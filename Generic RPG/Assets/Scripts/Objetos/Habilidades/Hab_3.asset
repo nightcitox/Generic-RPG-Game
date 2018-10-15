@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db710ed3bf17c664db928c50c8f73699, type: 3}
+  m_Name: Hab_3
+  m_EditorClassIdentifier: 
+  nombre: "Pichulazo Demon\xEDaco"
+  baseDMG: 2147483647
+  lrnLVL: 99
+  clases:
+  - {fileID: 11400000, guid: 463bed96ec78da541b3253184094ec70, type: 2}
+  - {fileID: 11400000, guid: c2606bd98a457b44099839268cfdf576, type: 2}
