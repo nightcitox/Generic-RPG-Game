@@ -8,14 +8,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 0d2dcd9871116544882537b946f06529, type: 3}
   m_Name: Mision_1
   m_EditorClassIdentifier: Assembly-CSharp::PlanMision
-  ID: 1
-  mision: Comer tula
-  descripcion: 123
-  recompensas:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  experiencia: 1000

@@ -11,9 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 314ccfe44665ed741ae64c1070f1b812, type: 3}
   m_Name: Obj_2
   m_EditorClassIdentifier: 
-  nombre: 
-  descripcion: 
-  nivelRestriccion: 0
-  efecto: 0
+  nombre: Sword of Destruction
+  descripcion: Una espada que destruye
+  nivelRestriccion: 5
+  efecto: 3
   tipo: 0
   reutilizable: 0
