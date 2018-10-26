@@ -13,5 +13,9 @@ public class Act : MonoBehaviour {
             boton = gameObject.GetComponent<Button>();
             boton.interactable = true;
         }
+        if (boton.interactable == false)
+        {
+            boton.Select();
+        }
 	}
 }
