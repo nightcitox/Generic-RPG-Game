@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 314ccfe44665ed741ae64c1070f1b812, type: 3}
+  m_Name: obj_3
+  m_EditorClassIdentifier: 
+  nombre: Paracetamol
+  descripcion: "El paracetamol, tambi\xE9n conocido como acetaminof\xE9n o acetaminofeno,
+    es un f\xE1rmaco con propiedades analg\xE9sicas y antipir\xE9ticas utilizado principalmente
+    para tratar la fiebre y el dolor leve y moderado"
+  nivelRestriccion: 0
+  efecto: 0
+  tipo: 1
+  reutilizable: 0
