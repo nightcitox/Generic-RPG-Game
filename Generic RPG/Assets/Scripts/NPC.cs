@@ -63,4 +63,3 @@ public class NPC : MonoBehaviour {
         mision = asigMision;
     }
 }
-  5
