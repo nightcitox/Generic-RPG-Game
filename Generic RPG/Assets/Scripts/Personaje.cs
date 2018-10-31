@@ -88,6 +88,15 @@ public class Personaje : MonoBehaviour {
     #endregion
     // Use this for initialization
     void Start () {
+        Estadisticas();
+    }
+	
+	// Update is called once per frame
+	void Update () {
+		
+	}
+    void Estadisticas()
+    {
         float formula;
         formula = (float)clase.baseHP + (nivel - 1 * clase.baseHP / 10);
         HP1 = Mathf.RoundToInt(formula);
@@ -100,10 +109,4 @@ public class Personaje : MonoBehaviour {
         formula = (float)clase.baseSPE + (nivel - 1 * clase.baseSPE / 25);
         SPE1 = Mathf.RoundToInt(formula);
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
 }

@@ -20,14 +20,12 @@ public class BattleManager : MonoBehaviour {
     private Text texto;
     private Vector3 pos;
     #endregion
-    // Use this for initialization
     void Start() {
         turno = 1;
         texto = GameObject.Find("Daño").GetComponent<Text>();
         anim = GameObject.Find("PJ").GetComponent<Animator>();
         atak = GameObject.Find("Ataque").GetComponent<Animator>();
 	}
-	// Update is called once per frame
 	void Update () {
 		if(enemigo1.baseHP <= 0)
         {
