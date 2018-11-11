@@ -7,7 +7,8 @@ public class GameManager : MonoBehaviour {
     #region Propiedades
     public PlanMision mision;
     public string dialogo;
-    private Personaje PJ;
+    public Inventario inventario;
+    Personaje PJ;
     #endregion
     // Use this for initialization
     void Start () {
