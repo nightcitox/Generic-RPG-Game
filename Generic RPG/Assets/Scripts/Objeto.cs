@@ -5,6 +5,7 @@ public class Objeto : MonoBehaviour {
     public PlanObjeto item;
     private string nombre;
     private string descripcion;
+    private Sprite icono;
     private int nivelRestriccion;
     private PlanObjeto.Efecto efecto;
     private PlanObjeto.Tipo tipo;

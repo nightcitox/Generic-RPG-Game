@@ -10,6 +10,7 @@ public class PlanObjeto : ScriptableObject {
     public int nivelRestriccion;
     public Efecto efecto;
     public Tipo tipo;
+    public Sprite icono;
     public bool reutilizable;
     #endregion
     public enum Efecto

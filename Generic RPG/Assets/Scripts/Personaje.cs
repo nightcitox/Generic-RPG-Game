@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Personaje : MonoBehaviour {
     #region propiedades
@@ -136,8 +137,10 @@ public class Personaje : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+        float VelX = (Input.GetAxis("Horizontal") * mov_spe) * Time.deltaTime;
+        float VelY = (Input.GetAxis("Vertical") * mov_spe) * Time.deltaTime;
+        transform.Translate(new Vector3(VelX, VelY));
+    }
     void Estadisticas()
     {
         float formula;
@@ -153,5 +156,9 @@ public class Personaje : MonoBehaviour {
         DEF1 = Mathf.RoundToInt(formula);
         formula = (float)clase.baseSPE + (nivel - 1 * clase.baseSPE / 25);
         SPE1 = Mathf.RoundToInt(formula);
+    }
+
+    void Movimiento()
+    {
     }
 }
