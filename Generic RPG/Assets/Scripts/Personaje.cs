@@ -14,6 +14,8 @@ public class Personaje : MonoBehaviour {
     public bool puedeMoverse;
     #endregion
     #region estadisticas
+    private int MaxHP;
+    private int MaxMP;
     private int HP;
     private int MP;
     private int ATK;
@@ -21,6 +23,32 @@ public class Personaje : MonoBehaviour {
     private int SPE;
     #endregion
     #region GetSetStats
+    public int MaxHP1
+    {
+        get
+        {
+            return MaxHP;
+        }
+
+        set
+        {
+            MaxHP = value;
+        }
+    }
+
+    public int MaxMP1
+    {
+        get
+        {
+            return MaxMP;
+        }
+
+        set
+        {
+            MaxMP = value;
+        }
+    }
+
     public int HP1
     {
         get
@@ -85,9 +113,24 @@ public class Personaje : MonoBehaviour {
             SPE = value;
         }
     }
+
+    public string Nombre
+    {
+        get
+        {
+            return nombre;
+        }
+
+        set
+        {
+            nombre = value;
+        }
+    }
     #endregion
     // Use this for initialization
     void Start () {
+        nivel = 1;
+        nombre = clase.nombre;
         Estadisticas();
     }
 	
@@ -98,9 +141,11 @@ public class Personaje : MonoBehaviour {
     void Estadisticas()
     {
         float formula;
-        formula = (float)clase.baseHP + (nivel - 1 * clase.baseHP / 10);
+        formula = (float)clase.baseHP + ((nivel - 1) * (clase.baseHP / 10));
+        MaxHP1 = Mathf.RoundToInt(formula);
         HP1 = Mathf.RoundToInt(formula);
         formula = (float)clase.baseMP + (nivel - 1 * clase.baseMP / 10);
+        MaxMP1 = Mathf.RoundToInt(formula);
         MP1 = Mathf.RoundToInt(formula);
         formula = (float)clase.baseATK + (nivel - 1 * clase.baseATK / 25);
         ATK1 = Mathf.RoundToInt(formula);
