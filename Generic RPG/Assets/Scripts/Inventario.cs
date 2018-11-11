@@ -6,6 +6,7 @@ public class Inventario : MonoBehaviour {
     public List<PlanObjeto> objetos;
     public GameObject obj;
     private int espacios;
+    private Component[] listado;
 	// Use this for initialization
 	void Start () {
 	}
@@ -23,23 +24,50 @@ public class Inventario : MonoBehaviour {
     }
     public void Abrir()
     {
-        float equis = -400.5f;
-        float igriega = 192.5f;
-        for (int i=1; i-1 < objetos.Count; i++)
+        float equis = -379f;
+        float igriega = 177.3f;
+        for (int i = 1; i - 1 < objetos.Count; i++)
         {
-            Debug.Log("Objeto: " + objetos[i-1].nombre);
-            Debug.Log("Objeto: " + objetos[i-1].name);
-            obj.GetComponent<Objeto>().item = objetos[i-1];
-            GameObject objeto = Instantiate(obj, new Vector2(equis, igriega), Quaternion.identity) as GameObject;
-            equis += 100;
+            int contador = 1;
+            Debug.Log("Objeto: " + objetos[i - 1].nombre);
+            Debug.Log("Objeto: " + objetos[i - 1].name);
+            obj.GetComponent<Objeto>().item = objetos[i - 1];
+            obj.GetComponent<Objeto>().Calculo(objetos);
+            GameObject objeto;
+            bool existe = false;
+            listado = GameObject.Find("Canvas").GetComponentsInChildren<Objeto>();
+            foreach (Objeto ob in listado)
+            {
+                if(ob.item == objetos[i - 1])
+                {
+                    print("Existe");
+                    existe = true;
+                }
+                else
+                {
+                    print("No existe.");
+                }
+            }
+            if (obj.GetComponent<Objeto>().Cantidad > 1 && objetos[i-1].name == obj.GetComponent<Objeto>().item.name && existe == true)
+            {
+                print("Se salta");
+            }
+            else
+            {
+                objeto = Instantiate(obj, new Vector2(equis, igriega), Quaternion.identity) as GameObject;
+                objeto.name = "Obj_" + contador;
+                objeto.transform.SetParent(GameObject.Find("Grilla").transform, false);
+                objeto.GetComponent<Objeto>().Calculo(objetos);
+                print(objeto.GetComponent<Objeto>().Cantidad);
+                contador += 1;
+            }
+            equis += 120;
             if (i % 5 == 0)
             {
-                igriega -= 100;
-                equis = -400.5f;
+                igriega -= 120;
+                equis = -379f;
             }
-            objeto.name = "Obj_" + i;
             print(igriega);
-            objeto.transform.SetParent(GameObject.Find("Grilla").transform, false);
         }
     }
     public void Agregar(PlanObjeto obj)
