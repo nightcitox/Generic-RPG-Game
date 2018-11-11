@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 314ccfe44665ed741ae64c1070f1b812, type: 3}
+  m_Name: obj_4
+  m_EditorClassIdentifier: 
+  nombre: Ibuprofeno
+  descripcion: "El ibuprofeno es un antiinflamatorio no esteroideo , utilizado frecuentemente
+    como antipir\xE9tico, analg\xE9sico y antiinflamatorio. Se utiliza para el alivio
+    sintom\xE1tico de la fiebre, dolor de cabeza (cefalea), dolor dental (odontalgia),
+    dolor muscular o mialgia, molestias de la menstruaci\xF3n (dismenorrea), dolor
+    neurol\xF3gico de car\xE1cter leve o moderado y dolor postquir\xFArgico. "
+  nivelRestriccion: 0
+  efecto: 0
+  tipo: 1
+  reutilizable: 0
