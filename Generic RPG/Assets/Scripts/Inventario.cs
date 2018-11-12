@@ -7,9 +7,19 @@ public class Inventario : MonoBehaviour {
     public GameObject obj;
     private int espacios;
     private Component[] listado;
-	// Use this for initialization
-	void Start () {
+    private int contador = 1;
+    // Use this for initialization
+    void Start () {
 	}
+    public void Cerrar()
+    {
+        listado = GameObject.Find("Canvas").GetComponentsInChildren<Objeto>();
+        foreach (Objeto ob in listado)
+        {
+            Destroy(ob.gameObject);
+        }
+        contador = 1;
+    }
     void Utilizar()
     {
 
@@ -28,7 +38,6 @@ public class Inventario : MonoBehaviour {
         float igriega = 177.3f;
         for (int i = 1; i - 1 < objetos.Count; i++)
         {
-            int contador = 1;
             Debug.Log("Objeto: " + objetos[i - 1].nombre);
             Debug.Log("Objeto: " + objetos[i - 1].name);
             obj.GetComponent<Objeto>().item = objetos[i - 1];
@@ -60,6 +69,7 @@ public class Inventario : MonoBehaviour {
                 objeto.GetComponent<Objeto>().Calculo(objetos);
                 print(objeto.GetComponent<Objeto>().Cantidad);
                 contador += 1;
+                Debug.Log(contador);
             }
             equis += 120;
             if (i % 5 == 0)
