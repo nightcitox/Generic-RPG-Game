@@ -14,6 +14,8 @@ public class Objeto : MonoBehaviour {
     private PlanObjeto.Tipo tipo;
     private bool reutilizable;
     private Button BotonUtilizar;
+    private int cantidadEfecto;
+    private PlanObjeto.Objetivo objetivoEfecto;
     void Update()
     {
         if(cantidad == 0)
@@ -34,6 +36,8 @@ public class Objeto : MonoBehaviour {
             cantidad = value;
         }
     }
+
+    public PlanObjeto.Tipo Tipo { get => tipo; set => tipo = value; }
     #endregion
     // Use this for initialization
     void Start () {
@@ -47,25 +51,47 @@ public class Objeto : MonoBehaviour {
         descripcion = item.descripcion;
         nivelRestriccion = item.nivelRestriccion;
         efecto = item.efecto;
-        tipo = item.tipo;
+        Tipo = item.tipo;
         reutilizable = item.reutilizable;
         icono = item.icono;
         transform.Find("Item").GetComponent<Image>().sprite = icono;
+        cantidadEfecto = item.cantidadEfecto;
+        objetivoEfecto = item.objetivoEfecto;
     }
     void Utilizar()
     {
-        //GameObject.Find("PanelDescripcion").SetActive(true);
         GameObject.Find("Descripcion").GetComponent<Text>().text = descripcion;
         if (reutilizable == false)
         {
             cantidad -= 1;
         }
-        else
+        if(SceneManagement.Scene.name == "Batalla")
         {
-            //Se utiliza
+            switch (Tipo)
+            {
+                case PlanObjeto.Tipo.Equipo:
+                    //Crear clase de equipamiento.
+                case PlanObjeto.Tipo.Consumible:
+                    if(PlanObjeto.Efecto.Curacion == efecto)
+                    {
+                        switch (objetivoEfecto)
+                        {
+                            case PlanObjeto.objetivoEfecto.HP:
+                                GameObject.Find("Personaje").GetComponent<Personaje>().HP += cantidadEfecto;
+                            case PlanObjeto.objetivoEfecto.MP:
+                                GameObject.Find("Personaje").GetComponent<Personaje>().MP += cantidadEfecto;
+                        }
+                    }else if(PlanObjeto.Efecto.Buff == efecto)
+                    {
+                        foreach(PlanObjeto.objetivoEfecto ef in PlanObjeto.objetivoEfecto)
+                        {
+                            Personaje.Buff(objetivoEfecto.toString(), cantidadEfecto);
+                        }
+                    }
+                case PlanObjeto.Tipo.Mision:
+            }
         }
         GetComponentInChildren<Text>().text = cantidad.ToString();
-        Debug.Log(cantidad);
     }
     public void Calculo(List<PlanObjeto> objs)
     {

@@ -12,7 +12,17 @@ public class PlanObjeto : ScriptableObject {
     public Tipo tipo;
     public Sprite icono;
     public bool reutilizable;
+    public int cantidadEfecto;
+    public Objetivo objetivoEfecto;
     #endregion
+    public enum Objetivo
+    {
+        HP,
+        MP,
+        ATK,
+        DEF,
+        SPE
+    }
     public enum Efecto
     {
         Curacion,

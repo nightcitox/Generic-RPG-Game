@@ -63,13 +63,24 @@ public class Inventario : MonoBehaviour {
             }
             else
             {
-                objeto = Instantiate(obj, new Vector2(equis, igriega), Quaternion.identity) as GameObject;
-                objeto.name = "Obj_" + contador;
-                objeto.transform.SetParent(GameObject.Find("Grilla").transform, false);
-                objeto.GetComponent<Objeto>().Calculo(objetos);
-                print(objeto.GetComponent<Objeto>().Cantidad);
-                contador += 1;
-                Debug.Log(contador);
+                if(obj.GetComponent<Objeto>().Tipo == PlanObjeto.Tipo.Consumible && SceneManagement.Scene.name == "Batalla")
+                {
+                    objeto = Instantiate(obj, new Vector2(equis, igriega), Quaternion.identity) as GameObject;
+                    objeto.name = "Obj_" + contador;
+                    objeto.transform.SetParent(GameObject.Find("Grilla").transform, false);
+                    objeto.GetComponent<Objeto>().Calculo(objetos);
+                    print(objeto.GetComponent<Objeto>().Cantidad);
+                    contador += 1;
+                    Debug.Log(contador);
+                }else if(SceneManagement.Scene.name != "Batalla")
+                    objeto = Instantiate(obj, new Vector2(equis, igriega), Quaternion.identity) as GameObject;
+                    objeto.name = "Obj_" + contador;
+                    objeto.transform.SetParent(GameObject.Find("Grilla").transform, false);
+                    objeto.GetComponent<Objeto>().Calculo(objetos);
+                    print(objeto.GetComponent<Objeto>().Cantidad);
+                    contador += 1;
+                    Debug.Log(contador);
+                }
             }
             equis += 120;
             if (i % 5 == 0)

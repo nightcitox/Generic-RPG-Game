@@ -13,6 +13,7 @@ public class Personaje : MonoBehaviour {
     private Vector3 pos;
     private Vector3 endPos;
     public bool puedeMoverse;
+    private int[] bufos; //0-HP, 1-MP, 2-ATK, 3-DEF, 4-SPE
     #endregion
     #region estadisticas
     private int MaxHP;
@@ -157,13 +158,54 @@ public class Personaje : MonoBehaviour {
     // Use this for initialization
     void Start () {
         Nivel = 1;
+        for(int i = 0; i < 4; i++)
+        {
+            bufos[i] = 0;
+        }
         nombre = clase.nombre;
         Estadisticas();
     }
 	
 	// Update is called once per frame
+    public void Buff(string stat, int cant)
+    {
+        switch (stat)
+        {
+            case "HP":
+                bufos[0] += cant;
+                HP += cant;
+            case "MP":
+                bufos[1] += cant;
+                MP += cant;
+            case "ATK":
+                bufos[2] += cant;
+            case "DEF":
+                bufos[3] += cant;
+            case "SPE":
+                bufos[4] += cant;
+        }
+        //Falta agregar el tiempo que demora. Por ahora voy a hacerlo pa que al salir de la batalla elimine los bufos.
+    }
 	void Update () {
+        if(HP > MaxHP)
+        {
+            HP = MaxHP;
+        }
+        if (MP > MaxMP)
+        {
+            MP = MaxMP;
+        }
         Movimiento();
+        Bufos();
+    }
+    void Bufos()
+    {
+        //Acá meteré los bufos del equipamiento.
+        MaxHP += bufos[0];
+        MaxMP += bufos[1];
+        ATK += bufos[2];
+        DEF += bufos[3];
+        SPE += bufos[4];
     }
     void Estadisticas()
     {
