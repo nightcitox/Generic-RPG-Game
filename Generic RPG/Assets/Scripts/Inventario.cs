@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Inventario : MonoBehaviour {
     public List<PlanObjeto> objetos;
@@ -63,7 +64,8 @@ public class Inventario : MonoBehaviour {
             }
             else
             {
-                if(obj.GetComponent<Objeto>().Tipo == PlanObjeto.Tipo.Consumible && SceneManagement.Scene.name == "Batalla")
+                Scene actual = SceneManager.GetActiveScene();
+                if (obj.GetComponent<Objeto>().Tipo == PlanObjeto.Tipo.Consumible && actual.name == "Batalla")
                 {
                     objeto = Instantiate(obj, new Vector2(equis, igriega), Quaternion.identity) as GameObject;
                     objeto.name = "Obj_" + contador;
@@ -71,15 +73,13 @@ public class Inventario : MonoBehaviour {
                     objeto.GetComponent<Objeto>().Calculo(objetos);
                     print(objeto.GetComponent<Objeto>().Cantidad);
                     contador += 1;
-                    Debug.Log(contador);
-                }else if(SceneManagement.Scene.name != "Batalla")
+                }else if(actual.name != "Batalla") {
                     objeto = Instantiate(obj, new Vector2(equis, igriega), Quaternion.identity) as GameObject;
                     objeto.name = "Obj_" + contador;
                     objeto.transform.SetParent(GameObject.Find("Grilla").transform, false);
                     objeto.GetComponent<Objeto>().Calculo(objetos);
                     print(objeto.GetComponent<Objeto>().Cantidad);
                     contador += 1;
-                    Debug.Log(contador);
                 }
             }
             equis += 120;

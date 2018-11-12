@@ -13,7 +13,7 @@ public class Personaje : MonoBehaviour {
     private Vector3 pos;
     private Vector3 endPos;
     public bool puedeMoverse;
-    private int[] bufos; //0-HP, 1-MP, 2-ATK, 3-DEF, 4-SPE
+    private int[] bufos = new int[5]; //0-HP, 1-MP, 2-ATK, 3-DEF, 4-SPE
     #endregion
     #region estadisticas
     private int MaxHP;
@@ -174,15 +174,20 @@ public class Personaje : MonoBehaviour {
             case "HP":
                 bufos[0] += cant;
                 HP += cant;
+                break;
             case "MP":
                 bufos[1] += cant;
                 MP += cant;
+                break;
             case "ATK":
                 bufos[2] += cant;
+                break;
             case "DEF":
                 bufos[3] += cant;
+                break;
             case "SPE":
                 bufos[4] += cant;
+                break;
         }
         //Falta agregar el tiempo que demora. Por ahora voy a hacerlo pa que al salir de la batalla elimine los bufos.
     }
