@@ -9,14 +9,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: db710ed3bf17c664db928c50c8f73699, type: 3}
-  m_Name: Hab_4
+  m_Name: Hab_3
   m_EditorClassIdentifier: 
-  nombre: "Pichulazo Entr\xF3pico"
-  baseDMG: 150
-  lrnLVL: 0
+  nombre: Paracetamolisis
+  baseDMG: 10
+  lrnLVL: 2
   clases:
-  - {fileID: 11400000, guid: e515ed67238fb424c864328bc172b80f, type: 2}
+  - {fileID: 11400000, guid: 463bed96ec78da541b3253184094ec70, type: 2}
+  - {fileID: 11400000, guid: c2606bd98a457b44099839268cfdf576, type: 2}
   tipo: 2
-  icono: {fileID: 21300000, guid: 1320f5b076eb212469e3455a9c65c7bf, type: 3}
-  Descripcion: Pichulazo bien cerdo.
-  MPUse: 0
+  icono: {fileID: 0}
+  Descripcion: Una rafaga feroz que puede aturdir al enemigo
+  MPUse: 5

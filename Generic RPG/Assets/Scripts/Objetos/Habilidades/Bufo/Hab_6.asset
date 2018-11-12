@@ -9,14 +9,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: db710ed3bf17c664db928c50c8f73699, type: 3}
-  m_Name: Hab_9 - copia
+  m_Name: Hab_6
   m_EditorClassIdentifier: 
-  nombre: 
+  nombre: Benzoato de propilo
   baseDMG: 0
-  lrnLVL: 0
+  lrnLVL: 2
   clases:
   - {fileID: 11400000, guid: e515ed67238fb424c864328bc172b80f, type: 2}
   tipo: 0
   icono: {fileID: 0}
-  Descripcion: 
+  Descripcion: Un dulce aroma que da poder al objetivo seleccionado
   MPUse: 0

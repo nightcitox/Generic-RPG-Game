@@ -9,14 +9,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: db710ed3bf17c664db928c50c8f73699, type: 3}
-  m_Name: Hab_6
+  m_Name: Hab_9
   m_EditorClassIdentifier: 
-  nombre: 
+  nombre: Burlon
   baseDMG: 0
-  lrnLVL: 0
+  lrnLVL: 1
   clases:
   - {fileID: 11400000, guid: e515ed67238fb424c864328bc172b80f, type: 2}
-  tipo: 0
+  tipo: 1
   icono: {fileID: 0}
-  Descripcion: 
-  MPUse: 0
+  Descripcion: Baile entretenido que baja el ataque rival.
+  MPUse: 5

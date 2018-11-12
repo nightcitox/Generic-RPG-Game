@@ -9,15 +9,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: db710ed3bf17c664db928c50c8f73699, type: 3}
-  m_Name: Hab_3
+  m_Name: Hab_7
   m_EditorClassIdentifier: 
-  nombre: "Pichulazo Demon\xEDaco"
-  baseDMG: 2147483647
-  lrnLVL: 99
+  nombre: "Alcohol et\xEDlico "
+  baseDMG: 0
+  lrnLVL: 0
   clases:
-  - {fileID: 11400000, guid: 463bed96ec78da541b3253184094ec70, type: 2}
-  - {fileID: 11400000, guid: c2606bd98a457b44099839268cfdf576, type: 2}
-  tipo: 2
+  - {fileID: 11400000, guid: e515ed67238fb424c864328bc172b80f, type: 2}
+  tipo: 1
   icono: {fileID: 0}
-  Descripcion: 
+  Descripcion: Un fuerte olor que confunde al rival.
   MPUse: 0

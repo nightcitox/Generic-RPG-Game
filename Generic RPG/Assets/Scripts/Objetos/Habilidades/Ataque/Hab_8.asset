@@ -11,12 +11,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db710ed3bf17c664db928c50c8f73699, type: 3}
   m_Name: Hab_8
   m_EditorClassIdentifier: 
-  nombre: 
-  baseDMG: 0
-  lrnLVL: 0
+  nombre: 'Sobredosis '
+  baseDMG: 100
+  lrnLVL: 50
   clases:
   - {fileID: 11400000, guid: e515ed67238fb424c864328bc172b80f, type: 2}
-  tipo: 0
+  tipo: 2
   icono: {fileID: 0}
-  Descripcion: 
+  Descripcion: El usuario consume una gran cantidad de pastillas para cargar un poderoso
+    ataque final, sin embargo al finalizar el turno pierdes toda tu vida.
   MPUse: 0
