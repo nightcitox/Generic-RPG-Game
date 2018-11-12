@@ -9,14 +9,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: db710ed3bf17c664db928c50c8f73699, type: 3}
-  m_Name: Hab_1
+  m_Name: Hab_5
   m_EditorClassIdentifier: 
-  nombre: Sword of Destruction
-  baseDMG: 10
+  nombre: Quesillo del Pico
+  baseDMG: 0
   lrnLVL: 0
   clases:
   - {fileID: 11400000, guid: e515ed67238fb424c864328bc172b80f, type: 2}
-  tipo: 2
-  icono: {fileID: 21300000, guid: 4de89a37e798dd04b85f1d0892719a37, type: 3}
-  Descripcion: "Espada de destrucci\xF3n masiva."
-  MPUse: 0
+  tipo: 1
+  icono: {fileID: 21300000, guid: 2d395f1eb70ce4a48b5f6a3bd06b3cd9, type: 3}
+  Descripcion: Hace al enemigo ingerir el quesillo de tu pichula.
+  MPUse: 15

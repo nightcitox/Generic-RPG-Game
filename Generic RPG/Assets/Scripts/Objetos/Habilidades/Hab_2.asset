@@ -16,3 +16,7 @@ MonoBehaviour:
   lrnLVL: 0
   clases:
   - {fileID: 11400000, guid: 463bed96ec78da541b3253184094ec70, type: 2}
+  tipo: 3
+  icono: {fileID: 0}
+  Descripcion: 
+  MPUse: 0

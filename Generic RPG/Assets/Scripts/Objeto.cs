@@ -14,7 +14,14 @@ public class Objeto : MonoBehaviour {
     private PlanObjeto.Tipo tipo;
     private bool reutilizable;
     private Button BotonUtilizar;
-
+    void Update()
+    {
+        if(cantidad == 0)
+        {
+            GameObject.Find("EventSystem").GetComponent<Inventario>().objetos.Remove(item);
+            Destroy(gameObject);
+        }
+    }
     public int Cantidad
     {
         get
@@ -47,8 +54,9 @@ public class Objeto : MonoBehaviour {
     }
     void Utilizar()
     {
+        //GameObject.Find("PanelDescripcion").SetActive(true);
         GameObject.Find("Descripcion").GetComponent<Text>().text = descripcion;
-        if(reutilizable == false)
+        if (reutilizable == false)
         {
             cantidad -= 1;
         }
@@ -56,7 +64,7 @@ public class Objeto : MonoBehaviour {
         {
             //Se utiliza
         }
-        GetComponentInChildren<Text>().text = "" + cantidad;
+        GetComponentInChildren<Text>().text = cantidad.ToString();
         Debug.Log(cantidad);
     }
     public void Calculo(List<PlanObjeto> objs)
@@ -70,6 +78,6 @@ public class Objeto : MonoBehaviour {
             }
         }
         cantidad = contador;
-        GetComponentInChildren<Text>().text = "" + cantidad;
+        GetComponentInChildren<Text>().text = cantidad.ToString();
     }
 }

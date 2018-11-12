@@ -127,38 +127,67 @@ public class Personaje : MonoBehaviour {
             nombre = value;
         }
     }
+
+    public int Nivel
+    {
+        get
+        {
+            return nivel;
+        }
+
+        set
+        {
+            nivel = value;
+        }
+    }
+
+    public float Exp
+    {
+        get
+        {
+            return exp;
+        }
+
+        set
+        {
+            exp = value;
+        }
+    }
     #endregion
     // Use this for initialization
     void Start () {
-        nivel = 1;
+        Nivel = 1;
         nombre = clase.nombre;
         Estadisticas();
     }
 	
 	// Update is called once per frame
 	void Update () {
-        float VelX = (Input.GetAxis("Horizontal") * mov_spe) * Time.deltaTime;
-        float VelY = (Input.GetAxis("Vertical") * mov_spe) * Time.deltaTime;
-        transform.Translate(new Vector3(VelX, VelY));
+        Movimiento();
     }
     void Estadisticas()
     {
         float formula;
-        formula = (float)clase.baseHP + ((nivel - 1) * (clase.baseHP / 10));
+        formula = (float)clase.baseHP + ((Nivel - 1) * (clase.baseHP / 10));
         MaxHP1 = Mathf.RoundToInt(formula);
         HP1 = Mathf.RoundToInt(formula);
-        formula = (float)clase.baseMP + (nivel - 1 * clase.baseMP / 10);
+        formula = (float)clase.baseMP + (Nivel - 1 * clase.baseMP / 10);
         MaxMP1 = Mathf.RoundToInt(formula);
         MP1 = Mathf.RoundToInt(formula);
-        formula = (float)clase.baseATK + (nivel - 1 * clase.baseATK / 25);
+        formula = (float)clase.baseATK + (Nivel - 1 * clase.baseATK / 25);
         ATK1 = Mathf.RoundToInt(formula);
-        formula = (float)clase.baseDEF + (nivel - 1 * clase.baseDEF / 25);
+        formula = (float)clase.baseDEF + (Nivel - 1 * clase.baseDEF / 25);
         DEF1 = Mathf.RoundToInt(formula);
-        formula = (float)clase.baseSPE + (nivel - 1 * clase.baseSPE / 25);
+        formula = (float)clase.baseSPE + (Nivel - 1 * clase.baseSPE / 25);
         SPE1 = Mathf.RoundToInt(formula);
     }
 
     void Movimiento()
     {
+        if(puedeMoverse == true) {
+        float VelX = (Input.GetAxis("Horizontal") * mov_spe) * Time.deltaTime;
+        float VelY = (Input.GetAxis("Vertical") * mov_spe) * Time.deltaTime;
+        transform.Translate(new Vector3(VelX, VelY));
+        }
     }
 }
