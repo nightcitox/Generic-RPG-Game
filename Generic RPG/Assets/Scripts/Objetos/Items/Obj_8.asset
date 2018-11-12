@@ -9,14 +9,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 314ccfe44665ed741ae64c1070f1b812, type: 3}
-  m_Name: obj_7
+  m_Name: Obj_8
   m_EditorClassIdentifier: 
-  nombre: Vitamina C
-  descripcion: "Es un nutriente esencial para el ser humano, los primates, los caballos
-    y algunos murci\xE9lagos, quienes carecen del mecanismo para su s\xEDntesis. Se
-    usa como suplemento para calmar los s\xEDntomas del resfriado com\xFAn."
+  nombre: Antirrabica
+  descripcion: Cura la rabia
   nivelRestriccion: 0
   efecto: 0
   tipo: 1
-  icono: {fileID: 21300000, guid: 4783372d552ccb643a422870b05afb72, type: 3}
+  icono: {fileID: 21300000, guid: fc4e15430eca2d442b5873d961703e5f, type: 3}
   reutilizable: 0
