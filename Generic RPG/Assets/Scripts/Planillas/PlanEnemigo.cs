@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 
 [CreateAssetMenu]
@@ -12,6 +13,6 @@ public class PlanEnemigo : ScriptableObject {
     public int baseSPE;
     public float exp;
     public Sprite sprite;
-    public Animator anim;
+    public AnimatorController anim;
     #endregion
 }

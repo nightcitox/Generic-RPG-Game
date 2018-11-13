@@ -214,7 +214,7 @@ public class Habilidad : MonoBehaviour {
                     }
                     break;
             }
-            StartCoroutine(GameObject.Find("GameManager").GetComponent<BattleManager>().Esperar());
+            StartCoroutine(GameObject.Find("GameManager").GetComponent<BattleManager>().Esperar(null));
             GameObject.Find("GameManager").GetComponent<BattleManager>().Turno += 1;
         }
         else

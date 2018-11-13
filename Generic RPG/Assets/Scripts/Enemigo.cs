@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 
 public class Enemigo : MonoBehaviour {
@@ -121,6 +122,9 @@ public class Enemigo : MonoBehaviour {
         atk = enemigo.baseATK;
         def = enemigo.baseDEF;
         spe = enemigo.baseSPE;
+        sprite = enemigo.sprite;
+        anim = GetComponent<Animator>();
+        anim.runtimeAnimatorController = enemigo.anim;
     }
     void AplicarStats()
     {

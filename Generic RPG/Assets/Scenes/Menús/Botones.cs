@@ -2,10 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Botones : MonoBehaviour {
-    
+    public AudioSource audio;
 
+    public void VolumeChange()
+    {
+        audio.volume = GameObject.Find("Volumen").GetComponent<Slider>().value;
+    }
     public void btn_Inipartida (string LevelName)
     {
         SceneManager.LoadScene("Batalla");

@@ -157,7 +157,7 @@ public class Personaje : MonoBehaviour {
     #endregion
     // Use this for initialization
     void Start () {
-        Nivel = 1;
+        Nivel = 5;
         for(int i = 0; i < 4; i++)
         {
             bufos[i] = 0;

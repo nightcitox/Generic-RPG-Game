@@ -20,3 +20,5 @@ MonoBehaviour:
   tipo: 1
   icono: {fileID: 21300000, guid: 4a0974977c7ea0e4f94f0d5cc99322ae, type: 3}
   reutilizable: 0
+  cantidadEfecto: 15
+  objetivoEfecto: 0

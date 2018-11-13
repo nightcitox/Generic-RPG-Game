@@ -82,10 +82,6 @@ public class Objeto : MonoBehaviour {
     }
     void Utilizar()
     {
-        if (reutilizable == false)
-        {
-            cantidad -= 1;
-        }
         Scene actual = SceneManager.GetActiveScene();
         switch (Tipo)
         {
@@ -108,7 +104,7 @@ public class Objeto : MonoBehaviour {
                     if(actual.name == "Batalla")
                     {
                         GameObject.Find("GameManager").GetComponent<BattleManager>().Texto.text = GameObject.Find("Personaje").GetComponent<Personaje>().Nombre + " va a utilizar " + nombre;
-                        StartCoroutine(GameObject.Find("GameManager").GetComponent<BattleManager>().Esperar());
+                        StartCoroutine(GameObject.Find("GameManager").GetComponent<BattleManager>().Esperar(this));
                         GameObject.Find("GameManager").GetComponent<BattleManager>().Turno += 1;
                     }
                 }

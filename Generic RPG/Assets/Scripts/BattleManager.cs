@@ -95,7 +95,7 @@ public class BattleManager : MonoBehaviour {
         }
 
     }
-    public IEnumerator Esperar()
+    public IEnumerator Esperar(Objeto item)
     {
         rutina = true;
         esperas = true;
@@ -107,6 +107,10 @@ public class BattleManager : MonoBehaviour {
         esperas = false;
         BotonesOFF();
         print("esperado");
+        if (item != null)
+        {
+            item.Cantidad -= 1;
+        }
     }
     IEnumerator Victoria()
     {
@@ -167,8 +171,8 @@ public class BattleManager : MonoBehaviour {
             switch (acc)
             {
                 case AccionesEnemigo.Atacar:
-                    StartCoroutine("Daño");
-                    rutina = false;
+                    Daño();
+                    rutina = true;
                     break;
                 case AccionesEnemigo.Escapar:
                     Texto.text = "El enemigo ha escapado.";
@@ -201,6 +205,8 @@ public class BattleManager : MonoBehaviour {
     }
     IEnumerator Turnos()
     {
+        print(poseedorTurno);
+        print(turno);
         if (EN1.Spe > pj.SPE1)
         {
             if(turno%2 == 1)
@@ -227,7 +233,6 @@ public class BattleManager : MonoBehaviour {
                 GetComponent<Inventario>().Cerrar();
             }
         }
-        AccEn();
         yield return true;
     }
     IEnumerator BarraAliado()
@@ -270,50 +275,52 @@ public class BattleManager : MonoBehaviour {
         yield return true;
     }
     #region rutinas
-    IEnumerator Daño()
+    void Daño()
     {
-        StopCoroutine("Acciones");
-        rutina = true;
+        AccEn();
         BotonesOFF();
-        boton = GameObject.Find("Atacar").GetComponent<Button>();
-        boton.interactable = false;
         if (poseedorTurno == "Personaje")
         {
             int daño = (pj.ATK1 - EN1.Def);
             Texto.text = "¡Has hecho "+ daño+ " de daño!";
-            StartCoroutine("AtaqueAnim");
-            EN1.Hp = EN1.Hp - (pj.ATK1 - EN1.Def);
+            EN1.Hp = EN1.Hp - (pj.ATK1 - EN1.Def/10);
         }
         else
         {
             int daño = (EN1.Atk - (pj.DEF1 / 10));
-            pj.HP1 = pj.HP1 - daño;
             Texto.text = "¡Has recibido " + daño + " de daño!";
-            boton.interactable = true;
-            boton.Select();
-            Turno += 1;
+            pj.HP1 = pj.HP1 - daño;
         }
-        rutina = false;
-        yield return true;
+        StartCoroutine("AtaqueAnim");
     }
-
     IEnumerator AtaqueAnim()
     {
-        anim.SetTrigger("Ataque");
-        esprai = atak.GetComponent<SpriteRenderer>();
-        esprai.sprite = hoja;
-        atak.SetBool("Ataque", true);
-        pos = atak.transform.position;
-        atak.transform.Translate(new Vector3(5, 0, 0));
-        print("comienza");
-        yield return new WaitForSeconds(1.5f);
-        Turno += 1;
-        print("termina");
-        boton.Select();
-        anim.ResetTrigger("Ataque");
-        atak.SetBool("Ataque", false);
-        esprai.sprite = null;
-        atak.transform.position = new Vector3(-5.5f, 0.5f, 0f);
+        if(poseedorTurno == "Personaje")
+        {
+            anim.SetTrigger("Ataque");
+            esprai = atak.GetComponent<SpriteRenderer>();
+            esprai.sprite = hoja;
+            atak.SetBool("Ataque", true);
+            pos = atak.transform.position;
+            atak.transform.Translate(new Vector3(5, 0, 0));
+            print("comienza");
+            yield return new WaitForSeconds(1.5f);
+            Turno += 1;
+            print("termina");
+            anim.ResetTrigger("Ataque");
+            atak.SetBool("Ataque", false);
+            esprai.sprite = null;
+            atak.transform.position = new Vector3(-5.5f, 0.5f, 0f);
+        }
+        else
+        {
+            Animator uwu = GameObject.Find("Enemigo 1").GetComponent<Animator>();
+            uwu.SetTrigger("Ataque");
+            Turno += 1;
+            uwu.ResetTrigger("Ataque");
+        }
+        AccEn();
+        yield return true;
     }
     #endregion
 }
