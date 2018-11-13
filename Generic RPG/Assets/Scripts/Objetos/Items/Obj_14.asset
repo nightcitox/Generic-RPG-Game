@@ -9,14 +9,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 314ccfe44665ed741ae64c1070f1b812, type: 3}
-  m_Name: Obj_13
+  m_Name: Obj_14
   m_EditorClassIdentifier: 
-  nombre: Morfina
-  descripcion: Alivia un dolor intenso
+  nombre: Amoxicilina
+  descripcion: Aumenta la resistencia
   nivelRestriccion: 0
-  efecto: 0
+  efecto: 1
   tipo: 1
-  icono: {fileID: 21300000, guid: 1fd59f2356bae0742bf173037c731559, type: 3}
+  icono: {fileID: 21300000, guid: 5b0eab599501e5342be4cbff4f1f7237, type: 3}
   reutilizable: 0
   cantidadEfecto: 0
-  objetivoEfecto: 0
+  objetivoEfecto: 3
