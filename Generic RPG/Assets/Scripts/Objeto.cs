@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -20,9 +22,12 @@ public class Objeto : MonoBehaviour {
     private PlanObjeto.Objetivo objetivoEfecto;
     void Update()
     {
-        if(cantidad == 0)
+        if(cantidad == 0 && item.tipo != PlanObjeto.Tipo.Equipo)
         {
-            GameObject.Find("EventSystem").GetComponent<Inventario>().objetos.Remove(item);
+            foreach(PlanObjeto ob in GameObject.Find("GameManager").GetComponent<Inventario>().objetos)
+            {
+                GameObject.Find("GameManager").GetComponent<Inventario>().objetos.Remove(item);
+            }
             Destroy(gameObject);
         }
     }
@@ -53,7 +58,10 @@ public class Objeto : MonoBehaviour {
     }
 
     #endregion
-    // Use this for initialization
+    public void uwu()
+    {
+        GameObject.Find("Descripcion").GetComponentInChildren<Text>().text = descripcion;
+    }
     void Start () {
         BotonUtilizar = GetComponentInChildren<Button>();
         Inicializar();
@@ -74,56 +82,68 @@ public class Objeto : MonoBehaviour {
     }
     void Utilizar()
     {
-        GameObject.Find("Descripcion").GetComponent<Text>().text = descripcion;
         if (reutilizable == false)
         {
             cantidad -= 1;
         }
         Scene actual = SceneManager.GetActiveScene();
-        if (actual.name == "Batalla")
+        switch (Tipo)
         {
-            switch (Tipo)
-            {
-                case PlanObjeto.Tipo.Equipo:
-                    //Crear clase de equipamiento.
-                    break;
-                case PlanObjeto.Tipo.Consumible:
-                    if(PlanObjeto.Efecto.Curacion == efecto)
+            case PlanObjeto.Tipo.Equipo:
+                print("uwu");
+                //Crear clase de equipamiento.
+                break;
+            case PlanObjeto.Tipo.Consumible:
+                if (PlanObjeto.Efecto.Curacion == efecto)
+                {
+                    switch (objetivoEfecto)
                     {
-                        switch (objetivoEfecto)
-                        {
-                            case PlanObjeto.Objetivo.HP:
-                                GameObject.Find("Personaje").GetComponent<Personaje>().HP1 += cantidadEfecto;
-                                break;
-                            case PlanObjeto.Objetivo.MP:
-                                GameObject.Find("Personaje").GetComponent<Personaje>().MP1 += cantidadEfecto;
-                                break;
-                        }
-                    }else if(PlanObjeto.Efecto.Buff == efecto)
-                    {
-                        foreach(PlanObjeto.Objetivo ef in (PlanObjeto.Objetivo[])Enum.GetValues(typeof(PlanObjeto.Objetivo)))
-                        {
-                            GameObject.Find("Personaje").GetComponent<Personaje>().Buff(objetivoEfecto.ToString(), cantidadEfecto);
-                        }
+                        case PlanObjeto.Objetivo.HP:
+                            GameObject.Find("Personaje").GetComponent<Personaje>().HP1 += cantidadEfecto;
+                            break;
+                        case PlanObjeto.Objetivo.MP:
+                            GameObject.Find("Personaje").GetComponent<Personaje>().MP1 += cantidadEfecto;
+                            break;
                     }
-                    break;
-                case PlanObjeto.Tipo.Mision:
-                    break;
-            }
+                    if(actual.name == "Batalla")
+                    {
+                        GameObject.Find("GameManager").GetComponent<BattleManager>().Texto.text = GameObject.Find("Personaje").GetComponent<Personaje>().Nombre + " va a utilizar " + nombre;
+                        StartCoroutine(GameObject.Find("GameManager").GetComponent<BattleManager>().Esperar());
+                        GameObject.Find("GameManager").GetComponent<BattleManager>().Turno += 1;
+                    }
+                }
+                else if (PlanObjeto.Efecto.Buff == efecto)
+                {
+                    foreach (PlanObjeto.Objetivo ef in (PlanObjeto.Objetivo[])Enum.GetValues(typeof(PlanObjeto.Objetivo)))
+                    {
+                        GameObject.Find("Personaje").GetComponent<Personaje>().Buff(objetivoEfecto.ToString(), cantidadEfecto);
+                    }
+                }
+                break;
+            case PlanObjeto.Tipo.Mision:
+                break;
         }
         GetComponentInChildren<Text>().text = cantidad.ToString();
     }
     public void Calculo(List<PlanObjeto> objs)
     {
-        int contador = 0;
-        foreach (PlanObjeto ob in objs)
+        if(item.tipo == PlanObjeto.Tipo.Equipo)
         {
-            if(ob == item)
-            {
-                contador += 1;
-            }
+            cantidad = 1;
+            GetComponentInChildren<Text>().text = "Equipo";
         }
-        cantidad = contador;
-        GetComponentInChildren<Text>().text = cantidad.ToString();
+        else
+        {
+            int contador = 0;
+            foreach (PlanObjeto ob in objs)
+            {
+                if (ob == item)
+                {
+                    contador += 1;
+                }
+            }
+            cantidad = contador;
+            GetComponentInChildren<Text>().text = cantidad.ToString();
+        }
     }
 }

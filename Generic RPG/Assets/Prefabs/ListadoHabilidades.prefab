@@ -51,7 +51,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0fe8444c4e2fb1409df1eb592aff48d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  habilidades:
-  - {fileID: 11400000, guid: 0e30dacc3a3443742a527601f9dad104, type: 2}
-  - {fileID: 11400000, guid: 0c0a4b5ec7d4e05489b756e5c0a2002d, type: 2}
-  - {fileID: 11400000, guid: 3127486f36fe25749a00c77e95e6b5f8, type: 2}
+  HabSlot: {fileID: 0}

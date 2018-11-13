@@ -9,17 +9,24 @@ public class Inventario : MonoBehaviour {
     private int espacios;
     private Component[] listado;
     private int contador = 1;
+    private bool abierto;
     // Use this for initialization
     void Start () {
+        abierto = false;
 	}
     public void Cerrar()
     {
-        listado = GameObject.Find("Canvas").GetComponentsInChildren<Objeto>();
-        foreach (Objeto ob in listado)
+        if(abierto == true)
         {
-            Destroy(ob.gameObject);
+            listado = GameObject.Find("Contenido").GetComponentsInChildren<Objeto>();
+            foreach (Objeto ob in listado)
+            {
+                Destroy(ob.gameObject);
+            }
+            contador = 1;
+            abierto = false;
+            GameObject.Find("Inventario").gameObject.SetActive(false);
         }
-        contador = 1;
     }
     void Utilizar()
     {
@@ -35,60 +42,67 @@ public class Inventario : MonoBehaviour {
     }
     public void Abrir()
     {
-        float equis = -379f;
-        float igriega = 177.3f;
-        for (int i = 1; i - 1 < objetos.Count; i++)
+        if(abierto == false)
         {
-            Debug.Log("Objeto: " + objetos[i - 1].nombre);
-            Debug.Log("Objeto: " + objetos[i - 1].name);
-            obj.GetComponent<Objeto>().item = objetos[i - 1];
-            obj.GetComponent<Objeto>().Calculo(objetos);
-            GameObject objeto;
-            bool existe = false;
-            listado = GameObject.Find("Canvas").GetComponentsInChildren<Objeto>();
-            foreach (Objeto ob in listado)
+            print("abriendo");
+            GameObject.Find("Panel").transform.Find("Inventario").gameObject.SetActive(true);
+            contador = 1;
+            for (int i = 0; i < objetos.Count - 1; i++)
             {
-                if(ob.item == objetos[i - 1])
+                obj.GetComponent<Objeto>().item = objetos[i];
+                obj.GetComponent<Objeto>().Calculo(objetos);
+                GameObject objeto;
+                bool existe = false;
+                listado = GameObject.Find("Contenido").GetComponentsInChildren<Objeto>();
+                foreach (Objeto ob in listado)
                 {
-                    print("Existe");
-                    existe = true;
+                    print(ob.item.nombre);
+                    if (ob.item == objetos[i])
+                    {
+                        print("Existe");
+                        existe = true;
+                    }
+                    else
+                    {
+                        print("No existe.");
+                    }
+                }
+                if (existe == true)
+                {
+                    if(obj.GetComponent<Objeto>().item.tipo == PlanObjeto.Tipo.Equipo)
+                    {
+                        print("Equipo");
+                        objeto = Instantiate(obj, new Vector2(0, 0), Quaternion.identity) as GameObject;
+                        objeto.name = "Obj_" + contador;
+                        objeto.transform.SetParent(GameObject.Find("Contenido").transform, false);
+                        objeto.GetComponent<Objeto>().Calculo(objetos);
+                        contador += 1;
+                    }
                 }
                 else
                 {
-                    print("No existe.");
+                    Scene actual = SceneManager.GetActiveScene();
+                    if (obj.GetComponent<Objeto>().item.tipo == PlanObjeto.Tipo.Consumible && actual.name == "Batalla")
+                    {
+                        print("Está en batalla");
+                        objeto = Instantiate(obj, new Vector2(0, 0), Quaternion.identity) as GameObject;
+                        objeto.name = "Obj_" + contador;
+                        objeto.transform.SetParent(GameObject.Find("Contenido").transform, false);
+                        objeto.GetComponent<Objeto>().Calculo(objetos);
+                        contador += 1;
+                    }
+                    else if (actual.name != "Batalla")
+                    {
+                        print("No está en batalla");
+                        objeto = Instantiate(obj, new Vector2(0, 0), Quaternion.identity) as GameObject;
+                        objeto.name = "Obj_" + contador;
+                        objeto.transform.SetParent(GameObject.Find("Contenido").transform, false);
+                        objeto.GetComponent<Objeto>().Calculo(objetos);
+                        contador += 1;
+                    }
                 }
             }
-            if (obj.GetComponent<Objeto>().Cantidad > 1 && objetos[i-1].name == obj.GetComponent<Objeto>().item.name && existe == true)
-            {
-                print("Se salta");
-            }
-            else
-            {
-                Scene actual = SceneManager.GetActiveScene();
-                if (obj.GetComponent<Objeto>().Tipo == PlanObjeto.Tipo.Consumible && actual.name == "Batalla")
-                {
-                    objeto = Instantiate(obj, new Vector2(equis, igriega), Quaternion.identity) as GameObject;
-                    objeto.name = "Obj_" + contador;
-                    objeto.transform.SetParent(GameObject.Find("Grilla").transform, false);
-                    objeto.GetComponent<Objeto>().Calculo(objetos);
-                    print(objeto.GetComponent<Objeto>().Cantidad);
-                    contador += 1;
-                }else if(actual.name != "Batalla") {
-                    objeto = Instantiate(obj, new Vector2(equis, igriega), Quaternion.identity) as GameObject;
-                    objeto.name = "Obj_" + contador;
-                    objeto.transform.SetParent(GameObject.Find("Grilla").transform, false);
-                    objeto.GetComponent<Objeto>().Calculo(objetos);
-                    print(objeto.GetComponent<Objeto>().Cantidad);
-                    contador += 1;
-                }
-            }
-            equis += 120;
-            if (i % 5 == 0)
-            {
-                igriega -= 120;
-                equis = -379f;
-            }
-            print(igriega);
+            abierto = true;
         }
     }
     public void Agregar(PlanObjeto obj)

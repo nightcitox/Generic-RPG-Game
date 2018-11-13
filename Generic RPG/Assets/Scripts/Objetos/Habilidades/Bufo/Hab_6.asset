@@ -19,4 +19,5 @@ MonoBehaviour:
   tipo: 0
   icono: {fileID: 0}
   Descripcion: Un dulce aroma que da poder al objetivo seleccionado
+  obj: 2
   MPUse: 0

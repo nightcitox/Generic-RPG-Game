@@ -14,6 +14,7 @@ public class Enemigo : MonoBehaviour {
     private int spe;
     private Sprite sprite;
     private Animator anim;
+    private int[] bufos = new int[4]; //0-HP, 1-ATK, 2-DEF, 3-SPE
     #endregion
     #region GetSetStats
     public string Nombre
@@ -109,6 +110,10 @@ public class Enemigo : MonoBehaviour {
     #endregion
     // Use this for initialization
     void Start() {
+        for (int i = 0; i < 3; i++)
+        {
+            bufos[i] = 0;
+        }
         nombre = enemigo.nombre;
         maxhp = enemigo.baseHP;
         hp = enemigo.baseHP;
@@ -116,5 +121,52 @@ public class Enemigo : MonoBehaviour {
         atk = enemigo.baseATK;
         def = enemigo.baseDEF;
         spe = enemigo.baseSPE;
+    }
+    void AplicarStats()
+    {
+        maxhp = enemigo.baseHP + bufos[0];
+        atk = enemigo.baseATK + bufos[1];
+        def = enemigo.baseDEF + bufos[2];
+        spe = enemigo.baseSPE + bufos[3];
+    }
+    public void Buff(string stat, int cant)
+    {
+        switch (stat)
+        {
+            case "HP":
+                bufos[0] += cant;
+                break;
+            case "ATK":
+                bufos[2] += cant;
+                break;
+            case "DEF":
+                bufos[3] += cant;
+                break;
+            case "SPE":
+                bufos[4] += cant;
+                break;
+        }
+        AplicarStats();
+        //Falta agregar el tiempo que demora. Por ahora voy a hacerlo pa que al salir de la batalla elimine los bufos.
+    }
+    public void DeBuff(string stat, int cant)
+    {
+        switch (stat)
+        {
+            case "HP":
+                bufos[0] -= cant;
+                break;
+            case "ATK":
+                bufos[2] -= cant;
+                break;
+            case "DEF":
+                bufos[3] -= cant;
+                break;
+            case "SPE":
+                bufos[4] -= cant;
+                break;
+        }
+        AplicarStats();
+        //Falta agregar el tiempo que demora. Por ahora voy a hacerlo pa que al salir de la batalla elimine los bufos.
     }
 }

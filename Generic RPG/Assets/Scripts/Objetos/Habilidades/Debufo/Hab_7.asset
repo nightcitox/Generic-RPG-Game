@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Name: Hab_7
   m_EditorClassIdentifier: 
   nombre: "Alcohol et\xEDlico "
-  baseDMG: 0
+  baseDMG: 10
   lrnLVL: 0
   clases:
   - {fileID: 11400000, guid: e515ed67238fb424c864328bc172b80f, type: 2}
   tipo: 1
   icono: {fileID: 0}
   Descripcion: Un fuerte olor que confunde al rival.
-  MPUse: 0
+  obj: 3
+  sfx: {fileID: 0}
+  MPUse: 10

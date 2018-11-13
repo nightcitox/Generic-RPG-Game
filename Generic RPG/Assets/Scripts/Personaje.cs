@@ -189,9 +189,35 @@ public class Personaje : MonoBehaviour {
                 bufos[4] += cant;
                 break;
         }
+        Bufos();
         //Falta agregar el tiempo que demora. Por ahora voy a hacerlo pa que al salir de la batalla elimine los bufos.
     }
-	void Update () {
+    public void DeBuff(string stat, int cant)
+    {
+        switch (stat)
+        {
+            case "HP":
+                bufos[0] -= cant;
+                HP += cant;
+                break;
+            case "MP":
+                bufos[1] -= cant;
+                MP += cant;
+                break;
+            case "ATK":
+                bufos[2] -= cant;
+                break;
+            case "DEF":
+                bufos[3] -= cant;
+                break;
+            case "SPE":
+                bufos[4] -= cant;
+                break;
+        }
+        Bufos();
+        //Falta agregar el tiempo que demora. Por ahora voy a hacerlo pa que al salir de la batalla elimine los bufos.
+    }
+    void Update () {
         if(HP > MaxHP)
         {
             HP = MaxHP;
@@ -201,7 +227,6 @@ public class Personaje : MonoBehaviour {
             MP = MaxMP;
         }
         Movimiento();
-        Bufos();
     }
     void Bufos()
     {

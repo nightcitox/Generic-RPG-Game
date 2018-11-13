@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a52a2f833bcd8dc4e9dadbac559590cc, type: 3}
   m_Name: npc_1
   m_EditorClassIdentifier: 
-  nombre: Jaime
+  nombre: Alejandro El sabuezo
   dialogos:
   - {fileID: 11400000, guid: 6e442740599cec746a25477a89d81a01, type: 2}
   - {fileID: 11400000, guid: 1b8ee23461f3ad545acca0e14d60d0f3, type: 2}

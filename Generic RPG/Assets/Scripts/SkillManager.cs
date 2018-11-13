@@ -12,7 +12,6 @@ public class SkillManager : MonoBehaviour{
     void Start()
     {
         PJ = GameObject.Find("Personaje").GetComponent<Personaje>();
-        print(PJ.clase.nombre);
         ListadoHabilidades();
     }
     public void ListadoHabilidades()
@@ -40,26 +39,23 @@ public class SkillManager : MonoBehaviour{
     }
     public void Desplegar()
     {
-        if(GameObject.Find("PanelHabilidades").activeSelf == false)
+        if(GameObject.Find("Panel").transform.Find("PanelHabilidades").gameObject.activeSelf == false)
         {
             GameObject.Find("Panel").transform.Find("PanelHabilidades").gameObject.SetActive(true);
-            float equis = -2.1f;
-            float igriega = 224.5f;
             GameObject habil;
             for (int i = 0; i < habilidadesPJ.Count; i++)
             {
-                habil = Instantiate(HabSlot, new Vector2(equis, igriega), Quaternion.identity) as GameObject;
+                habil = Instantiate(HabSlot, new Vector2(0, 0), Quaternion.identity) as GameObject;
                 habil.name = "Hab_" + (i + 1);
-                habil.transform.SetParent(GameObject.Find("Grilla").transform, false);
+                Transform papi = GameObject.Find("Panel").transform.Find("PanelHabilidades").transform.Find("Grilla");
+                habil.transform.SetParent(papi, false);
                 habil.GetComponent<Habilidad>().Hab = habilidadesPJ[i];
-                habil.GetComponent<Habilidad>().Start();
-                igriega -= 75;
             }
         }
     }
     public void Cerrar()
     {
-        if(GameObject.Find("PanelHabilidades").activeSelf == true)
+        if(GameObject.Find("Panel").transform.Find("PanelHabilidades").gameObject.activeSelf == true)
         {
             GameObject habil;
             for (int i = 0; i < habilidadesPJ.Count; i++)
