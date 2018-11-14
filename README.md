@@ -6,4 +6,4 @@ Integrantes del Desarrollo:
  - Programador Secundario: Juan Carlos Vergas
  - Administrador de Documentos Máximo: Nicolás Lavín
  - Perra del Semen: Ronal Olate
- - Comodín: Joaquín González
+ - Jugador experto izi: Joaquín González
