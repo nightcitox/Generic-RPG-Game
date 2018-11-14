@@ -17,7 +17,7 @@ public class Personaje : MonoBehaviour {
     bool moviendose;
     bool dentro;
     float timer;
-    float waitTime = 1f;
+    float espera = 0.5f;
     #endregion
     #region estadisticas
     private int MaxHP;
@@ -161,7 +161,7 @@ public class Personaje : MonoBehaviour {
     #endregion
     // Use this for initialization
     void Start () {
-        Nivel = 5;
+        Nivel = 10;
         for(int i = 0; i < 4; i++)
         {
             bufos[i] = 0;
@@ -169,8 +169,29 @@ public class Personaje : MonoBehaviour {
         nombre = clase.nombre;
         Estadisticas();
     }
-
-    private bool isInside = false;
+    void Update()
+    {
+        if (HP > MaxHP)
+        {
+            HP = MaxHP;
+        }
+        if (MP > MaxMP)
+        {
+            MP = MaxMP;
+        }
+        if (SceneManager.GetActiveScene().name != "Batalla")
+        {
+            Movimiento();
+            print(dentro + " " + moviendose);
+            if (dentro == false || moviendose == false) { return; }
+            if (timer > espera)
+            {
+                timer = 0f;
+                GameObject.Find("Zona Encuentros").GetComponent<Mapa>().CalcularProbabilidad();
+            }
+            timer += Time.deltaTime;
+        }
+    }
     void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.CompareTag("Encuentros") == false ) { return; }
@@ -233,28 +254,6 @@ public class Personaje : MonoBehaviour {
         }
         Bufos();
         //Falta agregar el tiempo que demora. Por ahora voy a hacerlo pa que al salir de la batalla elimine los bufos.
-    }
-    void Update () {
-        if(HP > MaxHP)
-        {
-            HP = MaxHP;
-        }
-        if (MP > MaxMP)
-        {
-            MP = MaxMP;
-        }
-        if(SceneManager.GetActiveScene().name != "Batalla")
-        {
-            Movimiento();
-            print(dentro + " " + moviendose);
-            if (dentro == false || moviendose == false) { return; }
-            if (timer > waitTime)
-            {
-                timer = 0f;
-                GameObject.Find("Zona Encuentros").GetComponent<Mapa>().CalcularProbabilidad();
-            }
-            timer += Time.deltaTime;
-        }
     }
     void Bufos()
     {

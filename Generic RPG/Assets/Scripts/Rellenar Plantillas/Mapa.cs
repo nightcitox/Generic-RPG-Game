@@ -8,17 +8,12 @@ public class Mapa : MonoBehaviour {
     public List<PlanEnemigo> enemigos;
     private string nombre;
     static public PlanEnemigo en;
-    public int NivelZona;
+    public int lv;
+    public static int NivelZona;
     #endregion
-    // Use this for initialization
     void Start () {
-
+        NivelZona = lv;
     }
-    // Update is called once per frame
-    void Update () {
-		
-	}
-
     public void CalcularProbabilidad()
     {
         float ProbEncuentro = Random.Range(0, 101);

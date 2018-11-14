@@ -63,19 +63,10 @@ public class BattleManager : MonoBehaviour {
     #endregion
     #region Start y Update
     void Start() {
-        if (EN1.Spe > pj.SPE1)
-        {
-            Turno1 = Turno.Enemigo;
-        }
-        else
-        {
-            Turno1 = Turno.Personaje;
-        }
         Texto = GameObject.Find("Daño").GetComponent<Text>();
         vidaPJ = (RectTransform)GameObject.Find("BarraPJHP").gameObject.transform.Find("Centro");
         manaPJ = (RectTransform)GameObject.Find("BarraPJMP").gameObject.transform.Find("Centro");
         vidaEn1 = (RectTransform)GameObject.Find("BarraENM1").gameObject.transform.Find("Centro");
-        GameObject.Find("BarraENM1").transform.Find("Text").GetComponent<Text>().text = EN1.Nombre;
         GameObject.Find("BarraPJHP").transform.Find("Nombre").GetComponent<Text>().text = pj.clase.nombre;
         esperas = false;
     }
@@ -133,52 +124,56 @@ public class BattleManager : MonoBehaviour {
     #region rutinas
     IEnumerator Acciones()
     {
-        if (Turno1 == Turno.Enemigo)
+        if(EN1.Hp > 0)
         {
-            BotonesOFF();
-            Texto.text = "El enemigo se está preparando.";
-            yield return new WaitForSeconds(3f);
-            Texto.text = "¡El enemigo va a " + acc + "!";
-            yield return new WaitForSeconds(3f);
+            if (Turno1 == Turno.Enemigo)
+            {
+                BotonesOFF();
+                Texto.text = "El enemigo se está preparando.";
+                yield return new WaitForSeconds(3f);
+                Texto.text = "¡El enemigo va a " + acc + "!";
+                yield return new WaitForSeconds(3f);
 
-            //Script básico de probabilidades.
-            float prob = Random.Range(0, 100);
-            if (prob <= 10 && EN1.Hp < (EN1.Maxhp/3) )
-            {
-                acc = AccionesEnemigo.Escapar;
-            }else if (prob > 10 && prob <= 90)
-            {
-                acc = AccionesEnemigo.Atacar;
+                //Script básico de probabilidades.
+                float prob = Random.Range(0, 100);
+                if (prob <= 10 && EN1.Hp < (EN1.Maxhp / 3))
+                {
+                    acc = AccionesEnemigo.Escapar;
+                }
+                else if (prob > 10 && prob <= 90)
+                {
+                    acc = AccionesEnemigo.Atacar;
+                }
+                else
+                {
+                    acc = AccionesEnemigo.Curarse;
+                }
+                //End
+
+                switch (acc)
+                {
+                    case AccionesEnemigo.Atacar:
+                        StartCoroutine(Ataque());
+                        break;
+                    case AccionesEnemigo.Escapar:
+                        Texto.text = "El enemigo ha escapado.";
+                        yield return new WaitForSeconds(5f);
+                        SceneManager.LoadScene("Mapa");
+                        break;
+                    case AccionesEnemigo.Curarse:
+                        EN1.Hp += 5;
+                        DecidirTurnos();
+                        break;
+                }
             }
             else
             {
-                acc = AccionesEnemigo.Curarse;
-            }
-            //End
-
-            switch (acc)
-            {
-                case AccionesEnemigo.Atacar:
-                    StartCoroutine(Ataque());
-                    break;
-                case AccionesEnemigo.Escapar:
-                    Texto.text = "El enemigo ha escapado.";
-                    yield return new WaitForSeconds(5f);
-                    SceneManager.LoadScene("Mapa");
-                    break;
-                case AccionesEnemigo.Curarse:
-                    EN1.Hp += 5;
-                    DecidirTurnos();
-                    break;
-            }
-        }
-        else
-        {
-            Button[] listado = GameObject.Find("Panel").GetComponentsInChildren<Button>();
-            foreach (Button x in listado)
-            {
-                x.interactable = true;
-                texto.text = "¿Qué vas a hacer?";
+                Button[] listado = GameObject.Find("Panel").GetComponentsInChildren<Button>();
+                foreach (Button x in listado)
+                {
+                    x.interactable = true;
+                    texto.text = "¿Qué vas a hacer?";
+                }
             }
         }
     }
@@ -223,24 +218,44 @@ public class BattleManager : MonoBehaviour {
     {
         Animator anim;
         int daño;
+        float media;
+        float critico = Random.Range(0, 100);
         switch (Turno1)
         {
             case Turno.Enemigo:
                 anim = GameObject.Find("Enemigo 1").GetComponent<Animator>();
-                daño = (EN1.Atk - (pj.DEF1 / 10));
-                Texto.text = "¡Has recibido " + daño + " de daño!";
+                media = EN1.Atk - (pj.DEF1 * 0.25f);
+                daño = Mathf.RoundToInt(Random.Range(media- (media*.1f), media + (media * .1f)));
+                if(critico < 10)
+                {
+                    daño += daño / 2;
+                    Texto.text = "¡Has recibido " + daño + " de daño CRÍTICO!";
+                }
+                else
+                {
+                    Texto.text = "¡Has recibido " + daño + " de daño!";
+                }
                 pj.HP1 = pj.HP1 - daño;
                 anim.SetTrigger("Ataque");
-                yield return new WaitForSeconds(3f);
+                yield return new WaitForSeconds(2f);
                 anim.ResetTrigger("Ataque");
                 break;
             case Turno.Personaje:
                 anim = GameObject.Find("Personaje").GetComponent<Animator>();
-                daño = (pj.ATK1 - EN1.Def / 5);
-                Texto.text = "¡Has hecho " + daño + " de daño!";
+                media = pj.ATK1 - (EN1.Def * 0.25f);
+                daño = Mathf.RoundToInt(Random.Range(media - (media * .1f), media + (media * .1f)));
+                if (critico < 10)
+                {
+                    daño += daño / 2;
+                    Texto.text = "¡Has realizado " + daño + " de daño CRÍTICO!";
+                }
+                else
+                {
+                    Texto.text = "¡Has realizado " + daño + " de daño!";
+                }
                 EN1.Hp = EN1.Hp - daño;
                 anim.SetTrigger("Ataque");
-                yield return new WaitForSeconds(3f);
+                yield return new WaitForSeconds(2f);
                 anim.ResetTrigger("Ataque");
                 break;
         }
@@ -265,6 +280,8 @@ public class BattleManager : MonoBehaviour {
     {
         if (EN1.Hp <= 0)
         {
+            StopCoroutine(Acciones());
+            BotonesOFF();
             yield return new WaitForSeconds(3f);
             Texto.text = "Ganaste!";
             yield return new WaitForSeconds(3f);
@@ -274,6 +291,8 @@ public class BattleManager : MonoBehaviour {
         }
         else if (pj.HP1 <= 0)
         {
+            StopCoroutine(Acciones());
+            BotonesOFF();
             yield return new WaitForSeconds(3f);
             Texto.text = "Perdiste!";
             yield return new WaitForSeconds(3f);

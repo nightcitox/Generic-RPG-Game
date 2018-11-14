@@ -10,13 +10,27 @@ public class Inventario : MonoBehaviour {
     private Component[] listado;
     private int contador = 1;
     private bool abierto;
+
+    public bool Abierto
+    {
+        get
+        {
+            return abierto;
+        }
+
+        set
+        {
+            abierto = value;
+        }
+    }
+
     // Use this for initialization
     void Start () {
-        abierto = false;
+        Abierto = false;
 	}
     public void Cerrar()
     {
-        if(abierto == true)
+        if(Abierto == true)
         {
             listado = GameObject.Find("Contenido").GetComponentsInChildren<Objeto>();
             foreach (Objeto ob in listado)
@@ -24,7 +38,7 @@ public class Inventario : MonoBehaviour {
                 Destroy(ob.gameObject);
             }
             contador = 1;
-            abierto = false;
+            Abierto = false;
             GameObject.Find("Inventario").gameObject.SetActive(false);
         }
     }
@@ -42,7 +56,7 @@ public class Inventario : MonoBehaviour {
     }
     public void Abrir()
     {
-        if(abierto == false)
+        if(Abierto == false)
         {
             print("abriendo");
             GameObject.Find("Panel").transform.Find("Inventario").gameObject.SetActive(true);
@@ -102,7 +116,7 @@ public class Inventario : MonoBehaviour {
                     }
                 }
             }
-            abierto = true;
+            Abierto = true;
         }
     }
     public void Agregar(PlanObjeto obj)

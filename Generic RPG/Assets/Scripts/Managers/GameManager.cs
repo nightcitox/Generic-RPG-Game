@@ -7,20 +7,31 @@ public class GameManager : MonoBehaviour {
     #region Propiedades
     public PlanMision mision;
     public string dialogo;
-    public Inventario inventario;
+    private Inventario inventario;
     Personaje PJ;
     #endregion
     // Use this for initialization
     void Start () {
-		
+        inventario = GetComponent<Inventario>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
-    void Encuentros()
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            switch (inventario.Abierto)
+            {
+                case true:
+                    inventario.Cerrar();
+                    break;
+                case false:
+                    Menus();
+                    break;
+            }
+        }
+    }
+    void Menus()
     {
-
+        inventario.Abrir();
     }
 }
