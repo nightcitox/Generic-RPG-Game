@@ -214,8 +214,10 @@ public class Habilidad : MonoBehaviour {
                     }
                     break;
             }
-            StartCoroutine(GameObject.Find("GameManager").GetComponent<BattleManager>().Esperar(null));
-            GameObject.Find("GameManager").GetComponent<BattleManager>().Turno += 1;
+            BattleManager bm = GameObject.Find("GameManager").GetComponent<BattleManager>();
+            bm.Texto.text = GameObject.Find("Personaje").GetComponent<Personaje>().Nombre + " ha utilizado " + nombre + ".";
+            bm.Turno1 = BattleManager.Turno.Enemigo;
+            StartCoroutine(bm.Esperar(null));
         }
         else
         {

@@ -11,16 +11,15 @@ public class BattleManager : MonoBehaviour {
     private Enemigo EN2;
     private Enemigo EN3;
     private Mapa zona;
-    private int turno;
+    private Turno turno;
+    public enum Turno
+    {
+        Personaje,
+        Enemigo
+    }
     #endregion
     #region elementos
-    private string poseedorTurno = "";
-    private Animator anim;
-    private Animator atak;
-    private SpriteRenderer esprai;
-    public Sprite hoja;
     private Text texto;
-    private Vector3 pos;
     private Button boton;
     private RectTransform vidaPJ;
     private RectTransform manaPJ;
@@ -28,25 +27,12 @@ public class BattleManager : MonoBehaviour {
     private RectTransform vidaEn2;
     private RectTransform vidaEn3;
     private AccionesEnemigo acc;
-    bool rutina;
     bool esperas;
     private enum AccionesEnemigo
     {
         Atacar = 0,
         Curarse = 1,
         Escapar = 2
-    }
-    public int Turno
-    {
-        get
-        {
-            return turno;
-        }
-
-        set
-        {
-            turno = value;
-        }
     }
 
     public Text Texto
@@ -61,12 +47,31 @@ public class BattleManager : MonoBehaviour {
             texto = value;
         }
     }
+
+    public Turno Turno1
+    {
+        get
+        {
+            return turno;
+        }
+
+        set
+        {
+            turno = value;
+        }
+    }
     #endregion
+    #region Start y Update
     void Start() {
-        Turno = 1;
+        if (EN1.Spe > pj.SPE1)
+        {
+            Turno1 = Turno.Enemigo;
+        }
+        else
+        {
+            Turno1 = Turno.Personaje;
+        }
         Texto = GameObject.Find("Daño").GetComponent<Text>();
-        anim = GameObject.Find("Personaje").GetComponent<Animator>();
-        atak = GameObject.Find("Ataque").GetComponent<Animator>();
         vidaPJ = (RectTransform)GameObject.Find("BarraPJHP").gameObject.transform.Find("Centro");
         manaPJ = (RectTransform)GameObject.Find("BarraPJMP").gameObject.transform.Find("Centro");
         vidaEn1 = (RectTransform)GameObject.Find("BarraENM1").gameObject.transform.Find("Centro");
@@ -74,7 +79,21 @@ public class BattleManager : MonoBehaviour {
         GameObject.Find("BarraPJHP").transform.Find("Nombre").GetComponent<Text>().text = pj.clase.nombre;
         esperas = false;
     }
-    void BotonesOFF()
+    void Update()
+    {
+        //Actualizar la barra de vida automáticamente.
+        StartCoroutine("BarraAliado");
+        StartCoroutine("BarraEnemigos");
+        StartCoroutine("Victoria");
+        if (Input.GetAxis("Cancel") > 0 && Turno1 == Turno.Personaje)
+        {
+            GetComponent<Inventario>().Cerrar();
+            GetComponent<SkillManager>().Cerrar();
+        }
+    }
+    #endregion
+    #region Métodos
+    public void BotonesOFF()
     {
         Button[] listado = GameObject.Find("Panel").GetComponentsInChildren<Button>();
         foreach (Button x in listado)
@@ -95,99 +114,63 @@ public class BattleManager : MonoBehaviour {
         }
 
     }
-    public IEnumerator Esperar(Objeto item)
-    {
-        rutina = true;
-        esperas = true;
-        StopAllCoroutines();
-        BotonesOFF();
-        print("esperando...");
-        yield return new WaitForSeconds(3f);
-        rutina = false;
-        esperas = false;
-        BotonesOFF();
-        print("esperado");
-        if (item != null)
-        {
-            item.Cantidad -= 1;
-        }
-    }
-    IEnumerator Victoria()
-    {
-        if (EN1.Hp <= 0)
-        {
-            yield return new WaitForSeconds(3f);
-            Texto.text = "Ganaste!";
-            yield return new WaitForSeconds(3f);
-            Texto.text = "Has recibido " + EN1.Exp + " puntos de experiencia.";
-            yield return new WaitForSeconds(5f);
-            SceneManager.LoadScene("Mapa");
-        }
-        else if (pj.HP1 <= 0)
-        {
-            yield return new WaitForSeconds(3f);
-            Texto.text = "Perdiste!";
-            yield return new WaitForSeconds(3f);
-        }
-        yield return true;
-    }
-    void Update() {
-        //Actualizar la barra de vida automáticamente.
-        StartCoroutine("BarraAliado");
-        StartCoroutine("BarraEnemigos");
-        StartCoroutine("Victoria");
-        if (rutina == false)
-        {
-            StartCoroutine("Turnos");
-        }
-        else
-        {
-        }
-        if(Input.GetAxis("Cancel") > 0 && poseedorTurno == "Personaje")
-        {
-            GetComponent<Inventario>().Cerrar();
-            GetComponent<SkillManager>().Cerrar();
-        }
-    }
     public void Rutinas(string rutina)
     {
         StartCoroutine(rutina);
     }
-    void AccEn()
+    void DecidirTurnos()
     {
-        acc = (AccionesEnemigo)Random.Range(0, 1);
-        StartCoroutine("Acciones");
+        if(Turno1 == Turno.Enemigo)
+        {
+            Turno1 = Turno.Personaje;
+        }
+        else
+        {
+            Turno1 = Turno.Enemigo;
+        }
     }
+    #endregion
+    #region rutinas
     IEnumerator Acciones()
     {
-        rutina = true;
-        if (poseedorTurno == "Enemigo")
+        if (Turno1 == Turno.Enemigo)
         {
             BotonesOFF();
             Texto.text = "El enemigo se está preparando.";
             yield return new WaitForSeconds(3f);
             Texto.text = "¡El enemigo va a " + acc + "!";
             yield return new WaitForSeconds(3f);
+
+            //Script básico de probabilidades.
+            float prob = Random.Range(0, 100);
+            if (prob <= 10 && EN1.Hp < (EN1.Maxhp/3) )
+            {
+                acc = AccionesEnemigo.Escapar;
+            }else if (prob > 10 && prob <= 90)
+            {
+                acc = AccionesEnemigo.Atacar;
+            }
+            else
+            {
+                acc = AccionesEnemigo.Curarse;
+            }
+            //End
+
             switch (acc)
             {
                 case AccionesEnemigo.Atacar:
-                    Daño();
-                    rutina = true;
+                    StartCoroutine(Ataque());
                     break;
                 case AccionesEnemigo.Escapar:
                     Texto.text = "El enemigo ha escapado.";
                     yield return new WaitForSeconds(5f);
                     SceneManager.LoadScene("Mapa");
-                    rutina = false;
                     break;
                 case AccionesEnemigo.Curarse:
                     EN1.Hp += 5;
-                    turno += 1;
-                    rutina = false;
+                    DecidirTurnos();
                     break;
             }
-            rutina = false;
-            yield return true;
         }
         else
         {
@@ -197,43 +180,7 @@ public class BattleManager : MonoBehaviour {
                 x.interactable = true;
                 texto.text = "¿Qué vas a hacer?";
             }
-            rutina = false;
-            yield return true;
         }
-        rutina = false;
-        yield return StartCoroutine("Turnos");
-    }
-    IEnumerator Turnos()
-    {
-        print(poseedorTurno);
-        print(turno);
-        if (EN1.Spe > pj.SPE1)
-        {
-            if(turno%2 == 1)
-            {
-                GetComponent<SkillManager>().Cerrar();
-                GetComponent<Inventario>().Cerrar();
-                poseedorTurno = "Enemigo";
-            }
-            else
-            {
-                poseedorTurno = "Personaje";
-            }
-        }
-        else
-        {
-            if (turno % 2 == 1)
-            {
-                poseedorTurno = "Personaje";
-            }
-            else
-            {
-                poseedorTurno = "Enemigo";
-                GetComponent<SkillManager>().Cerrar();
-                GetComponent<Inventario>().Cerrar();
-            }
-        }
-        yield return true;
     }
     IEnumerator BarraAliado()
     {
@@ -247,8 +194,6 @@ public class BattleManager : MonoBehaviour {
             vidaPJ.sizeDelta = new Vector2(ancho, alto);
             vidaPJ.anchoredPosition = new Vector2(vidaPJ.anchoredPosition.x - movimiento, vidaPJ.anchoredPosition.y);
         }
-        //END
-
         //Barra de MP
         GameObject.Find("BarraPJMP").transform.Find("Centro").transform.Find("MP").GetComponent<Text>().text = "MP - " + pj.MP1.ToString();
         float altoMP = manaPJ.rect.height;
@@ -274,52 +219,65 @@ public class BattleManager : MonoBehaviour {
         }
         yield return true;
     }
-    #region rutinas
-    void Daño()
+    IEnumerator Ataque()
     {
-        AccEn();
-        BotonesOFF();
-        if (poseedorTurno == "Personaje")
+        Animator anim;
+        int daño;
+        switch (Turno1)
         {
-            int daño = (pj.ATK1 - EN1.Def);
-            Texto.text = "¡Has hecho "+ daño+ " de daño!";
-            EN1.Hp = EN1.Hp - (pj.ATK1 - EN1.Def/10);
+            case Turno.Enemigo:
+                anim = GameObject.Find("Enemigo 1").GetComponent<Animator>();
+                daño = (EN1.Atk - (pj.DEF1 / 10));
+                Texto.text = "¡Has recibido " + daño + " de daño!";
+                pj.HP1 = pj.HP1 - daño;
+                anim.SetTrigger("Ataque");
+                yield return new WaitForSeconds(3f);
+                anim.ResetTrigger("Ataque");
+                break;
+            case Turno.Personaje:
+                anim = GameObject.Find("Personaje").GetComponent<Animator>();
+                daño = (pj.ATK1 - EN1.Def / 5);
+                Texto.text = "¡Has hecho " + daño + " de daño!";
+                EN1.Hp = EN1.Hp - daño;
+                anim.SetTrigger("Ataque");
+                yield return new WaitForSeconds(3f);
+                anim.ResetTrigger("Ataque");
+                break;
         }
-        else
-        {
-            int daño = (EN1.Atk - (pj.DEF1 / 10));
-            Texto.text = "¡Has recibido " + daño + " de daño!";
-            pj.HP1 = pj.HP1 - daño;
-        }
-        StartCoroutine("AtaqueAnim");
+        DecidirTurnos();
+        StartCoroutine(Acciones());
     }
-    IEnumerator AtaqueAnim()
+    public IEnumerator Esperar(Objeto item)
     {
-        if(poseedorTurno == "Personaje")
+        esperas = true;
+        BotonesOFF();
+        print("esperando...");
+        yield return new WaitForSeconds(3f);
+        esperas = false;
+        print("esperado");
+        if (item != null)
         {
-            anim.SetTrigger("Ataque");
-            esprai = atak.GetComponent<SpriteRenderer>();
-            esprai.sprite = hoja;
-            atak.SetBool("Ataque", true);
-            pos = atak.transform.position;
-            atak.transform.Translate(new Vector3(5, 0, 0));
-            print("comienza");
-            yield return new WaitForSeconds(1.5f);
-            Turno += 1;
-            print("termina");
-            anim.ResetTrigger("Ataque");
-            atak.SetBool("Ataque", false);
-            esprai.sprite = null;
-            atak.transform.position = new Vector3(-5.5f, 0.5f, 0f);
+            item.Cantidad -= 1;
         }
-        else
+        StartCoroutine(Acciones());
+    }
+    IEnumerator Victoria()
+    {
+        if (EN1.Hp <= 0)
         {
-            Animator uwu = GameObject.Find("Enemigo 1").GetComponent<Animator>();
-            uwu.SetTrigger("Ataque");
-            Turno += 1;
-            uwu.ResetTrigger("Ataque");
+            yield return new WaitForSeconds(3f);
+            Texto.text = "Ganaste!";
+            yield return new WaitForSeconds(3f);
+            Texto.text = "Has recibido " + EN1.Exp + " puntos de experiencia.";
+            yield return new WaitForSeconds(5f);
+            SceneManager.LoadScene("Mapa");
         }
-        AccEn();
+        else if (pj.HP1 <= 0)
+        {
+            yield return new WaitForSeconds(3f);
+            Texto.text = "Perdiste!";
+            yield return new WaitForSeconds(3f);
+        }
         yield return true;
     }
     #endregion
