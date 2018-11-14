@@ -14,6 +14,10 @@ public class Personaje : MonoBehaviour {
     private Vector3 endPos;
     public bool puedeMoverse;
     private int[] bufos = new int[5]; //0-HP, 1-MP, 2-ATK, 3-DEF, 4-SPE
+    bool moviendose;
+    bool dentro;
+    float timer;
+    float waitTime = 1f;
     #endregion
     #region estadisticas
     private int MaxHP;
@@ -165,8 +169,21 @@ public class Personaje : MonoBehaviour {
         nombre = clase.nombre;
         Estadisticas();
     }
-	
-	// Update is called once per frame
+
+    private bool isInside = false;
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.CompareTag("Encuentros") == false ) { return; }
+        dentro = true;
+        GameObject.Find("Zona Encuentros").GetComponent<Mapa>().CalcularProbabilidad();
+    }
+    void OnTriggerExit2D(Collider2D col)
+    {
+        if (col.gameObject.CompareTag("Encuentros") == false) { return; }
+        dentro = false;
+        timer = 0f;
+    }
+    // Update is called once per frame
     public void Buff(string stat, int cant)
     {
         switch (stat)
@@ -226,7 +243,18 @@ public class Personaje : MonoBehaviour {
         {
             MP = MaxMP;
         }
-        Movimiento();
+        if(SceneManager.GetActiveScene().name != "Batalla")
+        {
+            Movimiento();
+            print(dentro + " " + moviendose);
+            if (dentro == false || moviendose == false) { return; }
+            if (timer > waitTime)
+            {
+                timer = 0f;
+                GameObject.Find("Zona Encuentros").GetComponent<Mapa>().CalcularProbabilidad();
+            }
+            timer += Time.deltaTime;
+        }
     }
     void Bufos()
     {
@@ -257,9 +285,14 @@ public class Personaje : MonoBehaviour {
     void Movimiento()
     {
         if(puedeMoverse == true) {
+            moviendose = true;
         float VelX = (Input.GetAxis("Horizontal") * mov_spe) * Time.deltaTime;
         float VelY = (Input.GetAxis("Vertical") * mov_spe) * Time.deltaTime;
         transform.Translate(new Vector3(VelX, VelY));
+        }
+        if(Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Vertical") == 0)
+        {
+            moviendose = false;
         }
     }
 }

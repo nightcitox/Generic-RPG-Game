@@ -14,5 +14,6 @@ public class PlanEnemigo : ScriptableObject {
     public float exp;
     public Sprite sprite;
     public AnimatorController anim;
+    public float ProbabilidadAparecer;
     #endregion
 }

@@ -103,9 +103,10 @@ public class Objeto : MonoBehaviour {
                     }
                     if(actual.name == "Batalla")
                     {
-                        GameObject.Find("GameManager").GetComponent<BattleManager>().Texto.text = GameObject.Find("Personaje").GetComponent<Personaje>().Nombre + " va a utilizar " + nombre;
-                        StartCoroutine(GameObject.Find("GameManager").GetComponent<BattleManager>().Esperar(this));
-                        GameObject.Find("GameManager").GetComponent<BattleManager>().Turno += 1;
+                        BattleManager bm = GameObject.Find("GameManager").GetComponent<BattleManager>();
+                        bm.Texto.text = GameObject.Find("Personaje").GetComponent<Personaje>().Nombre + " ha utilizado " + nombre + ".";
+                        bm.Turno1 = BattleManager.Turno.Enemigo;
+                        StartCoroutine(bm.Esperar(this));
                     }
                 }
                 else if (PlanObjeto.Efecto.Buff == efecto)

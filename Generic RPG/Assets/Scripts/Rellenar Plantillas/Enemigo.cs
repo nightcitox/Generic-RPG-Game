@@ -16,6 +16,7 @@ public class Enemigo : MonoBehaviour {
     private Sprite sprite;
     private Animator anim;
     private int[] bufos = new int[4]; //0-HP, 1-ATK, 2-DEF, 3-SPE
+    private float ProbabilidadAparecer;
     #endregion
     #region GetSetStats
     public string Nombre
@@ -108,9 +109,23 @@ public class Enemigo : MonoBehaviour {
             spe = value;
         }
     }
+
+    public float ProbabilidadAparecer1
+    {
+        get
+        {
+            return ProbabilidadAparecer;
+        }
+
+        set
+        {
+            ProbabilidadAparecer = value;
+        }
+    }
     #endregion
     // Use this for initialization
     void Start() {
+        enemigo = Mapa.en;
         for (int i = 0; i < 3; i++)
         {
             bufos[i] = 0;
@@ -123,8 +138,9 @@ public class Enemigo : MonoBehaviour {
         def = enemigo.baseDEF;
         spe = enemigo.baseSPE;
         sprite = enemigo.sprite;
+        GetComponent<SpriteRenderer>().sprite = sprite;
         anim = GetComponent<Animator>();
-        anim.runtimeAnimatorController = enemigo.anim;
+        anim.runtimeAnimatorController = enemigo.anim as RuntimeAnimatorController;
     }
     void AplicarStats()
     {
