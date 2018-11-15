@@ -16,7 +16,7 @@ public class Enemigo : MonoBehaviour {
     private int spe;
     private Sprite sprite;
     private Animator anim;
-    private int[] bufos = new int[4]; //0-HP, 1-ATK, 2-DEF, 3-SPE
+    private int[] bufos = new int[3]; //0-ATK, 1-DEF, 2-SPE
     private float ProbabilidadAparecer;
     private int nivel;
     #endregion
@@ -142,7 +142,7 @@ public class Enemigo : MonoBehaviour {
     void Start() {
         enemigo = Mapa.en;
         Nivel = Random.Range(Mapa.NivelZona-2, Mapa.NivelZona+2);
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 2; i++)
         {
             bufos[i] = 0;
         }
@@ -160,6 +160,10 @@ public class Enemigo : MonoBehaviour {
         if(hp <= 0)
         {
             hp = 0;
+        }
+        if (hp > maxhp)
+        {
+            hp = maxhp;
         }
     }
     void CalcularStatsPorNivel()
@@ -184,51 +188,78 @@ public class Enemigo : MonoBehaviour {
         }
         bm.StartCoroutine("Acciones");
     }
-    void AplicarStats()
+    string AplicarStats(string stat, int cant)
     {
-        maxhp = enemigo.baseHP + bufos[0];
-        atk = enemigo.baseATK + bufos[1];
-        def = enemigo.baseDEF + bufos[2];
-        spe = enemigo.baseSPE + bufos[3];
+        string msj = "";
+        if(atk+bufos[0] <= 0)
+        {
+            atk = 1;
+            msj = "El ataque de "+nombre+" no puede bajar más.";
+        }
+        else
+        {
+            atk += bufos[0];
+        }
+        if (def + bufos[1] <= 0)
+        {
+            def = 1;
+            msj = "La defensa de " + nombre + " no puede bajar más.";
+        }
+        else
+        {
+            def += bufos[1];
+        }
+        if (spe + bufos[2] <= 0)
+        {
+            spe = 1;
+            msj = "La velocidad de " + nombre + " no puede bajar más.";
+        }
+        else
+        {
+            spe += bufos[2];
+        }
+        print("MaxHP: " + maxhp + " EXP: " + exp + " ATK: " + atk + " DEF: " + def + " SPE: " + spe);
+        if(msj == "")
+        {
+            return "Has bajado la " + stat + " del enemigo en " + cant + " puntos.";
+        }
+        else
+        {
+            return msj;
+        }
     }
     public void Buff(string stat, int cant)
     {
         switch (stat)
         {
-            case "HP":
+            case "ATK":
                 bufos[0] += cant;
                 break;
-            case "ATK":
-                bufos[2] += cant;
-                break;
             case "DEF":
-                bufos[3] += cant;
+                bufos[1] += cant;
                 break;
             case "SPE":
-                bufos[4] += cant;
+                bufos[2] += cant;
                 break;
         }
-        AplicarStats();
+        AplicarStats(null, 0);
         //Falta agregar el tiempo que demora. Por ahora voy a hacerlo pa que al salir de la batalla elimine los bufos.
     }
-    public void DeBuff(string stat, int cant)
+    public string DeBuff(string stat, int cant)
     {
         switch (stat)
         {
-            case "HP":
+            case "ATK":
                 bufos[0] -= cant;
                 break;
-            case "ATK":
-                bufos[2] -= cant;
-                break;
             case "DEF":
-                bufos[3] -= cant;
+                bufos[1] -= cant;
                 break;
             case "SPE":
-                bufos[4] -= cant;
+                bufos[2] -= cant;
                 break;
         }
-        AplicarStats();
+        return AplicarStats(stat, cant);
         //Falta agregar el tiempo que demora. Por ahora voy a hacerlo pa que al salir de la batalla elimine los bufos.
     }
 }

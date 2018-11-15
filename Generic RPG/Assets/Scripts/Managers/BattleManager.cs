@@ -8,8 +8,6 @@ public class BattleManager : MonoBehaviour {
     #region propiedades
     public Personaje pj;
     public Enemigo EN1;
-    private Enemigo EN2;
-    private Enemigo EN3;
     private Mapa zona;
     private Turno turno;
     public enum Turno
@@ -24,8 +22,6 @@ public class BattleManager : MonoBehaviour {
     private RectTransform vidaPJ;
     private RectTransform manaPJ;
     private RectTransform vidaEn1;
-    private RectTransform vidaEn2;
-    private RectTransform vidaEn3;
     private AccionesEnemigo acc;
     bool esperas;
     private enum AccionesEnemigo
@@ -63,7 +59,8 @@ public class BattleManager : MonoBehaviour {
     #endregion
     #region Start y Update
     void Start() {
-        Texto = GameObject.Find("Daño").GetComponent<Text>();
+        pj = GameManager.PJ;
+        Texto = GameObject.Find("Estado").GetComponent<Text>();
         vidaPJ = (RectTransform)GameObject.Find("BarraPJHP").gameObject.transform.Find("Centro");
         manaPJ = (RectTransform)GameObject.Find("BarraPJMP").gameObject.transform.Find("Centro");
         vidaEn1 = (RectTransform)GameObject.Find("BarraENM1").gameObject.transform.Find("Centro");
@@ -119,6 +116,7 @@ public class BattleManager : MonoBehaviour {
         {
             Turno1 = Turno.Enemigo;
         }
+        StartCoroutine(Acciones());
     }
     #endregion
     #region rutinas
@@ -129,27 +127,28 @@ public class BattleManager : MonoBehaviour {
             if (Turno1 == Turno.Enemigo)
             {
                 BotonesOFF();
-                Texto.text = "El enemigo se está preparando.";
-                yield return new WaitForSeconds(3f);
-                Texto.text = "¡El enemigo va a " + acc + "!";
-                yield return new WaitForSeconds(3f);
-
                 //Script básico de probabilidades.
                 float prob = Random.Range(0, 100);
                 if (prob <= 10 && EN1.Hp < (EN1.Maxhp / 3))
                 {
                     acc = AccionesEnemigo.Escapar;
                 }
-                else if (prob > 10 && prob <= 90)
+                else if (prob > 10 && prob <= 80)
                 {
                     acc = AccionesEnemigo.Atacar;
                 }
                 else
                 {
-                    acc = AccionesEnemigo.Curarse;
+                    if ((EN1.Hp / EN1.Maxhp) < 0.2)
+                    {
+                        acc = AccionesEnemigo.Curarse;
+                    }
                 }
                 //End
-
+                Texto.text = "El enemigo se está preparando.";
+                yield return new WaitForSeconds(3f);
+                Texto.text = "¡El enemigo va a " + acc + "!";
+                yield return new WaitForSeconds(3f);
                 switch (acc)
                 {
                     case AccionesEnemigo.Atacar:
@@ -161,7 +160,7 @@ public class BattleManager : MonoBehaviour {
                         SceneManager.LoadScene("Mapa");
                         break;
                     case AccionesEnemigo.Curarse:
-                        EN1.Hp += 5;
+                        EN1.Hp += Mathf.RoundToInt(Random.Range(EN1.Maxhp*.05f, EN1.Maxhp * .1f));
                         DecidirTurnos();
                         break;
                 }
@@ -217,14 +216,19 @@ public class BattleManager : MonoBehaviour {
     IEnumerator Ataque()
     {
         Animator anim;
+        Animator dmg = GameObject.Find("Daño").GetComponent<Animator>();
         int daño;
         float media;
         float critico = Random.Range(0, 100);
         switch (Turno1)
         {
             case Turno.Enemigo:
-                anim = GameObject.Find("Enemigo 1").GetComponent<Animator>();
+                anim = GameObject.Find("Enemigo").GetComponent<Animator>();
                 media = EN1.Atk - (pj.DEF1 * 0.25f);
+                if(media < 0)
+                {
+                    media = 1;
+                }
                 daño = Mathf.RoundToInt(Random.Range(media- (media*.1f), media + (media * .1f)));
                 if(critico < 10)
                 {
@@ -237,12 +241,18 @@ public class BattleManager : MonoBehaviour {
                 }
                 pj.HP1 = pj.HP1 - daño;
                 anim.SetTrigger("Ataque");
-                yield return new WaitForSeconds(2f);
+                GameObject.Find("Daño").GetComponent<Text>().text = "-" + daño;
+                dmg.SetTrigger("Personaje");
+                yield return new WaitForSeconds(3f);
                 anim.ResetTrigger("Ataque");
                 break;
             case Turno.Personaje:
                 anim = GameObject.Find("Personaje").GetComponent<Animator>();
                 media = pj.ATK1 - (EN1.Def * 0.25f);
+                if (media < 0)
+                {
+                    media = 1;
+                }
                 daño = Mathf.RoundToInt(Random.Range(media - (media * .1f), media + (media * .1f)));
                 if (critico < 10)
                 {
@@ -255,26 +265,60 @@ public class BattleManager : MonoBehaviour {
                 }
                 EN1.Hp = EN1.Hp - daño;
                 anim.SetTrigger("Ataque");
-                yield return new WaitForSeconds(2f);
+                Animator en = GameObject.Find("Enemigo").GetComponent<Animator>();
+                GameObject.Find("Daño").GetComponent<Text>().text = "-"+daño;
+                dmg.SetTrigger("Enemigo");
+                en.SetTrigger("Sufrimiento");
+                GameObject.Find("Enemigo").GetComponent<AudioSource>().Play();
+                yield return new WaitForSeconds(3f);
+                en.ResetTrigger("Sufrimiento");
                 anim.ResetTrigger("Ataque");
                 break;
         }
+        GameObject.Find("Daño").GetComponent<Text>().text = "";
+        dmg.ResetTrigger("Enemigo");
+        dmg.ResetTrigger("Personaje");
         DecidirTurnos();
-        StartCoroutine(Acciones());
     }
-    public IEnumerator Esperar(Objeto item)
+    public IEnumerator Animacion(int daño)
+    {
+        Animator dmg = GameObject.Find("Daño").GetComponent<Animator>();
+        Animator anim = GameObject.Find("Personaje").GetComponent<Animator>();
+        anim.SetTrigger("Ataque");
+        Animator en = GameObject.Find("Enemigo").GetComponent<Animator>();
+        GameObject.Find("Daño").GetComponent<Text>().text = "-" + daño;
+        dmg.SetTrigger("Enemigo");
+        en.SetTrigger("Sufrimiento");
+        GameObject.Find("Enemigo").GetComponent<AudioSource>().Play();
+        yield return new WaitForSeconds(3f);
+        en.ResetTrigger("Sufrimiento");
+        anim.ResetTrigger("Ataque");
+        DecidirTurnos();
+        GameObject.Find("Daño").GetComponent<Text>().text = "";
+    } 
+    public IEnumerator Esperar(Objeto item, string[] mensaje, int daño)
     {
         esperas = true;
         BotonesOFF();
-        print("esperando...");
-        yield return new WaitForSeconds(3f);
+        foreach(string x in mensaje)
+        {
+            Texto.text = x;
+            yield return new WaitForSeconds(3f);
+        }
         esperas = false;
-        print("esperado");
         if (item != null)
         {
             item.Cantidad -= 1;
+            DecidirTurnos();
         }
-        StartCoroutine(Acciones());
+        else if(daño != 0)
+        {
+            StartCoroutine(Animacion(daño));
+        }
+        else
+        {
+            DecidirTurnos();
+        }
     }
     IEnumerator Victoria()
     {
@@ -287,6 +331,7 @@ public class BattleManager : MonoBehaviour {
             yield return new WaitForSeconds(3f);
             Texto.text = "Has recibido " + EN1.Exp + " puntos de experiencia.";
             yield return new WaitForSeconds(5f);
+            GameManager.Experiencia += Mathf.RoundToInt(EN1.Exp);
             SceneManager.LoadScene("Mapa");
         }
         else if (pj.HP1 <= 0)

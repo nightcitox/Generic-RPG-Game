@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Name: Hab_4
   m_EditorClassIdentifier: 
   nombre: Nanai
-  baseDMG: -1000
-  lrnLVL: 0
+  baseDMG: -20
+  lrnLVL: 2
   clases:
   - {fileID: 11400000, guid: e515ed67238fb424c864328bc172b80f, type: 2}
   tipo: 3
   icono: {fileID: 21300000, guid: 1320f5b076eb212469e3455a9c65c7bf, type: 3}
   Descripcion: "Es la t\xE9cnica m\xE1s eficaz para curar tus dolores."
+  obj: 0
+  sfx: {fileID: 0}
   MPUse: 1

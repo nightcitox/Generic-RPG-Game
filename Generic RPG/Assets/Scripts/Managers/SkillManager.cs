@@ -11,7 +11,7 @@ public class SkillManager : MonoBehaviour{
 
     void Start()
     {
-        PJ = GameObject.Find("Personaje").GetComponent<Personaje>();
+        PJ = GameManager.PJ;
         ListadoHabilidades();
     }
     public void ListadoHabilidades()

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nombre: Adrenalina
   baseDMG: 15
-  lrnLVL: 0
+  lrnLVL: 3
   clases:
   - {fileID: 11400000, guid: e515ed67238fb424c864328bc172b80f, type: 2}
   tipo: 0

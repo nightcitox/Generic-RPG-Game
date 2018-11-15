@@ -161,13 +161,11 @@ public class Personaje : MonoBehaviour {
     #endregion
     // Use this for initialization
     void Start () {
-        Nivel = 10;
         for(int i = 0; i < 4; i++)
         {
             bufos[i] = 0;
         }
         nombre = clase.nombre;
-        Estadisticas();
     }
     void Update()
     {
@@ -264,21 +262,16 @@ public class Personaje : MonoBehaviour {
         DEF += bufos[3];
         SPE += bufos[4];
     }
-    void Estadisticas()
+    public void Estadisticas()
     {
-        float formula;
-        formula = (float)clase.baseHP + ((Nivel - 1) * (clase.baseHP / 10));
-        MaxHP1 = Mathf.RoundToInt(formula);
-        HP1 = Mathf.RoundToInt(formula);
-        formula = (float)clase.baseMP + (Nivel - 1 * clase.baseMP / 10);
-        MaxMP1 = Mathf.RoundToInt(formula);
-        MP1 = Mathf.RoundToInt(formula);
-        formula = (float)clase.baseATK + (Nivel - 1 * clase.baseATK / 25);
-        ATK1 = Mathf.RoundToInt(formula);
-        formula = (float)clase.baseDEF + (Nivel - 1 * clase.baseDEF / 25);
-        DEF1 = Mathf.RoundToInt(formula);
-        formula = (float)clase.baseSPE + (Nivel - 1 * clase.baseSPE / 25);
-        SPE1 = Mathf.RoundToInt(formula);
+        MaxHP = Mathf.RoundToInt(((nivel - 1) * .1f) * clase.baseHP + clase.baseHP);
+        HP1 = MaxHP;
+        MaxMP = Mathf.RoundToInt(((nivel - 1) * .1f) * clase.baseMP + clase.baseMP);
+        MP1 = MaxMP;
+        ATK1 = Mathf.RoundToInt(((nivel - 1) * .25f) * clase.baseATK + clase.baseATK);
+        DEF1 = Mathf.RoundToInt(((nivel - 1) * .25f) * clase.baseDEF + clase.baseDEF);
+        SPE1 = Mathf.RoundToInt(((nivel - 1) * .25f) * clase.baseSPE + clase.baseSPE);
+        print(MaxHP);
     }
 
     void Movimiento()

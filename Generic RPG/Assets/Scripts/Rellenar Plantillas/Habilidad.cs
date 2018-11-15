@@ -158,10 +158,10 @@ public class Habilidad : MonoBehaviour {
         switch (tipo)
         {
             case PlanHabilidades.Tipo.Ataque:
-                gameObject.transform.Find("Daño").GetComponent<Text>().text = "Daño: " + baseDMG;
+                gameObject.transform.Find("Daño").GetComponent<Text>().text = BaseDMG.ToString()+"%";
                 break;
             case PlanHabilidades.Tipo.Curacion:
-                gameObject.transform.Find("Daño").GetComponent<Text>().text = "Curación: " + baseDMG * -1;
+                gameObject.transform.Find("Daño").GetComponent<Text>().text = (baseDMG*-1).ToString();
                 break;
             case PlanHabilidades.Tipo.Bufo:
                 gameObject.transform.Find("Daño").GetComponent<Text>().text = objetivoEfecto.ToString() + " - " + baseDMG;
@@ -170,58 +170,75 @@ public class Habilidad : MonoBehaviour {
                 gameObject.transform.Find("Daño").GetComponent<Text>().text = objetivoEfecto.ToString() + " - " + baseDMG;
                 break;
         }
-        gameObject.transform.Find("Ícono").GetComponent<Image>().sprite = icono;
+        gameObject.transform.Find("Panel").transform.Find("Ícono").GetComponent<Image>().sprite = icono;
         gameObject.transform.Find("Descripcion").GetComponent<Text>().text = Descripcion;
         gameObject.transform.Find("Tipo").GetComponent<Text>().text = tipo.ToString();
-        gameObject.transform.Find("Titulo").GetComponent<Text>().text = nombre;
+        gameObject.transform.Find("Panel").transform.Find("Titulo").GetComponent<Text>().text = nombre;
+        //gameObject.transform.Find("ManaIcon").transform.Find("Mana").GetComponent<Text>().text = MPUse.ToString();
     }
     void Utilizar()
     {
-        if(GameObject.Find("Personaje").GetComponent<Personaje>().MP1 > MPUse)
+        BattleManager bm = GameObject.Find("GameManager").GetComponent<BattleManager>();
+        Enemigo en = GameObject.Find("Enemigo").GetComponent<Enemigo>();
+        Personaje pj = bm.pj;
+        int daño = 0;
+        if (pj.MP1 > MPUse)
         {
-            GameObject.Find("GameManager").GetComponent<AudioSource>().Stop();
-            GameObject.Find("GameManager").GetComponentInChildren<AudioSource>().PlayOneShot(sfx);
-            GameObject.Find("GameManager").GetComponent<AudioSource>().Play();
+            string[] mensaje = new string[2];
+            bm.GetComponentInChildren<AudioSource>().PlayOneShot(sfx);
+            mensaje[0] = pj.Nombre + " ha utilizado " + nombre + ".";
             //cositos de la animacion que podría tener.
-            GameObject.Find("Personaje").GetComponent<Personaje>().MP1 -= MPUse;
+            pj.MP1 -= MPUse;
             switch (tipo)
             {
                 case PlanHabilidades.Tipo.Ataque:
-                    GameObject.Find("Enemigo 1").GetComponent<Enemigo>().Hp -= baseDMG + GameObject.Find("Personaje").GetComponent<Personaje>().ATK1;
-                    GameObject.Find("GameManager").GetComponent<BattleManager>().Texto.text = "Haces " + (baseDMG + GameObject.Find("Personaje").GetComponent<Personaje>().ATK1)+ " de daño.";
-                    
+                    float critico = UnityEngine.Random.Range(0, 100);
+                    float media = pj.ATK1*(baseDMG/100) - (en.Def * 0.25f);
+                    if (media < 0)
+                    {
+                        media = 1;
+                    }
+                    daño = Mathf.RoundToInt(UnityEngine.Random.Range(media - (media * .1f), media + (media * .1f)));
+                    if (critico < 10)
+                    {
+                        daño += daño / 2;
+                        mensaje[1] = "Haces " + daño + " de daño CRÍTICO.";
+                    }
+                    else
+                    {
+                        mensaje[1] = "Haces " + daño + " de daño.";
+                    }
+                    en.Hp -= daño;
                     break;
                 case PlanHabilidades.Tipo.Bufo:
                     foreach (PlanHabilidades.Objetivo x in (PlanHabilidades.Objetivo[])Enum.GetValues(typeof(PlanHabilidades.Objetivo)))
                     {
                         if (x == objetivoEfecto)
                         {
-                            GameObject.Find("GameManager").GetComponent<BattleManager>().Texto.text = "Has aumentado en " + baseDMG + " tu " + x.ToString();
-                            GameObject.Find("Personaje").GetComponent<Personaje>().Buff(objetivoEfecto.ToString(), baseDMG);
+                            mensaje[1] = "Has aumentado en " + baseDMG + " tu " + x.ToString();
+                            pj.Buff(objetivoEfecto.ToString(), baseDMG);
                         }
                     }
                     break;
                 case PlanHabilidades.Tipo.Curacion:
-                    GameObject.Find("Personaje").GetComponent<Personaje>().HP1 -= BaseDMG;
+                    pj.HP1 -= BaseDMG;
+                    mensaje[1] = "Te has curado " + BaseDMG + " puntos de vida.";
                     break;
                 case PlanHabilidades.Tipo.Debufo:
                     foreach (PlanHabilidades.Objetivo x in (PlanHabilidades.Objetivo[])Enum.GetValues(typeof(PlanHabilidades.Objetivo)))
                     {
                         if (x == objetivoEfecto)
                         {
-                            GameObject.Find("Enemigo 1").GetComponent<Enemigo>().DeBuff(objetivoEfecto.ToString(), baseDMG);
+                            mensaje[1] = en.DeBuff(objetivoEfecto.ToString(), baseDMG);
                         }
                     }
                     break;
             }
-            BattleManager bm = GameObject.Find("GameManager").GetComponent<BattleManager>();
-            bm.Texto.text = GameObject.Find("Personaje").GetComponent<Personaje>().Nombre + " ha utilizado " + nombre + ".";
-            bm.Turno1 = BattleManager.Turno.Enemigo;
-            StartCoroutine(bm.Esperar(null));
+            StartCoroutine(bm.Esperar(null, mensaje, daño));
         }
         else
         {
-            GameObject.Find("GameManager").GetComponent<BattleManager>().Texto.text = "No tienes suficiente mana.";
+            bm.Texto.text = "No tienes suficiente mana.";
             GameObject.Find("GameManager").GetComponent<SkillManager>().Cerrar();
         }
     }

@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Name: Hab_9
   m_EditorClassIdentifier: 
   nombre: Burlon
-  baseDMG: 0
+  baseDMG: 10
   lrnLVL: 1
   clases:
   - {fileID: 11400000, guid: e515ed67238fb424c864328bc172b80f, type: 2}
   tipo: 1
-  icono: {fileID: 0}
+  icono: {fileID: 21300050, guid: 6ae6c5514ef10614488ab924d54641c6, type: 3}
   Descripcion: Baile entretenido que baja el ataque rival.
+  obj: 2
+  sfx: {fileID: 0}
   MPUse: 5

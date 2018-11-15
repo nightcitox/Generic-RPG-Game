@@ -19,4 +19,6 @@ MonoBehaviour:
   tipo: 2
   icono: {fileID: 0}
   Descripcion: Fuerte patada.
+  obj: 0
+  sfx: {fileID: 0}
   MPUse: 10
