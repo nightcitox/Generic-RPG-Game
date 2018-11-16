@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Name: Hab_50
   m_EditorClassIdentifier: 
   nombre: SuperCOmbo
-  baseDMG: 500
+  baseDMG: 20
   lrnLVL: 0
   clases:
   - {fileID: 11400000, guid: e515ed67238fb424c864328bc172b80f, type: 2}
   tipo: 2
-  icono: {fileID: 21300000, guid: 3ea6ccc08cee89a47b6f9926f600a66a, type: 3}
+  icono: {fileID: 21300000, guid: 2f354e5f0d17bc84ba5a99cfa588d0f4, type: 3}
   Descripcion: Super hyper combo.
   obj: 0
   sfx: {fileID: 8300000, guid: fb3eb429d447d8b4baa598d5d8065799, type: 3}

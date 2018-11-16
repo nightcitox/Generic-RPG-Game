@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Name: Hab_13
   m_EditorClassIdentifier: 
   nombre: HachazoUwu
-  baseDMG: 30
+  baseDMG: 15
   lrnLVL: 1
   clases:
   - {fileID: 11400000, guid: e515ed67238fb424c864328bc172b80f, type: 2}
   tipo: 2
-  icono: {fileID: 0}
+  icono: {fileID: 21300000, guid: a0c692710f15af34293c2628a6d43be0, type: 3}
   Descripcion: Da un fuerte hachazo al enemigo seleccionado
+  obj: 0
+  sfx: {fileID: 0}
   MPUse: 10

@@ -17,7 +17,7 @@ MonoBehaviour:
   clases:
   - {fileID: 11400000, guid: e515ed67238fb424c864328bc172b80f, type: 2}
   tipo: 2
-  icono: {fileID: 21300000, guid: 4de89a37e798dd04b85f1d0892719a37, type: 3}
+  icono: {fileID: 21300000, guid: b68f9d059c3f8ef4ca09ae2d3436b019, type: 3}
   Descripcion: "Espada de destrucci\xF3n masiva."
   obj: 0
   sfx: {fileID: 8300000, guid: fb3eb429d447d8b4baa598d5d8065799, type: 3}
