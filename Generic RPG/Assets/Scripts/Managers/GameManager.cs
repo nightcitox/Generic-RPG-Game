@@ -5,18 +5,27 @@ using UnityEngine;
 public class GameManager : MonoBehaviour {
     //Almacena los datos de la misión actual, diálogo actual para mostrarlo y el Personaje actual con su nivel, experiencia y estadísticas.
     #region Propiedades
-    public PlanMision mision;
+    public static PlanMision mision;
     public string dialogo;
     private Inventario inventario;
-    static public Personaje PJ;
+    static public Personaje PJ = new Personaje();
     static public int Experiencia;
     private List<int> niveles;
+    public PlanClase clasesita;
+    static public Vector2 PosMapa;
     #endregion
     // Use this for initialization
     void Start () {
+        if(PosMapa == new Vector2(0, 0))
+        {
+            print("Es nulo");
+            PosMapa = new Vector2(0f, 0f);
+        }
+        print(PosMapa);
+        PJ.clase = clasesita;
+        GameObject.Find("Personaje").transform.position = PosMapa;
         niveles = new List<int>();
         inventario = GetComponent<Inventario>();
-        PJ = GameObject.Find("Personaje").GetComponent<Personaje>();
         int formula = 0;
         for (int i = 0;i < 30; i++)
         {
@@ -68,16 +77,21 @@ public class GameManager : MonoBehaviour {
     }
     public void SubirNivel()
     {
+        int nivelanterior = PJ.Nivel;
         int j = 0;
         foreach (int x in niveles)
         {
             if(Experiencia >= x)
             {
+                print("Cosito");
                 PJ.Nivel = j+1;
             }
             j += 1;
         }
+        if(nivelanterior != PJ.Nivel)
+        {
+            PJ.Estadisticas();
+        }
         print(PJ.Nivel);
-        PJ.Estadisticas();
     }
 }

@@ -15,5 +15,7 @@ public class PlanEnemigo : ScriptableObject {
     public Sprite sprite;
     public AnimatorController anim;
     public float ProbabilidadAparecer;
+    public AudioClip Sufrimiento;
+    public AudioClip Ataque;
     #endregion
 }

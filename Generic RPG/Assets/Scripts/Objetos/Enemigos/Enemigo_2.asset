@@ -16,7 +16,7 @@ MonoBehaviour:
   baseATK: 5
   baseDEF: 20
   baseSPE: 5
-  exp: 5000
+  exp: 10
   sprite: {fileID: 21300000, guid: 223bd426a10e3684ab033cba6f827561, type: 3}
   anim: {fileID: 9100000, guid: dbf6d85e07a74fc4a9b51c10aa86a0d8, type: 2}
   ProbabilidadAparecer: 100

@@ -176,70 +176,82 @@ public class Habilidad : MonoBehaviour {
         gameObject.transform.Find("Panel").transform.Find("Titulo").GetComponent<Text>().text = nombre;
         //gameObject.transform.Find("ManaIcon").transform.Find("Mana").GetComponent<Text>().text = MPUse.ToString();
     }
-    void Utilizar()
+    public void Utilizar()
     {
         BattleManager bm = GameObject.Find("GameManager").GetComponent<BattleManager>();
-        Enemigo en = GameObject.Find("Enemigo").GetComponent<Enemigo>();
-        Personaje pj = bm.pj;
-        int daño = 0;
-        if (pj.MP1 > MPUse)
+        if (bm.accionespj == BattleManager.AccionesPJ.Decision)
         {
-            string[] mensaje = new string[2];
-            bm.GetComponentInChildren<AudioSource>().PlayOneShot(sfx);
-            mensaje[0] = pj.Nombre + " ha utilizado " + nombre + ".";
-            //cositos de la animacion que podría tener.
-            pj.MP1 -= MPUse;
-            switch (tipo)
+            if (bm.pj.MP1 < MPUse)
             {
-                case PlanHabilidades.Tipo.Ataque:
-                    float critico = UnityEngine.Random.Range(0, 100);
-                    float media = pj.ATK1*(baseDMG/100) - (en.Def * 0.25f);
-                    if (media < 0)
-                    {
-                        media = 1;
-                    }
-                    daño = Mathf.RoundToInt(UnityEngine.Random.Range(media - (media * .1f), media + (media * .1f)));
-                    if (critico < 10)
-                    {
-                        daño += daño / 2;
-                        mensaje[1] = "Haces " + daño + " de daño CRÍTICO.";
-                    }
-                    else
-                    {
-                        mensaje[1] = "Haces " + daño + " de daño.";
-                    }
-                    en.Hp -= daño;
-                    break;
-                case PlanHabilidades.Tipo.Bufo:
-                    foreach (PlanHabilidades.Objetivo x in (PlanHabilidades.Objetivo[])Enum.GetValues(typeof(PlanHabilidades.Objetivo)))
-                    {
-                        if (x == objetivoEfecto)
-                        {
-                            mensaje[1] = "Has aumentado en " + baseDMG + " tu " + x.ToString();
-                            pj.Buff(objetivoEfecto.ToString(), baseDMG);
-                        }
-                    }
-                    break;
-                case PlanHabilidades.Tipo.Curacion:
-                    pj.HP1 -= BaseDMG;
-                    mensaje[1] = "Te has curado " + BaseDMG + " puntos de vida.";
-                    break;
-                case PlanHabilidades.Tipo.Debufo:
-                    foreach (PlanHabilidades.Objetivo x in (PlanHabilidades.Objetivo[])Enum.GetValues(typeof(PlanHabilidades.Objetivo)))
-                    {
-                        if (x == objetivoEfecto)
-                        {
-                            mensaje[1] = en.DeBuff(objetivoEfecto.ToString(), baseDMG);
-                        }
-                    }
-                    break;
+                bm.Texto.text = "No tienes suficiente mana.";
+                GameObject.Find("GameManager").GetComponent<SkillManager>().Cerrar();
             }
-            StartCoroutine(bm.Esperar(null, mensaje, daño));
-        }
-        else
+            else
+            {
+                bm.HabUtilizada1 = this;
+                print(bm.HabUtilizada1.nombre);
+                bm.AccionesdelPJ("Habilidad");
+            }
+        }else if(bm.accionespj == BattleManager.AccionesPJ.Habilidad)
         {
-            bm.Texto.text = "No tienes suficiente mana.";
-            GameObject.Find("GameManager").GetComponent<SkillManager>().Cerrar();
+            Enemigo en = GameObject.Find("Enemigo").GetComponent<Enemigo>();
+            Personaje pj = bm.pj;
+            int daño = 0;
+            if (pj.MP1 >= MPUse)
+            {
+                print("La usa");
+                string[] mensaje = new string[2];
+                bm.GetComponentInChildren<AudioSource>().PlayOneShot(sfx);
+                mensaje[0] = pj.Nombre + " ha utilizado " + nombre + ".";
+                //cositos de la animacion que podría tener.
+                pj.MP1 -= MPUse;
+                switch (tipo)
+                {
+                    case PlanHabilidades.Tipo.Ataque:
+                        float critico = UnityEngine.Random.Range(0, 100);
+                        float media = pj.ATK1 * (baseDMG / 100) - (en.Def * 0.25f);
+                        if (media < 0)
+                        {
+                            media = 1;
+                        }
+                        daño = Mathf.RoundToInt(UnityEngine.Random.Range(media - (media * .1f), media + (media * .1f)));
+                        if (critico < 10)
+                        {
+                            daño += daño / 2;
+                            mensaje[1] = "Haces " + daño + " de daño CRÍTICO.";
+                        }
+                        else
+                        {
+                            mensaje[1] = "Haces " + daño + " de daño.";
+                        }
+                        break;
+                    case PlanHabilidades.Tipo.Bufo:
+                        foreach (PlanHabilidades.Objetivo x in (PlanHabilidades.Objetivo[])Enum.GetValues(typeof(PlanHabilidades.Objetivo)))
+                        {
+                            if (x == objetivoEfecto)
+                            {
+                                mensaje[1] = "Has aumentado en " + baseDMG + " tu " + x.ToString();
+                                pj.Buff(objetivoEfecto.ToString(), baseDMG);
+                            }
+                        }
+                        break;
+                    case PlanHabilidades.Tipo.Curacion:
+                        pj.HP1 -= BaseDMG;
+                        mensaje[1] = "Te has curado " + BaseDMG + " puntos de vida.";
+                        break;
+                    case PlanHabilidades.Tipo.Debufo:
+                        foreach (PlanHabilidades.Objetivo x in (PlanHabilidades.Objetivo[])Enum.GetValues(typeof(PlanHabilidades.Objetivo)))
+                        {
+                            if (x == objetivoEfecto)
+                            {
+                                mensaje[1] = en.DeBuff(objetivoEfecto.ToString(), baseDMG);
+                            }
+                        }
+                        break;
+                }
+                print("Correcto");
+                bm.StartCoroutine(bm.Esperar(null, mensaje, daño));
+            }
         }
     }
     #endregion

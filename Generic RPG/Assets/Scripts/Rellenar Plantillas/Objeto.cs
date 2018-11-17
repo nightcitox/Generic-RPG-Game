@@ -20,17 +20,6 @@ public class Objeto : MonoBehaviour {
     private Button BotonUtilizar;
     private int cantidadEfecto;
     private PlanObjeto.Objetivo objetivoEfecto;
-    void Update()
-    {
-        if(cantidad == 0 && item.tipo != PlanObjeto.Tipo.Equipo)
-        {
-            foreach(PlanObjeto ob in GameObject.Find("GameManager").GetComponent<Inventario>().objetos)
-            {
-                GameObject.Find("GameManager").GetComponent<Inventario>().objetos.Remove(item);
-            }
-            Destroy(gameObject);
-        }
-    }
     public int Cantidad
     {
         get
@@ -58,14 +47,22 @@ public class Objeto : MonoBehaviour {
     }
 
     #endregion
-    public void uwu()
-    {
-        GameObject.Find("Descripcion").GetComponentInChildren<Text>().text = descripcion;
-    }
     void Start () {
         BotonUtilizar = GetComponentInChildren<Button>();
         Inicializar();
         BotonUtilizar.onClick.AddListener(Utilizar);
+    }
+    void Update()
+    {
+        if (cantidad == 0 && item.tipo != PlanObjeto.Tipo.Equipo)
+        {
+            print("Se destruye");
+            foreach (PlanObjeto ob in GameObject.Find("GameManager").GetComponent<Inventario>().objetos)
+            {
+                GameObject.Find("GameManager").GetComponent<Inventario>().objetos.Remove(item);
+            }
+            Destroy(gameObject);
+        }
     }
     public void Inicializar()
     {
@@ -80,7 +77,7 @@ public class Objeto : MonoBehaviour {
         cantidadEfecto = item.cantidadEfecto;
         objetivoEfecto = item.objetivoEfecto;
     }
-    void Utilizar()
+    public void Utilizar()
     {
         string[] mensaje = new string[1];
         Scene actual = SceneManager.GetActiveScene();
@@ -93,20 +90,49 @@ public class Objeto : MonoBehaviour {
             case PlanObjeto.Tipo.Consumible:
                 if (PlanObjeto.Efecto.Curacion == efecto)
                 {
-                    switch (objetivoEfecto)
-                    {
-                        case PlanObjeto.Objetivo.HP:
-                            GameObject.Find("Personaje").GetComponent<Personaje>().HP1 += cantidadEfecto;
-                            break;
-                        case PlanObjeto.Objetivo.MP:
-                            GameObject.Find("Personaje").GetComponent<Personaje>().MP1 += cantidadEfecto;
-                            break;
-                    }
-                    if(actual.name == "Batalla")
+                    if (actual.name == "Batalla")
                     {
                         BattleManager bm = GameObject.Find("GameManager").GetComponent<BattleManager>();
-                        mensaje[0] = GameObject.Find("Personaje").GetComponent<Personaje>().Nombre + " ha utilizado " + nombre + ".";
-                        StartCoroutine(bm.Esperar(this, mensaje, 0));
+                        if (bm.accionespj == BattleManager.AccionesPJ.Decision)
+                        {
+                            bm.ObjUtilizado1 = this;
+                            print(bm.ObjUtilizado1.nombre);
+                            bm.AccionesdelPJ("Objeto");
+                        }
+                        else if(bm.accionespj == BattleManager.AccionesPJ.Objeto)
+                        {
+                            mensaje = new string[2];
+                            mensaje[0] = GameObject.Find("Personaje").GetComponent<Personaje>().Nombre + " ha utilizado " + nombre + ".";
+                            mensaje[1] = GameObject.Find("Personaje").GetComponent<Personaje>().Nombre + " ha recuperado " + cantidadEfecto + " de "+ objetivoEfecto.ToString() +".";
+                            bm.StartCoroutine(bm.Esperar(this, mensaje, 0));
+                            print("inicia");
+                            switch (objetivoEfecto)
+                            {
+                                case PlanObjeto.Objetivo.HP:
+                                    bm.pj.HP1 += cantidadEfecto;
+                                    print("Se cura");
+                                    break;
+                                case PlanObjeto.Objetivo.MP:
+                                    bm.pj.MP1 += cantidadEfecto;
+                                    break;
+                            }
+                            print("Acaba");
+                        }
+                    }
+                    else
+                    {
+                        print("inicia");
+                        switch (objetivoEfecto)
+                        {
+                            case PlanObjeto.Objetivo.HP:
+                                GameManager.PJ.HP1 += cantidadEfecto;
+                                print("Se cura");
+                                break;
+                            case PlanObjeto.Objetivo.MP:
+                                GameManager.PJ.MP1 += cantidadEfecto;
+                                break;
+                        }
+                        print("Acaba");
                     }
                 }
                 else if (PlanObjeto.Efecto.Buff == efecto)
@@ -120,7 +146,10 @@ public class Objeto : MonoBehaviour {
             case PlanObjeto.Tipo.Mision:
                 break;
         }
-        GetComponentInChildren<Text>().text = cantidad.ToString();
+        if(actual.name != "Batalla")
+        {
+            GetComponentInChildren<Text>().text = cantidad.ToString();
+        }
     }
     public void Calculo(List<PlanObjeto> objs)
     {

@@ -8,6 +8,7 @@ TextureImporter:
     21300006: Warrior animacion ataque 1.2_3
     21300008: Warrior animacion ataque 1.2_4
     21300010: Warrior animacion ataque 1.2_5
+    21300012: Warrior animacion ataque 1.2_6
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -93,18 +94,18 @@ TextureImporter:
       name: Warrior animacion ataque 1.2_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 128
-        height: 128
+        x: 24
+        y: 27
+        width: 67
+        height: 88
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5ca9e4a981904044eb2f878ecd41cca3
+      spriteID: 5b523b882120a8a4c945efb15f96adf4
       vertices: []
       indices: 
       edges: []
@@ -113,18 +114,18 @@ TextureImporter:
       name: Warrior animacion ataque 1.2_1
       rect:
         serializedVersion: 2
-        x: 128
-        y: 0
-        width: 128
-        height: 128
+        x: 152
+        y: 27
+        width: 67
+        height: 88
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6eb8f749451e50c4bb3a7fdd323cd905
+      spriteID: 5f01f733f646cb64eafa918a174f2a62
       vertices: []
       indices: 
       edges: []
@@ -133,38 +134,18 @@ TextureImporter:
       name: Warrior animacion ataque 1.2_2
       rect:
         serializedVersion: 2
-        x: 256
-        y: 0
-        width: 128
-        height: 128
+        x: 279
+        y: 27
+        width: 68
+        height: 88
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9430dd5f4a614eb4686d9892a9a2b810
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Warrior animacion ataque 1.2_3
-      rect:
-        serializedVersion: 2
-        x: 384
-        y: 0
-        width: 128
-        height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ad5575bcda4f4864fb8d480d22ab6ae4
+      spriteID: db28ea39b91a83145988d4f952590df2
       vertices: []
       indices: 
       edges: []
@@ -173,18 +154,18 @@ TextureImporter:
       name: Warrior animacion ataque 1.2_4
       rect:
         serializedVersion: 2
-        x: 512
-        y: 0
-        width: 128
-        height: 128
+        x: 419
+        y: 24
+        width: 88
+        height: 85
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bc3aac77e0460364c8c46189213152fa
+      spriteID: 62c9aa56aec62b44eb9a57596200885d
       vertices: []
       indices: 
       edges: []
@@ -193,18 +174,38 @@ TextureImporter:
       name: Warrior animacion ataque 1.2_5
       rect:
         serializedVersion: 2
-        x: 640
-        y: 0
-        width: 128
-        height: 128
+        x: 547
+        y: 24
+        width: 88
+        height: 85
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f62b8512c7bca83429d85b3136bcaf94
+      spriteID: 5680a317d72f60745b3e0c5e9c7045ff
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Warrior animacion ataque 1.2_6
+      rect:
+        serializedVersion: 2
+        x: 675
+        y: 24
+        width: 93
+        height: 85
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: abf7660ed1815a84085c0b2ee54f78ad
       vertices: []
       indices: 
       edges: []

@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Name: Obj_1
   m_EditorClassIdentifier: 
   nombre: "Poci\xF3n"
-  descripcion: "Te cura la we\xE1 po."
+  descripcion: "Objeto b\xE1sico de curaci\xF3n."
   nivelRestriccion: 0
   efecto: 0
   tipo: 1
   icono: {fileID: 21300000, guid: 1d7c0adffa9de5c448a94038fc7c68c0, type: 3}
   reutilizable: 0
-  cantidadEfecto: -10
-  objetivoEfecto: 1
+  cantidadEfecto: 20
+  objetivoEfecto: 0

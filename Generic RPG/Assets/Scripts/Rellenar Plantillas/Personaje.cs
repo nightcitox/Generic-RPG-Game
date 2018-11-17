@@ -18,6 +18,7 @@ public class Personaje : MonoBehaviour {
     bool dentro;
     float timer;
     float espera = 0.5f;
+    float UltimaPos;
     #endregion
     #region estadisticas
     private int MaxHP;
@@ -190,6 +191,10 @@ public class Personaje : MonoBehaviour {
             timer += Time.deltaTime;
         }
     }
+    void OnCollisionStay2D(Collision2D col)
+    {
+        col.rigidbody.AddForce(-0.1F * col.rigidbody.velocity);
+    }
     void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.CompareTag("Encuentros") == false ) { return; }
@@ -271,20 +276,46 @@ public class Personaje : MonoBehaviour {
         ATK1 = Mathf.RoundToInt(((nivel - 1) * .25f) * clase.baseATK + clase.baseATK);
         DEF1 = Mathf.RoundToInt(((nivel - 1) * .25f) * clase.baseDEF + clase.baseDEF);
         SPE1 = Mathf.RoundToInt(((nivel - 1) * .25f) * clase.baseSPE + clase.baseSPE);
-        print(MaxHP);
     }
 
     void Movimiento()
     {
+        Animator mov = GetComponent<Animator>();
         if(puedeMoverse == true) {
             moviendose = true;
-        float VelX = (Input.GetAxis("Horizontal") * mov_spe) * Time.deltaTime;
-        float VelY = (Input.GetAxis("Vertical") * mov_spe) * Time.deltaTime;
-        transform.Translate(new Vector3(VelX, VelY));
+            float VelX = (Input.GetAxis("Horizontal") * mov_spe) * Time.deltaTime;
+            float VelY = (Input.GetAxis("Vertical") * mov_spe) * Time.deltaTime;
+            if(VelX > 0)
+            {
+                VelY = 0;
+                UltimaPos = 0.5f;
+            }else if (VelY > 0)
+            {
+                VelX = 0;
+                UltimaPos = 0.75f;
+            }
+            else if (VelX < 0)
+            {
+                VelY = 0;
+                UltimaPos = 0.25f;
+            }
+            else if (VelY < 0)
+            {
+                VelX = 0;
+                UltimaPos = 0f;
+            }
+            transform.Translate(new Vector2(VelX, VelY));
+            mov.SetBool("Moviendose", true);
+            mov.SetFloat("Mov X", VelX);
+            mov.SetFloat("Mov Y", VelY);
+            //moviendose = false;
         }
         if(Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Vertical") == 0)
         {
+            print(UltimaPos);
             moviendose = false;
+            mov.SetBool("Moviendose", false);
+            mov.Play("Nada", 0, UltimaPos);
         }
     }
 }
