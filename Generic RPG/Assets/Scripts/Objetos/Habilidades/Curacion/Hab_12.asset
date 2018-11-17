@@ -17,6 +17,8 @@ MonoBehaviour:
   clases:
   - {fileID: 11400000, guid: e515ed67238fb424c864328bc172b80f, type: 2}
   tipo: 3
-  icono: {fileID: 0}
+  icono: {fileID: 21300000, guid: e68879679660c4a4bbfae4ac39d5d358, type: 3}
   Descripcion: "Puede eliminar debufos adem\xE1s cura al objetivo."
+  obj: 0
+  sfx: {fileID: 0}
   MPUse: 20

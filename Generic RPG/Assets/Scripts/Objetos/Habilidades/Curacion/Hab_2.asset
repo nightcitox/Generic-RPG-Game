@@ -17,6 +17,8 @@ MonoBehaviour:
   clases:
   - {fileID: 11400000, guid: 463bed96ec78da541b3253184094ec70, type: 2}
   tipo: 3
-  icono: {fileID: 0}
-  Descripcion: 
+  icono: {fileID: 21300000, guid: 9bdd1b037b02c514893ba3393d458b02, type: 3}
+  Descripcion: cura xd
+  obj: 0
+  sfx: {fileID: 0}
   MPUse: 0

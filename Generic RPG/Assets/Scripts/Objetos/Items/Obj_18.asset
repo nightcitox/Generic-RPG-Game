@@ -16,7 +16,7 @@ MonoBehaviour:
   nivelRestriccion: 0
   efecto: 3
   tipo: 0
-  icono: {fileID: 21300000, guid: 5e51dd4819e387e41afe7e91a8b749da, type: 3}
+  icono: {fileID: 21300000, guid: f83d4b4bb3bc22c4aada73189ca86b41, type: 3}
   reutilizable: 1
   cantidadEfecto: 0
   objetivoEfecto: 0
