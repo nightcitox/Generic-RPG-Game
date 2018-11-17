@@ -181,7 +181,6 @@ public class Personaje : MonoBehaviour {
         if (SceneManager.GetActiveScene().name != "Batalla")
         {
             Movimiento();
-            print(dentro + " " + moviendose);
             if (dentro == false || moviendose == false) { return; }
             if (timer > espera)
             {
@@ -312,7 +311,6 @@ public class Personaje : MonoBehaviour {
         }
         if(Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Vertical") == 0)
         {
-            print(UltimaPos);
             moviendose = false;
             mov.SetBool("Moviendose", false);
             mov.Play("Nada", 0, UltimaPos);

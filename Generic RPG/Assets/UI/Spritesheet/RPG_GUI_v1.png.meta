@@ -1532,10 +1532,10 @@ TextureImporter:
       name: RPG_GUI_v1_67
       rect:
         serializedVersion: 2
-        x: 613
-        y: 369
-        width: 44
-        height: 42
+        x: 616
+        y: 371
+        width: 37
+        height: 37
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2032,10 +2032,10 @@ TextureImporter:
       name: RPG_GUI_v1_92
       rect:
         serializedVersion: 2
-        x: 33
-        y: 128
-        width: 56
-        height: 56
+        x: 39
+        y: 134
+        width: 44
+        height: 44
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

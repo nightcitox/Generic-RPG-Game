@@ -8,7 +8,7 @@ public class NPC : MonoBehaviour {
     // ingresa el objeto creado anteriormente.
     #region Propiedades
     private string nombre;
-    private PlanDialogo[] dialogos;
+    private PlanDialogo dialogos;
     public PlanNPCs npc;
     private PlanMision mision;
     private Text texto;
@@ -19,7 +19,6 @@ public class NPC : MonoBehaviour {
     #endregion
     void Start()
     {
-        texto = GameObject.Find("Dialogo").GetComponent<Text>();
         nombre = npc.nombre;
         dialogos = npc.dialogos;
     }
@@ -34,13 +33,19 @@ public class NPC : MonoBehaviour {
             //haga todo el proceso de los diálogos pero OJO siempre y cuando esté en colisión y permaneza así.
             if (Input.GetKeyUp(KeyCode.Z))
             {
+                GameObject Holder = Instantiate(GameManager.DialogueHolder, FindObjectOfType<Image>().transform);
+                Holder.name = "Holder";
+                texto = GameObject.Find("Dialogo").GetComponent<Text>();
+                GameObject.Find("NPCName").GetComponent<Text>().text = nombre;
+                AudioClip GUI = Resources.Load<AudioClip>("SFX/GUI/Ogg/Confirm_tones/style2/confirm_style_2_002");
+                FindObjectOfType<AudioSource>().PlayOneShot(GUI);
                 index = 0;
                 //Primero busco el objeto de Personaje.
                 Personaje movimiento = GameObject.Find("Personaje 1").GetComponent<Personaje>();
                 //Ahora llamo al personaje y cambio la propiedad de "PuedeMoverse" a false pa que no se mueva durante el diálogo.
                 movimiento.puedeMoverse = false;
                 //Si hay más de un diálogo presente en el sistema del NPC se filtra para que funcionen todos.
-                char[] tex = dialogos[index].dialogo.ToCharArray();
+                char[] tex = dialogos.dialogos[index].ToCharArray();
                 StartCoroutine(TextoCambiante(tex));
                 interaccion = false;
             }
@@ -48,6 +53,8 @@ public class NPC : MonoBehaviour {
         {
             if (Input.GetKeyUp(KeyCode.Z) && puedeContinuar)
             {
+                AudioClip GUI = Resources.Load<AudioClip>("SFX/GUI/Ogg/Confirm_tones/style2/confirm_style_2_002");
+                FindObjectOfType<AudioSource>().PlayOneShot(GUI);
                 IniciarChat();
                 print("Success");
             }
@@ -56,20 +63,28 @@ public class NPC : MonoBehaviour {
     void IniciarChat()
     {
         index += 1;
-        if (dialogos.Length >= (index+1))
+        if (dialogos.dialogos.Length >= (index+1))
         {
-            char[] tex = dialogos[index].dialogo.ToCharArray();
+            char[] tex = dialogos.dialogos[index].ToCharArray();
             StartCoroutine(TextoCambiante(tex));
             //Si presiona de nuevo el botón de aceptar, el diálogo acaba y pasaría al siguiente.
         }
         else
         {
             print("No quedan más diálogos");
-            texto.text = "";
             chatIniciado = false;
             GameObject.Find("Personaje 1").GetComponent<Personaje>().puedeMoverse = true;
             interaccion = true;
             puedeContinuar = false;
+            if (dialogos.tipo == PlanDialogo.TipoDialogo.ConOpciones)
+            {
+                GameObject.Find("Holder").transform.Find("Opciones").gameObject.SetActive(true);
+            }
+            else
+            {
+                texto.text = "";
+                Destroy(GameObject.Find("Holder"));
+            }
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)

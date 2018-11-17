@@ -6,16 +6,18 @@ public class GameManager : MonoBehaviour {
     //Almacena los datos de la misión actual, diálogo actual para mostrarlo y el Personaje actual con su nivel, experiencia y estadísticas.
     #region Propiedades
     public static PlanMision mision;
-    public string dialogo;
+    public static GameObject DialogueHolder;
     private Inventario inventario;
     static public Personaje PJ = new Personaje();
     static public int Experiencia;
     private List<int> niveles;
     public PlanClase clasesita;
     static public Vector2 PosMapa;
+    public GameObject Prefab;
     #endregion
     // Use this for initialization
     void Start () {
+        DialogueHolder = Prefab;
         if(PosMapa == new Vector2(0, 0))
         {
             print("Es nulo");

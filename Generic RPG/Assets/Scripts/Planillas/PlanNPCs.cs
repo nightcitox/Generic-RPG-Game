@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlanNPCs : ScriptableObject {
     #region Propiedades
     public string nombre;
-    public PlanDialogo[] dialogos;
+    public PlanDialogo dialogos;
+    public PlanMision[] misionesNPC;
     #endregion
 }
