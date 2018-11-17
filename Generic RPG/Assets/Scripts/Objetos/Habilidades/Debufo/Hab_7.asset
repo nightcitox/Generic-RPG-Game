@@ -10,14 +10,18 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: db710ed3bf17c664db928c50c8f73699, type: 3}
   m_Name: Hab_7
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   nombre: "Alcohol et\xEDlico "
   baseDMG: 10
-  lrnLVL: 0
+  lrnLVL: 10
   clases:
   - {fileID: 11400000, guid: e515ed67238fb424c864328bc172b80f, type: 2}
   tipo: 1
+
   icono: {fileID: 21300000, guid: a5a90456ad4d8724997f56e86d223e03, type: 3}
+  
+  icono: {fileID: 21300000, guid: 2d395f1eb70ce4a48b5f6a3bd06b3cd9, type: 3}
+
   Descripcion: Un fuerte olor que confunde al rival.
   obj: 3
   sfx: {fileID: 0}

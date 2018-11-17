@@ -82,6 +82,7 @@ public class Objeto : MonoBehaviour {
     }
     void Utilizar()
     {
+        string[] mensaje = new string[1];
         Scene actual = SceneManager.GetActiveScene();
         switch (Tipo)
         {
@@ -104,9 +105,8 @@ public class Objeto : MonoBehaviour {
                     if(actual.name == "Batalla")
                     {
                         BattleManager bm = GameObject.Find("GameManager").GetComponent<BattleManager>();
-                        bm.Texto.text = GameObject.Find("Personaje").GetComponent<Personaje>().Nombre + " ha utilizado " + nombre + ".";
-                        bm.Turno1 = BattleManager.Turno.Enemigo;
-                        StartCoroutine(bm.Esperar(this));
+                        mensaje[0] = GameObject.Find("Personaje").GetComponent<Personaje>().Nombre + " ha utilizado " + nombre + ".";
+                        StartCoroutine(bm.Esperar(this, mensaje, 0));
                     }
                 }
                 else if (PlanObjeto.Efecto.Buff == efecto)

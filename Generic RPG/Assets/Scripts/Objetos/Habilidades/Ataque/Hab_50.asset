@@ -21,4 +21,4 @@ MonoBehaviour:
   Descripcion: Super hyper combo.
   obj: 0
   sfx: {fileID: 8300000, guid: fb3eb429d447d8b4baa598d5d8065799, type: 3}
-  MPUse: 10
+  MPUse: 40

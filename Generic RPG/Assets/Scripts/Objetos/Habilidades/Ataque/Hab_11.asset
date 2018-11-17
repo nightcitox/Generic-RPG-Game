@@ -10,7 +10,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: db710ed3bf17c664db928c50c8f73699, type: 3}
   m_Name: Hab_11
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   nombre: Patad-ol
   baseDMG: 9
   lrnLVL: 5
