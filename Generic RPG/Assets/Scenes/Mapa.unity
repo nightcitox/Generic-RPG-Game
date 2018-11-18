@@ -170,8 +170,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 989fe3b61efc90b41a3cfa68179e65c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogo: Pichula
   clasesita: {fileID: 11400000, guid: e515ed67238fb424c864328bc172b80f, type: 2}
+  Prefab: {fileID: 0}
 --- !u!1 &189163455
 GameObject:
   m_ObjectHideFlags: 0
@@ -528,6 +528,11 @@ Prefab:
     - target: {fileID: 1526561253876710, guid: aeaae0cdc438164409f77a9c65ef9ae7, type: 2}
       propertyPath: m_Name
       value: Personaje
+      objectReference: {fileID: 0}
+    - target: {fileID: 212698790418675154, guid: aeaae0cdc438164409f77a9c65ef9ae7,
+        type: 2}
+      propertyPath: m_SortingOrder
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aeaae0cdc438164409f77a9c65ef9ae7, type: 2}
