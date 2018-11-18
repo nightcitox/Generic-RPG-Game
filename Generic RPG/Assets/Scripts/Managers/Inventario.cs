@@ -1,7 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Inventario : MonoBehaviour {
     public List<PlanObjeto> objetos;
@@ -42,23 +45,19 @@ public class Inventario : MonoBehaviour {
             GameObject.Find("Inventario").gameObject.SetActive(false);
         }
     }
-    void Utilizar()
-    {
-
-    }
-    void Equipar()
-    {
-
-    }
-    void Botar()
-    {
-
-    }
     public void Abrir()
     {
         if(Abierto == false)
         {
-            print("abriendo");
+            if (SceneManager.GetActiveScene().name == "Batalla")
+            {
+                Button[] listado = GameObject.Find("Panel").GetComponentsInChildren<Button>();
+                foreach (Button x in listado)
+                {
+                    x.interactable = false;
+                    GameObject.FindObjectOfType<BattleManager>().Texto.text = "Objetos.";
+                }
+            }
             GameObject.Find("Panel").transform.Find("Inventario").gameObject.SetActive(true);
             contador = 1;
             for (int i = 0; i < objetos.Count - 1; i++)
@@ -116,12 +115,19 @@ public class Inventario : MonoBehaviour {
                     }
                 }
             }
+            if(objetos.Count > 0)
+                GameObject.Find("Obj_1").GetComponentInChildren<Button>().Select();
             Abierto = true;
         }
     }
-    public void Agregar(PlanObjeto obj)
+    public void Agregar()
     {
-        int al = Random.Range(1, 4);
-        objetos.Add(obj);
+        int al = Random.Range(1, 19);
+        string[] nombres = AssetDatabase.FindAssets("Obj_" + al);
+        string assetPath = AssetDatabase.GUIDToAssetPath(nombres[0]);
+        PlanObjeto asset = AssetDatabase.LoadAssetAtPath<PlanObjeto>(assetPath);
+        if(asset != null)
+            objetos.Add(asset);
+        print("Agegado objeto: " + asset.nombre);
     }
 }

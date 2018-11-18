@@ -22,7 +22,26 @@ public class ScrollRectPosition : MonoBehaviour
         // Get the currently selected UI element from the event system.
         GameObject selected = EventSystem.current.currentSelectedGameObject;
 
-        // Return if there are none.
+        if (selected == GameObject.Find("Hab_1"))
+        {
+            GameObject.Find("PanelHabilidades").transform.Find("Scrollbar").gameObject.GetComponent<Scrollbar>().value = 1;
+            return;
+        }
+        GameObject[] PrimerosObjetos = new GameObject[]
+        {
+            GameObject.Find("Obj_1"),
+            GameObject.Find("Obj_2"),
+            GameObject.Find("Obj_3"),
+            GameObject.Find("Obj_4")
+        };
+        foreach(GameObject obj in PrimerosObjetos)
+        {
+            if (selected == obj)
+            {
+                GameObject.Find("Inventario").transform.Find("Scrollbar").gameObject.GetComponent<Scrollbar>().value = 1;
+                return;
+            }
+        }
         if (selected == null)
         {
             return;

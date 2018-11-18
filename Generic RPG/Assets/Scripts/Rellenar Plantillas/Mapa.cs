@@ -19,7 +19,6 @@ public class Mapa : MonoBehaviour {
         float ProbEncuentro = Random.Range(0, 101);
         if(ProbEncuentro > 5)
         {
-            Debug.Log("No hay encuentro.");
             return;
         }
         else
@@ -34,7 +33,6 @@ public class Mapa : MonoBehaviour {
             {
                 if(Encuentro <= enemigos[i].ProbabilidadAparecer)
                 {
-                    Debug.Log(enemigos[i].nombre);
                     en = enemigos[i];
                     GameManager.PosMapa = GameObject.Find("Personaje").transform.position;
                     SceneManager.LoadScene("Batalla");

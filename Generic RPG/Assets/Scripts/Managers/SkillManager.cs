@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class SkillManager : MonoBehaviour{
     private List<PlanHabilidades> AllSkills = new List<PlanHabilidades>();
@@ -41,6 +43,15 @@ public class SkillManager : MonoBehaviour{
     {
         if(GameObject.Find("Panel").transform.Find("PanelHabilidades").gameObject.activeSelf == false)
         {
+            if(SceneManager.GetActiveScene().name == "Batalla")
+            {
+                Button[] listado = GameObject.Find("Panel").GetComponentsInChildren<Button>();
+                foreach (Button x in listado)
+                {
+                    x.interactable = false;
+                    GameObject.FindObjectOfType<BattleManager>().Texto.text = "Habilidades";
+                }
+            }
             GameObject.Find("Panel").transform.Find("PanelHabilidades").gameObject.SetActive(true);
             GameObject habil;
             for (int i = 0; i < habilidadesPJ.Count; i++)
@@ -51,6 +62,7 @@ public class SkillManager : MonoBehaviour{
                 habil.transform.SetParent(papi, false);
                 habil.GetComponent<Habilidad>().Hab = habilidadesPJ[i];
             }
+            GameObject.Find("Hab_1").GetComponent<Button>().Select();
         }
     }
     public void Cerrar()
