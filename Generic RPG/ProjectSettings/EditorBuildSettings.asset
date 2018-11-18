@@ -12,12 +12,12 @@ EditorBuildSettings:
     path: "Assets/Scenes/Men\xFAs/Registrar.unity"
     guid: c88c2319ff04a6c4c8d7537629aa954d
   - enabled: 1
-    path: "Assets/Scenes/Men\xFAs/Men\xFA principal.unity"
+    path: "Assets/Scenes/Men\xFAs/MainMenu.unity"
     guid: cd559ca3879255f4990eeb4c064f8442
   - enabled: 1
-    path: Assets/Scenes/Mapa.unity
+    path: Assets/Scenes/Mapas/Mapa.unity
     guid: 0b6676339d86ac040b8d14d2ef435d91
   - enabled: 1
-    path: Assets/Scenes/Batalla.unity
+    path: Assets/Scenes/Interfaces/Batalla.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   m_configObjects: {}

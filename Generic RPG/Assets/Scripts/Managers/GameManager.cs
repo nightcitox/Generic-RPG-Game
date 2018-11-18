@@ -9,6 +9,8 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour {
     //Almacena los datos de la misión actual, diálogo actual para mostrarlo y el Personaje actual con su nivel, experiencia y estadísticas.
     #region Propiedades
+    public static string UsuarioConectado;
+    public static bool sesion;
     public static PlanMision mision;
     public static GameObject DialogueHolder;
     public static Inventario inventario;
@@ -23,6 +25,8 @@ public class GameManager : MonoBehaviour {
     #endregion
     #region Métodos
     void Start () {
+        if (SceneManager.GetActiveScene().name == "MainMenu")
+            VerificarGuardado(false);
         if(FindObjectOfType<Personaje>() != null)
             PJ = GameObject.Find("Personaje").GetComponent<Personaje>();
         if(PJ != null)
@@ -153,13 +157,8 @@ public class GameManager : MonoBehaviour {
     }
     void OnGUI()
     {
-        AxisEventData ad = new AxisEventData(EventSystem.current);
         if(SceneManager.GetActiveScene().name == "Batalla")
             InputManager.GUIActivo = true;
-        if()
-        {
-
-        }
     }
     void Menus()
     {
@@ -197,7 +196,7 @@ public class GameManager : MonoBehaviour {
         {
             Directory.CreateDirectory(path);
         }
-        string dataPath = Path.Combine(path, PJ.Nombre + ext);
+        string dataPath = Path.Combine(path, UsuarioConectado.ToLower() + ext);
         BinaryFormatter formateador = new BinaryFormatter();
         using (FileStream fs = File.Open(dataPath, FileMode.OpenOrCreate))
         {
@@ -224,7 +223,7 @@ public class GameManager : MonoBehaviour {
     static string[] GetFilePaths()
     {
         const string carpeta = "Guardados";
-        string ext = PJ.Nombre+".dat";
+        string ext = UsuarioConectado.ToLower() + ".dat";
         string path = Application.persistentDataPath + "/" + carpeta;
         return Directory.GetFiles(path, ext);
     }
@@ -237,6 +236,36 @@ public class GameManager : MonoBehaviour {
     #endregion
     #region Control de Menus
     static bool opciones;
+    public void VerificarGuardado(bool carga)
+    {
+        bool partida = false;
+        if (GetFilePaths().Length == 0)
+        {
+            GameObject.Find("btn_Partida").GetComponentInChildren<Text>().text = "Nueva Partida";
+            partida = false;
+        }
+        else
+        {
+            GameObject.Find("btn_Partida").GetComponentInChildren<Text>().text = "Continuar";
+            partida = true;
+        }
+        if (carga)
+        {
+            switch (partida)
+            {
+                case true:
+                    info = CargarPartida();
+                    SceneManager.LoadScene(info.mapaActual);
+                    PosMapa.x = info.posActualMapa[0];
+                    PosMapa.y = info.posActualMapa[1];
+                    break;
+                case false:
+                    SceneManager.LoadScene("Mapa");
+                    break;
+            }
+        }
+        
+    }
     public void Volumen()
     {
         if (opciones || SceneManager.GetActiveScene().name == "MainMenu")
@@ -261,6 +290,18 @@ public class GameManager : MonoBehaviour {
             };
             Screen.SetResolution(resFinal[0], resFinal[1], FullScreenMode.Windowed);
         }
+    }
+    public void Graficos()
+    {
+        if (opciones || SceneManager.GetActiveScene().name == "MainMenu")
+        {
+            Dropdown res = GameObject.Find("Graficos").GetComponent<Dropdown>();
+            QualitySettings.SetQualityLevel(res.value);
+        }
+    }
+    public void CerrarJuego()
+    {
+        Application.Quit();
     }
     #endregion
 }

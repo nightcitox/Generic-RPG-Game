@@ -12,6 +12,13 @@ public class LogManager : MonoBehaviour {
     {
         StartCoroutine(rutina);
     }
+    IEnumerator CerrarSesion()
+    {
+        GameManager.sesion = false;
+        GameManager.UsuarioConectado = "";
+        SceneManager.LoadScene("Login");
+        yield return true;
+    }
     IEnumerator Logearse()
     {
         WWWForm formulario = new WWWForm();
@@ -21,19 +28,25 @@ public class LogManager : MonoBehaviour {
         formulario.AddField("contraseña", obj.text);
         WWW link = new WWW("http://localhost/ConexionesSQL/login.php", formulario);
         yield return link;
+        string msg = "";
         switch (link.text)
         {
             case "0":
                 print("Logueado exitosamente.");
+                obj = Inputs[0].GetComponent<InputField>();
+                GameManager.UsuarioConectado = obj.text;
+                GameManager.sesion = true;
                 SceneManager.LoadScene("MainMenu");
                 break;
             case "2":
-                print("El usuario es incorrecto.");
+                msg = "El usuario es incorrecto.";
                 break;
             case "3":
-                print("La contraseña es incorrecta.");
+                msg = "La contraseña es incorrecta.";
                 break;
         }
+        Submit.interactable = false;
+        GameObject.Find("LoginMSG").GetComponent<Text>().text = msg;
     }
     IEnumerator Registrar()
     {
@@ -73,6 +86,7 @@ public class LogManager : MonoBehaviour {
         {
             print("Hubo un error. Error #"+link.text);
         }
+        Submit.interactable = false;
     }
     public void Verificar()
     {
