@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class Objeto : MonoBehaviour {
+public class Objeto : MonoBehaviour{
     #region Propiedades
     public PlanObjeto item;
     private string nombre;
@@ -63,6 +63,18 @@ public class Objeto : MonoBehaviour {
             }
             Destroy(gameObject);
         }
+        GameObject seleccionado = EventSystem.current.currentSelectedGameObject;
+        print(seleccionado.GetComponentInParent<Objeto>());
+        print(BotonUtilizar.name);
+        if(seleccionado.GetComponentInParent<Objeto>() == this)
+        {
+            Seleccionar();
+        }
+    }
+    void Seleccionar()
+    {
+        print("Seleccionado " + gameObject.name);
+        GameObject.Find("Inventario").transform.Find("Descripcion").transform.Find("Text").gameObject.GetComponent<Text>().text = descripcion;
     }
     public void Inicializar()
     {

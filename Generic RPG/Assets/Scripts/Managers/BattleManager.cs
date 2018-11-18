@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class BattleManager : MonoBehaviour {
-    #region propiedades
+    #region Propiedades
     public Personaje pj;
     public Enemigo EN1;
     private Mapa zona;
@@ -28,7 +28,7 @@ public class BattleManager : MonoBehaviour {
         Decision
     }
     #endregion
-    #region elementos
+    #region Elementos
     private Text texto;
     private Button boton;
     private RectTransform vidaPJ;
@@ -106,6 +106,7 @@ public class BattleManager : MonoBehaviour {
         esperas = false;
         finalizar = 0;
         accionespj = AccionesPJ.Decision;
+        GameObject.Find("Atacar").GetComponent<Button>().Select();
     }
     void Update()
     {
@@ -120,14 +121,12 @@ public class BattleManager : MonoBehaviour {
             StartCoroutine("BarraAliado");
             StartCoroutine("BarraEnemigos");
         }
-        if (Input.GetAxis("Cancel") > 0 && accionespj == AccionesPJ.Decision)
+        if (InputManager.KeyDown("Cancelar") && accionespj == AccionesPJ.Decision)
         {
             GetComponent<Inventario>().Cerrar();
             GetComponent<SkillManager>().Cerrar();
+            BotonesON();
         }
-        print(finalizar);
-        print(turno);
-        print(accionespj);
     }
     #endregion
     #region Métodos
@@ -154,7 +153,6 @@ public class BattleManager : MonoBehaviour {
     }
     public void DecidirTurnos()
     {
-        print(pj.SPE1 + " : " + EN1.Spe);
         if (accionespj != AccionesPJ.Decision)
         {
             if (Turno1 == Turno.Enemigo)
@@ -185,6 +183,15 @@ public class BattleManager : MonoBehaviour {
         }
         StartCoroutine(Acciones());
     }
+    void BotonesON()
+    {
+        Button[] listado = GameObject.Find("Panel").GetComponentsInChildren<Button>();
+        foreach (Button x in listado)
+        {
+            x.interactable = true;
+            GameObject.FindObjectOfType<BattleManager>().Texto.text = "¿Qué vas a hacer?";
+        }
+    }
     public void AccionesdelPJ(string accion)
     {
         foreach(AccionesPJ x in (AccionesPJ[])System.Enum.GetValues(typeof(AccionesPJ)))
@@ -197,7 +204,7 @@ public class BattleManager : MonoBehaviour {
         }
     }
     #endregion
-    #region rutinas
+    #region Rutinas
     IEnumerator Acciones()
     {
         if(accionespj != AccionesPJ.Decision)
@@ -285,7 +292,7 @@ public class BattleManager : MonoBehaviour {
     IEnumerator BarraAliado()
     {
         //Barra de HP
-        GameObject.Find("BarraPJHP").transform.Find("Centro").transform.Find("HP").GetComponent<Text>().text = "HP - " + pj.HP1.ToString();
+        GameObject.Find("BarraPJHP").transform.Find("Centro").transform.Find("HP").GetComponent<Text>().text = "HP " + pj.HP1.ToString();
         float alto = vidaPJ.rect.height;
         float ancho = 300 * (pj.HP1 / (float)pj.MaxHP1);
         float movimiento = (vidaPJ.rect.width - ancho) / 2f;
@@ -295,7 +302,7 @@ public class BattleManager : MonoBehaviour {
             vidaPJ.anchoredPosition = new Vector2(vidaPJ.anchoredPosition.x - movimiento, vidaPJ.anchoredPosition.y);
         }
         //Barra de MP
-        GameObject.Find("BarraPJMP").transform.Find("Centro").transform.Find("MP").GetComponent<Text>().text = "MP - " + pj.MP1.ToString();
+        GameObject.Find("BarraPJMP").transform.Find("Centro").transform.Find("MP").GetComponent<Text>().text = "MP " + pj.MP1.ToString();
         float altoMP = manaPJ.rect.height;
         float anchoMP = 300 * (pj.MP1 / (float)pj.MaxMP1);
         float movimientoMP = (manaPJ.rect.width - anchoMP) / 2f;
@@ -308,7 +315,7 @@ public class BattleManager : MonoBehaviour {
     }
     IEnumerator BarraEnemigos()
     {
-        GameObject.Find("BarraENM1").transform.Find("Centro").transform.Find("HP").GetComponent<Text>().text = "HP - " + EN1.Hp.ToString();
+        GameObject.Find("BarraENM1").transform.Find("Centro").transform.Find("HP").GetComponent<Text>().text = "HP " + EN1.Hp.ToString();
         float alto = vidaEn1.rect.height;
         float ancho = 300 * (EN1.Hp / (float)EN1.Maxhp);
         float movimiento = (vidaEn1.rect.width - ancho) / 2f;
@@ -455,7 +462,6 @@ public class BattleManager : MonoBehaviour {
             yield return new WaitForSeconds(5f);
             GameManager.Experiencia += Mathf.RoundToInt(EN1.Exp);
             GameManager.PJ = pj;
-            print(GameManager.PJ.HP1);
             SceneManager.LoadScene("Mapa");
         }
         else if (pj.HP1 <= 0)

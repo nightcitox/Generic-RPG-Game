@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -160,7 +161,7 @@ public class Personaje : MonoBehaviour {
         }
     }
     #endregion
-    // Use this for initialization
+    #region Start y Update
     void Start () {
         for(int i = 0; i < 4; i++)
         {
@@ -190,9 +191,11 @@ public class Personaje : MonoBehaviour {
             timer += Time.deltaTime;
         }
     }
+    #endregion
+    #region Métodos Unity
     void OnCollisionStay2D(Collision2D col)
     {
-        col.rigidbody.AddForce(-0.1F * col.rigidbody.velocity);
+        col.otherRigidbody.AddForce(-0.1F * col.otherRigidbody.velocity);
     }
     void OnTriggerEnter2D(Collider2D col)
     {
@@ -206,7 +209,8 @@ public class Personaje : MonoBehaviour {
         dentro = false;
         timer = 0f;
     }
-    // Update is called once per frame
+    #endregion
+    #region Métodos
     public void Buff(string stat, int cant)
     {
         switch (stat)
@@ -276,30 +280,33 @@ public class Personaje : MonoBehaviour {
         DEF1 = Mathf.RoundToInt(((nivel - 1) * .25f) * clase.baseDEF + clase.baseDEF);
         SPE1 = Mathf.RoundToInt(((nivel - 1) * .25f) * clase.baseSPE + clase.baseSPE);
     }
-
     void Movimiento()
     {
         Animator mov = GetComponent<Animator>();
         if(puedeMoverse == true) {
             moviendose = true;
-            float VelX = (Input.GetAxis("Horizontal") * mov_spe) * Time.deltaTime;
-            float VelY = (Input.GetAxis("Vertical") * mov_spe) * Time.deltaTime;
-            if(VelX > 0)
+            float VelX = 0;
+            float VelY = 0;
+            if(InputManager.Key("Derecha"))
             {
+                VelX = (mov_spe) * Time.deltaTime;
                 VelY = 0;
                 UltimaPos = 0.5f;
-            }else if (VelY > 0)
+            }else if (InputManager.Key("Arriba"))
             {
+                VelY = (mov_spe) * Time.deltaTime;
                 VelX = 0;
                 UltimaPos = 0.75f;
             }
-            else if (VelX < 0)
+            else if (InputManager.Key("Izquierda"))
             {
+                VelX = (mov_spe*-1) * Time.deltaTime;
                 VelY = 0;
                 UltimaPos = 0.25f;
             }
-            else if (VelY < 0)
+            else if (InputManager.Key("Abajo"))
             {
+                VelY = (mov_spe*-1) * Time.deltaTime;
                 VelX = 0;
                 UltimaPos = 0f;
             }
@@ -309,11 +316,12 @@ public class Personaje : MonoBehaviour {
             mov.SetFloat("Mov Y", VelY);
             //moviendose = false;
         }
-        if(Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Vertical") == 0)
+        if(!InputManager.Key("Derecha") && !InputManager.Key("Izquierda") && !InputManager.Key("Arriba") && !InputManager.Key("Abajo"))
         {
             moviendose = false;
             mov.SetBool("Moviendose", false);
             mov.Play("Nada", 0, UltimaPos);
         }
     }
+    #endregion
 }

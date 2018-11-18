@@ -14,11 +14,11 @@ MonoBehaviour:
   nombre: Paracetamol
   descripcion: "El paracetamol, tambi\xE9n conocido como acetaminof\xE9n o acetaminofeno,
     es un f\xE1rmaco con propiedades analg\xE9sicas y antipir\xE9ticas utilizado principalmente
-    para tratar la fiebre y el dolor leve y moderado"
+    para tratar la fiebre y el dolor leve y moderado."
   nivelRestriccion: 0
   efecto: 0
   tipo: 1
-  icono: {fileID: 21300000, guid: 50f1a29b5158bfd4e8fc455bbc2f5bbf, type: 3}
+  icono: {fileID: 21300000, guid: 3f6fbdff379519149adc6947133d1c65, type: 3}
   reutilizable: 0
-  cantidadEfecto: -15
+  cantidadEfecto: 15
   objetivoEfecto: 0

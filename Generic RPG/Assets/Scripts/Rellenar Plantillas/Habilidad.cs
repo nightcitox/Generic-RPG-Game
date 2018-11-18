@@ -140,7 +140,6 @@ public class Habilidad : MonoBehaviour {
     public void Start()
     {
         BotonHabilidad = GetComponent<Button>();
-        print(BotonHabilidad.name);
         BotonHabilidad.onClick.AddListener(Utilizar);
         nombre = habilidad.nombre;
         BaseDMG = Hab.baseDMG;
@@ -199,7 +198,6 @@ public class Habilidad : MonoBehaviour {
             int daño = 0;
             if (pj.MP1 >= MPUse)
             {
-                print("La usa");
                 string[] mensaje = new string[2];
                 bm.GetComponentInChildren<AudioSource>().PlayOneShot(sfx);
                 mensaje[0] = pj.Nombre + " ha utilizado " + nombre + ".";
@@ -249,7 +247,6 @@ public class Habilidad : MonoBehaviour {
                         }
                         break;
                 }
-                print("Correcto");
                 bm.StartCoroutine(bm.Esperar(null, mensaje, daño));
             }
         }

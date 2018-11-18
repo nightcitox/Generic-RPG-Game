@@ -16,6 +16,7 @@ public class NPC : MonoBehaviour {
     bool chatIniciado;
     int index;
     bool puedeContinuar;
+    bool MisionActiva;
     #endregion
     void Start()
     {
@@ -24,14 +25,11 @@ public class NPC : MonoBehaviour {
     }
     void Update()
     {
-        print("Interaccion: " + interaccion);
-        print("Puede Continuar: " + puedeContinuar);
-        print("Chat Iniciado: " + chatIniciado);
         if (interaccion)
         {
             //Aquí coloco que cuando entra en colisión y presiona el botón denominado como Submit
             //haga todo el proceso de los diálogos pero OJO siempre y cuando esté en colisión y permaneza así.
-            if (Input.GetKeyUp(KeyCode.Z))
+            if (InputManager.KeyDown("Aceptar"))
             {
                 GameObject Holder = Instantiate(GameManager.DialogueHolder, FindObjectOfType<Image>().transform);
                 Holder.name = "Holder";
@@ -41,9 +39,7 @@ public class NPC : MonoBehaviour {
                 FindObjectOfType<AudioSource>().PlayOneShot(GUI);
                 index = 0;
                 //Primero busco el objeto de Personaje.
-                Personaje movimiento = GameObject.Find("Personaje 1").GetComponent<Personaje>();
-                //Ahora llamo al personaje y cambio la propiedad de "PuedeMoverse" a false pa que no se mueva durante el diálogo.
-                movimiento.puedeMoverse = false;
+                GameObject.FindGameObjectWithTag("Player").GetComponent<Personaje>().puedeMoverse = false;
                 //Si hay más de un diálogo presente en el sistema del NPC se filtra para que funcionen todos.
                 char[] tex = dialogos.dialogos[index].ToCharArray();
                 StartCoroutine(TextoCambiante(tex));
@@ -51,7 +47,7 @@ public class NPC : MonoBehaviour {
             }
         }else if (chatIniciado)
         {
-            if (Input.GetKeyUp(KeyCode.Z) && puedeContinuar)
+            if (InputManager.KeyDown("Aceptar") && puedeContinuar)
             {
                 AudioClip GUI = Resources.Load<AudioClip>("SFX/GUI/Ogg/Confirm_tones/style2/confirm_style_2_002");
                 FindObjectOfType<AudioSource>().PlayOneShot(GUI);
@@ -72,18 +68,24 @@ public class NPC : MonoBehaviour {
         else
         {
             print("No quedan más diálogos");
-            chatIniciado = false;
-            GameObject.Find("Personaje 1").GetComponent<Personaje>().puedeMoverse = true;
-            interaccion = true;
-            puedeContinuar = false;
             if (dialogos.tipo == PlanDialogo.TipoDialogo.ConOpciones)
             {
+                InputManager.GUIActivo = true;
                 GameObject.Find("Holder").transform.Find("Opciones").gameObject.SetActive(true);
+                Button con = GameObject.Find("Confirmar").GetComponent<Button>();
+                con.Select();
+                con.onClick.AddListener(CrearMision);
+                Button negar = GameObject.Find("Negar").GetComponent<Button>();
+                negar.onClick.AddListener(Salir);
             }
             else
             {
                 texto.text = "";
                 Destroy(GameObject.Find("Holder"));
+                chatIniciado = false;
+                GameObject.FindGameObjectWithTag("Player").GetComponent<Personaje>().puedeMoverse = true;
+                interaccion = true;
+                puedeContinuar = false;
             }
         }
     }
@@ -102,17 +104,32 @@ public class NPC : MonoBehaviour {
         for (int j = 0; j < tex.Length; j++)
         {
             texto.text = texto.text + tex[j];
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(0.032f);
         }
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
         puedeContinuar = true;
         chatIniciado = true;
+    }
+    void Salir()
+    {
+        print("Uwu");
+        chatIniciado = false;
+        GameObject.FindGameObjectWithTag("Player").GetComponent<Personaje>().puedeMoverse = true;
+        interaccion = true;
+        puedeContinuar = false;
+        Destroy(GameObject.Find("Holder"));
     }
     public void CrearMision()
     {
         //En este, se crea la misión y se redirige al GameManager para que se coloque como misión actual y se pueda
         //cumplir el objetivo de la misma.
+        print("Fleto");
         GameManager.mision = mision;
+        chatIniciado = false;
+        GameObject.FindGameObjectWithTag("Player").GetComponent<Personaje>().puedeMoverse = true;
+        interaccion = true;
+        puedeContinuar = false;
+        Destroy(GameObject.Find("Holder"));
     }
     public void AsignarMision(PlanMision asigMision)
     {

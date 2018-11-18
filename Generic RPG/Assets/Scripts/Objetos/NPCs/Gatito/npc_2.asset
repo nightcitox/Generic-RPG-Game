@@ -13,4 +13,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nombre: Gatito Raro
   dialogos: {fileID: 11400000, guid: c187a37f1fce84848a5467c510e4e8cb, type: 2}
-  misionesNPC: []
+  misionesNPC:
+  - {fileID: 0}
