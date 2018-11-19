@@ -199,9 +199,23 @@ public class Personaje : MonoBehaviour {
     }
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.CompareTag("Encuentros") == false ) { return; }
-        dentro = true;
-        GameObject.Find("Zona Encuentros").GetComponent<Mapa>().CalcularProbabilidad();
+        if (col.gameObject.CompareTag("Encuentros") == true )
+        {
+            dentro = true;
+            GameObject.Find("Zona Encuentros").GetComponent<Mapa>().CalcularProbabilidad();
+        }
+        else if(col.gameObject.CompareTag("TP") == true)
+        {
+            SceneManager.LoadScene(col.gameObject.name);
+        }
+        else if(col.gameObject.CompareTag("Evento") == true)
+        {
+            col.gameObject.GetComponent<Evento>().Accionar();
+        }
+        else
+        {
+            return;
+        }
     }
     void OnTriggerExit2D(Collider2D col)
     {

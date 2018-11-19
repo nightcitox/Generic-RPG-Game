@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Encuentros
   - SFX
+  - TP
   layers:
   - Default
   - TransparentFX

@@ -76,7 +76,7 @@ public class GameManager : MonoBehaviour {
     }
 	void Update () {
         //Sistema de Guardado.
-        if (Input.GetKeyDown(KeyCode.H))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             info.posActualMapa = new float[2]
             {
@@ -92,7 +92,7 @@ public class GameManager : MonoBehaviour {
             GuardarPartida();
         }
         //Sistema de Cargado.
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Delete))
         {
             info = CargarPartida();
             GameObject.Find("Personaje").GetComponent<Transform>().localPosition = new Vector2(info.posActualMapa[0], info.posActualMapa[1]);

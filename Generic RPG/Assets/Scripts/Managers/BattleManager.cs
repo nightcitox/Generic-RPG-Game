@@ -352,7 +352,6 @@ public class BattleManager : MonoBehaviour {
                 {
                     Texto.text = "¡Has recibido " + daño + " de daño!";
                 }
-                pj.HP1 = pj.HP1 - daño;
                 anim.SetTrigger("Ataque");
                 GameObject.Find("Daño").GetComponent<Text>().text = "-" + daño;
                 dmg.SetTrigger("Personaje");
@@ -361,6 +360,7 @@ public class BattleManager : MonoBehaviour {
                 GameObject.Find("SFX").GetComponent<AudioSource>().PlayOneShot(oof);
                 yield return new WaitForSeconds(2.5f);
                 anim.ResetTrigger("Ataque");
+                pj.HP1 = pj.HP1 - daño;
                 break;
             case Turno.Personaje:
                 anim = GameObject.Find("Personaje").GetComponent<Animator>();
@@ -379,7 +379,6 @@ public class BattleManager : MonoBehaviour {
                 {
                     Texto.text = "¡Has realizado " + daño + " de daño!";
                 }
-                EN1.Hp = EN1.Hp - daño;
                 anim.SetTrigger("Ataque");
                 Animator en = GameObject.Find("Enemigo").GetComponent<Animator>();
                 GameObject.Find("Daño").GetComponent<Text>().text = "-"+daño;
@@ -387,6 +386,7 @@ public class BattleManager : MonoBehaviour {
                 en.SetTrigger("Sufrimiento");
                 GameObject.Find("Enemigo").GetComponent<AudioSource>().Play();
                 yield return new WaitForSeconds(2.5f);
+                EN1.Hp = EN1.Hp - daño;
                 en.ResetTrigger("Sufrimiento");
                 anim.ResetTrigger("Ataque");
                 break;
