@@ -6,7 +6,8 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-public class GameManager : MonoBehaviour {
+public class GameManager : MonoBehaviour, ISelectHandler, IDeselectHandler, IPointerEnterHandler, IPointerExitHandler
+{
     //Almacena los datos de la misión actual, diálogo actual para mostrarlo y el Personaje actual con su nivel, experiencia y estadísticas.
     #region Propiedades
     public static string UsuarioConectado;
@@ -23,9 +24,12 @@ public class GameManager : MonoBehaviour {
     public static bool menusActivos;
     public static bool partidaCargada;
     public static InfoPartida info = new InfoPartida();
+    public static float volumen = 1f;
     #endregion
     #region Métodos
-    void Start () {
+    void Awake () {
+        AudioSource bgm = GameObject.FindGameObjectWithTag("BGM").GetComponent<AudioSource>();
+        bgm.volume = volumen;
         if (SceneManager.GetActiveScene().name == "MainMenu")
             VerificarGuardado(false);
         if(FindObjectOfType<Personaje>() != null)
@@ -76,7 +80,6 @@ public class GameManager : MonoBehaviour {
         }
     }
 	void Update () {
-        print(InputManager.GUIActivo);
         //Sistema de Guardado.
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -116,6 +119,7 @@ public class GameManager : MonoBehaviour {
         if(InputManager.GUIActivo)
         {
             AudioSource sfx = GameObject.FindGameObjectWithTag("SFX").GetComponent<AudioSource>();
+            sfx.volume = volumen;
             PJ.puedeMoverse = false;
             AxisEventData ad = new AxisEventData(EventSystem.current);
             AudioClip cursor = Resources.Load<AudioClip>("SFX/GUI/Ogg/Cursor_tones/cursor_style_2");
@@ -160,7 +164,13 @@ public class GameManager : MonoBehaviour {
     void OnGUI()
     {
         if(SceneManager.GetActiveScene().name == "Batalla")
+        {
             InputManager.GUIActivo = true;
+        }
+        else
+        {
+            InputManager.GUIActivo = false;
+        }
     }
     void Menus()
     {
@@ -230,12 +240,6 @@ public class GameManager : MonoBehaviour {
         return Directory.GetFiles(path, ext);
     }
     #endregion
-    #region Cambiar Escenas
-    public void CambiarEscena(string scene)
-    {
-        SceneManager.LoadScene(scene);
-    }
-    #endregion
     #region Control de Menus
     static bool opciones;
     public void VerificarGuardado(bool carga)
@@ -276,6 +280,7 @@ public class GameManager : MonoBehaviour {
             foreach(AudioSource x in audios)
             {
                 x.volume = FindObjectOfType<Slider>().value;
+                volumen = x.volume;
             }
         }
     }
@@ -304,6 +309,27 @@ public class GameManager : MonoBehaviour {
     public void CerrarJuego()
     {
         Application.Quit();
+    }
+
+    public void OnSelect(BaseEventData eventData)
+    {
+        print(eventData.selectedObject);
+        Debug.Log("Cambio");
+    }
+
+    public void OnDeselect(BaseEventData eventData)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        throw new System.NotImplementedException();
     }
     #endregion
 }

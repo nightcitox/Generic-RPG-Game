@@ -16,4 +16,8 @@ MonoBehaviour:
   baseMP: 50
   baseATK: 150
   baseDEF: 15
-  baseSPE: 15
+  baseSPE: 150
+  battlerController: {fileID: 9100000, guid: 1011e39de7e997c499fe8f61f36126cc, type: 2}
+  battler: {fileID: 21300000, guid: c3c2a198d23d3f34488ae5622cef9cd9, type: 3}
+  mapController: {fileID: 9100000, guid: f4b141cf54fea5a4e9d76839e2e87caf, type: 2}
+  mapSprite: {fileID: 21300000, guid: 639f87d31924b0342aa155a7afb8a68d, type: 3}

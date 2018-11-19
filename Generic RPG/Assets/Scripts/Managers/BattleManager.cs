@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -294,7 +293,7 @@ public class BattleManager : MonoBehaviour {
         //Barra de HP
         GameObject.Find("BarraPJHP").transform.Find("Centro").transform.Find("HP").GetComponent<Text>().text = "HP " + pj.HP1.ToString();
         float alto = vidaPJ.rect.height;
-        float ancho = 300 * (pj.HP1 / (float)pj.MaxHP1);
+        float ancho = 120 * (pj.HP1 / (float)pj.MaxHP1);
         float movimiento = (vidaPJ.rect.width - ancho) / 2f;
         if (ancho != 0)
         {
@@ -304,7 +303,7 @@ public class BattleManager : MonoBehaviour {
         //Barra de MP
         GameObject.Find("BarraPJMP").transform.Find("Centro").transform.Find("MP").GetComponent<Text>().text = "MP " + pj.MP1.ToString();
         float altoMP = manaPJ.rect.height;
-        float anchoMP = 300 * (pj.MP1 / (float)pj.MaxMP1);
+        float anchoMP = 120 * (pj.MP1 / (float)pj.MaxMP1);
         float movimientoMP = (manaPJ.rect.width - anchoMP) / 2f;
         if (anchoMP != 0)
         {
@@ -317,7 +316,7 @@ public class BattleManager : MonoBehaviour {
     {
         GameObject.Find("BarraENM1").transform.Find("Centro").transform.Find("HP").GetComponent<Text>().text = "HP " + EN1.Hp.ToString();
         float alto = vidaEn1.rect.height;
-        float ancho = 300 * (EN1.Hp / (float)EN1.Maxhp);
+        float ancho = 120 * (EN1.Hp / (float)EN1.Maxhp);
         float movimiento = (vidaEn1.rect.width - ancho) / 2f;
         if (ancho != 0)
         {
@@ -360,7 +359,7 @@ public class BattleManager : MonoBehaviour {
                 GameObject.Find("SFX").GetComponent<AudioSource>().PlayOneShot(oof);
                 yield return new WaitForSeconds(2.5f);
                 anim.ResetTrigger("Ataque");
-                pj.HP1 = pj.HP1 - daño;
+                pj.HP1 -= daño;
                 break;
             case Turno.Personaje:
                 anim = GameObject.Find("Personaje").GetComponent<Animator>();
@@ -381,14 +380,16 @@ public class BattleManager : MonoBehaviour {
                 }
                 anim.SetTrigger("Ataque");
                 Animator en = GameObject.Find("Enemigo").GetComponent<Animator>();
-                GameObject.Find("Daño").GetComponent<Text>().text = "-"+daño;
+                yield return new WaitForSeconds(0.5f);
+                GameObject.Find("Daño").GetComponent<Text>().text = "-" + daño;
                 dmg.SetTrigger("Enemigo");
                 en.SetTrigger("Sufrimiento");
+                yield return new WaitForSeconds(0.5f);
                 GameObject.Find("Enemigo").GetComponent<AudioSource>().Play();
-                yield return new WaitForSeconds(2.5f);
-                EN1.Hp = EN1.Hp - daño;
+                yield return new WaitForSeconds(anim.GetCurrentAnimatorClipInfo(0)[0].clip.length - 1f);
                 en.ResetTrigger("Sufrimiento");
                 anim.ResetTrigger("Ataque");
+                EN1.Hp -= daño;
                 break;
         }
         GameObject.Find("Daño").GetComponent<Text>().text = "";
@@ -402,11 +403,13 @@ public class BattleManager : MonoBehaviour {
         Animator anim = GameObject.Find("Personaje").GetComponent<Animator>();
         anim.SetTrigger("Ataque");
         Animator en = GameObject.Find("Enemigo").GetComponent<Animator>();
+        yield return new WaitForSeconds(0.5f);
         GameObject.Find("Daño").GetComponent<Text>().text = "-" + daño;
         dmg.SetTrigger("Enemigo");
         en.SetTrigger("Sufrimiento");
+        yield return new WaitForSeconds(0.5f);
         GameObject.Find("Enemigo").GetComponent<AudioSource>().Play();
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(anim.GetCurrentAnimatorClipInfo(0)[0].clip.length-1f);
         en.ResetTrigger("Sufrimiento");
         anim.ResetTrigger("Ataque");
         if(Turno1 == Turno.Personaje)
@@ -438,9 +441,6 @@ public class BattleManager : MonoBehaviour {
             item.Cantidad -= 1;
             DecidirTurnos();
         }
-        else {
-            DecidirTurnos();
-        }
     }
     IEnumerator Victoria()
     {
@@ -448,10 +448,12 @@ public class BattleManager : MonoBehaviour {
         {
             StopCoroutine(BarraEnemigos());
             EN1.Hp = 1;
+            GameObject.Find("BarraENM1").transform.Find("Centro").transform.Find("HP").GetComponent<Text>().text = "HP 0";
             Destroy(GameObject.Find("Enemigo"));
+            yield return new WaitForSeconds(2f);
             AudioClip vic = Resources.Load<AudioClip>("Música/FF7 - Victory Fanfare");
-            GetComponent<AudioSource>().Stop();
-            GetComponent<AudioSource>().PlayOneShot(vic);
+            GameObject.FindGameObjectWithTag("BGM").GetComponent<AudioSource>().Stop();
+            GameObject.FindGameObjectWithTag("BGM").GetComponent<AudioSource>().PlayOneShot(vic);
             StopCoroutine(Acciones());
             BotonesOFF();
             Texto.text = "¡Has eliminado al enemigo!";

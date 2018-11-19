@@ -14,6 +14,7 @@ public class PlanObjeto : ScriptableObject {
     public bool reutilizable;
     public int cantidadEfecto;
     public Objetivo objetivoEfecto;
+    public PlanClase[] clasesPermitidas;
     #endregion
     public enum Objetivo
     {

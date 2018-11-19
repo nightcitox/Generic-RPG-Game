@@ -10,11 +10,18 @@ public class SkillManager : MonoBehaviour{
     private Personaje PJ;
     private List<PlanHabilidades> habilidadesPJ = new List<PlanHabilidades>();
     public GameObject HabSlot;
-
     void Start()
     {
-        PJ = GameManager.PJ;
-        ListadoHabilidades();
+        if(GameManager.PJ != null)
+        {
+            PJ = GameManager.PJ;
+            ListadoHabilidades();
+            print(PJ.Nombre);
+        }
+        else
+        {
+            print("No se encuentra PJ en GM");
+        }
     }
     public void ListadoHabilidades()
     {
@@ -28,15 +35,22 @@ public class SkillManager : MonoBehaviour{
                 AllSkills.Add(asset);
             }
         }
-        foreach (PlanHabilidades x in AllSkills)
+        if(AllSkills.Count > 0)
         {
-            foreach(PlanClase y in x.clases)
+            foreach (PlanHabilidades x in AllSkills)
             {
-                if (y == PJ.clase && PJ.Nivel >= x.lrnLVL)
+                foreach (PlanClase y in x.clases)
                 {
-                    habilidadesPJ.Add(x);
+                    if (y == PJ.clase && PJ.Nivel >= x.lrnLVL)
+                    {
+                        habilidadesPJ.Add(x);
+                    }
                 }
             }
+        }
+        else
+        {
+            print("No hay");
         }
     }
     public void Desplegar()

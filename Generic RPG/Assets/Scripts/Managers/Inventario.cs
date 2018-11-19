@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Inventario : MonoBehaviour {
-    public List<PlanObjeto> objetos;
+    public static List<PlanObjeto> objetos;
     public GameObject obj;
     private int espacios;
     private Component[] listado;

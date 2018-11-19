@@ -57,9 +57,9 @@ public class Objeto : MonoBehaviour{
         if (cantidad == 0 && item.tipo != PlanObjeto.Tipo.Equipo)
         {
             print("Se destruye");
-            foreach (PlanObjeto ob in GameObject.Find("GameManager").GetComponent<Inventario>().objetos)
+            foreach (PlanObjeto ob in Inventario.objetos)
             {
-                GameObject.Find("GameManager").GetComponent<Inventario>().objetos.Remove(item);
+                Inventario.objetos.Remove(item);
             }
             Destroy(gameObject);
         }

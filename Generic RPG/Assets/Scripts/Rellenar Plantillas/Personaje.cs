@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Personaje : MonoBehaviour {
@@ -168,6 +165,18 @@ public class Personaje : MonoBehaviour {
             bufos[i] = 0;
         }
         nombre = clase.nombre;
+        if (SceneManager.GetActiveScene().name == "Batalla")
+        {
+            GetComponent<SpriteRenderer>().sprite = clase.battler;
+            Animator anim = GetComponent<Animator>();
+            anim.runtimeAnimatorController = clase.battlerController as RuntimeAnimatorController;
+        }
+        else
+        {
+            GetComponent<SpriteRenderer>().sprite = clase.mapSprite;
+            Animator anim = GetComponent<Animator>();
+            anim.runtimeAnimatorController = clase.mapController as RuntimeAnimatorController;
+        }
     }
     void Update()
     {

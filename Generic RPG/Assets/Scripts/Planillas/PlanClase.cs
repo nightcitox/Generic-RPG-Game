@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 [CreateAssetMenu]
 public class PlanClase : ScriptableObject {
@@ -10,5 +11,9 @@ public class PlanClase : ScriptableObject {
     public int baseATK;
     public int baseDEF;
     public int baseSPE;
+    public AnimatorController battlerController;
+    public Sprite battler;
+    public AnimatorController mapController;
+    public Sprite mapSprite;
     #endregion
 }
