@@ -206,7 +206,8 @@ public class Personaje : MonoBehaviour {
         }
         else if(col.gameObject.CompareTag("TP") == true)
         {
-            SceneManager.LoadScene(col.gameObject.name);
+            Fader.nombreMapa = col.gameObject.name;
+            Fader.cambiarLvl = true;
         }
         else if(col.gameObject.CompareTag("Evento") == true)
         {

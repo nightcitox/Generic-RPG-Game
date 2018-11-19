@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour {
     static public Vector2 PosMapa;
     public GameObject Prefab;
     public static bool menusActivos;
+    public static bool partidaCargada;
     public static InfoPartida info = new InfoPartida();
     #endregion
     #region Métodos
@@ -70,11 +71,12 @@ public class GameManager : MonoBehaviour {
                 j += 1;
             }
             SubirNivel();
-            if (SceneManager.GetActiveScene().name != "Batalla")
+            if (SceneManager.GetActiveScene().name != "Batalla" && partidaCargada)
                 GameObject.Find("Personaje").transform.position = PosMapa;
         }
     }
 	void Update () {
+        print(InputManager.GUIActivo);
         //Sistema de Guardado.
         if (Input.GetKeyDown(KeyCode.Escape))
         {
