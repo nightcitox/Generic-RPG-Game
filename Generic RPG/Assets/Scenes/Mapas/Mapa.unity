@@ -334,11 +334,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4412291985819064, guid: aeaae0cdc438164409f77a9c65ef9ae7, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -4
+      value: -4.26
       objectReference: {fileID: 0}
     - target: {fileID: 4412291985819064, guid: aeaae0cdc438164409f77a9c65ef9ae7, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 1.42
       objectReference: {fileID: 0}
     - target: {fileID: 4412291985819064, guid: aeaae0cdc438164409f77a9c65ef9ae7, type: 2}
       propertyPath: m_LocalPosition.z
@@ -372,6 +372,65 @@ Prefab:
         type: 2}
       propertyPath: m_SortingOrder
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4412291985819064, guid: aeaae0cdc438164409f77a9c65ef9ae7, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4412291985819064, guid: aeaae0cdc438164409f77a9c65ef9ae7, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 95622101127524286, guid: aeaae0cdc438164409f77a9c65ef9ae7,
+        type: 2}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 212698790418675154, guid: aeaae0cdc438164409f77a9c65ef9ae7,
+        type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300714, guid: 1b8d56b8bd1eac041ba53c28bb90a708,
+        type: 3}
+    - target: {fileID: 61820736870575966, guid: aeaae0cdc438164409f77a9c65ef9ae7,
+        type: 2}
+      propertyPath: m_Offset.x
+      value: -0.0023593903
+      objectReference: {fileID: 0}
+    - target: {fileID: 61820736870575966, guid: aeaae0cdc438164409f77a9c65ef9ae7,
+        type: 2}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 0.16
+      objectReference: {fileID: 0}
+    - target: {fileID: 61820736870575966, guid: aeaae0cdc438164409f77a9c65ef9ae7,
+        type: 2}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 0.16
+      objectReference: {fileID: 0}
+    - target: {fileID: 61820736870575966, guid: aeaae0cdc438164409f77a9c65ef9ae7,
+        type: 2}
+      propertyPath: m_Size.x
+      value: 0.11368561
+      objectReference: {fileID: 0}
+    - target: {fileID: 61820736870575966, guid: aeaae0cdc438164409f77a9c65ef9ae7,
+        type: 2}
+      propertyPath: m_Offset.y
+      value: -0.054547727
+      objectReference: {fileID: 0}
+    - target: {fileID: 61820736870575966, guid: aeaae0cdc438164409f77a9c65ef9ae7,
+        type: 2}
+      propertyPath: m_Size.y
+      value: 0.052593827
+      objectReference: {fileID: 0}
+    - target: {fileID: 95622101127524286, guid: aeaae0cdc438164409f77a9c65ef9ae7,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 212698790418675154, guid: aeaae0cdc438164409f77a9c65ef9ae7,
+        type: 2}
+      propertyPath: m_FlipX
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aeaae0cdc438164409f77a9c65ef9ae7, type: 2}

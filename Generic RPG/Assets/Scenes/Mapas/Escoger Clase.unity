@@ -213,59 +213,6 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 74f8bcb3b15305f4198ffc75a7881e64, type: 2}
   m_IsPrefabAsset: 0
---- !u!1001 &626657765
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4015578151446092, guid: 23b14fbeccc311140a6b63d889304bbc, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4015578151446092, guid: 23b14fbeccc311140a6b63d889304bbc, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4015578151446092, guid: 23b14fbeccc311140a6b63d889304bbc, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4015578151446092, guid: 23b14fbeccc311140a6b63d889304bbc, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4015578151446092, guid: 23b14fbeccc311140a6b63d889304bbc, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4015578151446092, guid: 23b14fbeccc311140a6b63d889304bbc, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4015578151446092, guid: 23b14fbeccc311140a6b63d889304bbc, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4015578151446092, guid: 23b14fbeccc311140a6b63d889304bbc, type: 2}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114101703197767164, guid: 23b14fbeccc311140a6b63d889304bbc,
-        type: 2}
-      propertyPath: Prefab
-      value: 
-      objectReference: {fileID: 1798649347326302, guid: ced87bb2ab7c07f4fb92ab912cb43d98,
-        type: 2}
-    - target: {fileID: 114554055398014604, guid: 23b14fbeccc311140a6b63d889304bbc,
-        type: 2}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 23b14fbeccc311140a6b63d889304bbc, type: 2}
-  m_IsPrefabAsset: 0
 --- !u!1 &1334566117
 GameObject:
   m_ObjectHideFlags: 0
@@ -380,11 +327,24 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4425532275967246, guid: c40b8ed9fbff44e44b2d4f307a0ee1f6, type: 2}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1668441310573348, guid: c40b8ed9fbff44e44b2d4f307a0ee1f6, type: 2}
       propertyPath: m_Name
       value: Mapa
+      objectReference: {fileID: 0}
+    - target: {fileID: 61326421080803626, guid: c40b8ed9fbff44e44b2d4f307a0ee1f6,
+        type: 2}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1075331743217188, guid: c40b8ed9fbff44e44b2d4f307a0ee1f6, type: 2}
+      propertyPath: m_Name
+      value: Mapa
+      objectReference: {fileID: 0}
+    - target: {fileID: 1075331743217188, guid: c40b8ed9fbff44e44b2d4f307a0ee1f6, type: 2}
+      propertyPath: m_TagString
+      value: TP
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c40b8ed9fbff44e44b2d4f307a0ee1f6, type: 2}
@@ -495,7 +455,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4412291985819064, guid: aeaae0cdc438164409f77a9c65ef9ae7, type: 2}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1526561253876710, guid: aeaae0cdc438164409f77a9c65ef9ae7, type: 2}
       propertyPath: m_TagString
@@ -652,7 +612,7 @@ Transform:
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &2078959266
 BoxCollider2D:

@@ -177,6 +177,7 @@ public class Personaje : MonoBehaviour {
             Animator anim = GetComponent<Animator>();
             anim.runtimeAnimatorController = clase.mapController as RuntimeAnimatorController;
         }
+        puedeMoverse = true;
     }
     void Update()
     {
@@ -216,6 +217,7 @@ public class Personaje : MonoBehaviour {
         else if(col.gameObject.CompareTag("TP") == true)
         {
             Fader.nombreMapa = col.gameObject.name;
+            puedeMoverse = false;
             Fader.cambiarLvl = true;
         }
         else if(col.gameObject.CompareTag("Evento") == true)
