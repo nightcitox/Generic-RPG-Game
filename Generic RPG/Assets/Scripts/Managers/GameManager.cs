@@ -83,7 +83,10 @@ public class GameManager : MonoBehaviour
                 j += 1;
             }
             if (SceneManager.GetActiveScene().name != "Batalla" && partidaCargada)
+            {
                 GameObject.Find("Personaje").transform.position = PosMapa;
+                partidaCargada = false;
+            }
             if(SceneManager.GetActiveScene().name != "Batalla")
             {
                 SubirNivel();
@@ -95,24 +98,13 @@ public class GameManager : MonoBehaviour
         //Sistema de Guardado.
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            info.posActualMapa = new float[2]
-            {
-                GameObject.Find("Personaje").GetComponent<Transform>().localPosition.x,
-                GameObject.Find("Personaje").GetComponent<Transform>().localPosition.y
-            };
-            info.Experiencia = Experiencia;
-            info.nombre = PJ.Nombre;
-            info.clase = clasesita.nombre;
-            info.hp = PJ.HP1;
-            info.mp = PJ.MP1;
-            info.mapaActual = SceneManager.GetActiveScene().name;
+
             GuardarPartida();
         }
         //Sistema de Cargado.
         if (Input.GetKeyDown(KeyCode.Delete))
         {
-            info = CargarPartida();
-            GameObject.Find("Personaje").GetComponent<Transform>().localPosition = new Vector2(info.posActualMapa[0], info.posActualMapa[1]);
+
         }
         if (SceneManager.GetActiveScene().name != "Login" && SceneManager.GetActiveScene().name != "Registro" && SceneManager.GetActiveScene().name != "MainMenu")
         {
@@ -219,6 +211,19 @@ public class GameManager : MonoBehaviour
     #region Guardar y Cargar
     public void GuardarPartida()
     {
+        //Propiedades que guarda.
+        info.posActualMapa = new float[2]
+        {
+                GameObject.Find("Personaje").GetComponent<Transform>().localPosition.x,
+                GameObject.Find("Personaje").GetComponent<Transform>().localPosition.y
+        };
+        info.Experiencia = Experiencia;
+        info.nombre = PJ.Nombre;
+        info.clase = clasesita.nombre;
+        info.hp = PJ.HP1;
+        info.mp = PJ.MP1;
+        info.mapaActual = SceneManager.GetActiveScene().name;
+        //fin
         const string carpeta = "Guardados";
         const string ext = ".dat";
         string path = Application.persistentDataPath +"/"+ carpeta;
@@ -232,6 +237,7 @@ public class GameManager : MonoBehaviour
         {
             formateador.Serialize(fs, info);
         }
+        CerrarMenu();
     }
     public InfoPartida CargarPartida()
     {
@@ -281,6 +287,7 @@ public class GameManager : MonoBehaviour
                 case true:
                     info = CargarPartida();
                     InputManager.GUIActivo = false;
+                    partidaCargada = true;
                     SceneManager.LoadScene(info.mapaActual);
                     PosMapa.x = info.posActualMapa[0];
                     PosMapa.y = info.posActualMapa[1];

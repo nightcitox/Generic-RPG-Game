@@ -234,7 +234,6 @@ public class Habilidad : MonoBehaviour {
                                     pj.Buff(objetivoEfecto.ToString(), baseDMG);
                                 }
                             }
-<<<<<<< HEAD
                             break;
                         case PlanHabilidades.Tipo.Curacion:
                             pj.HP1 += BaseDMG;
@@ -242,18 +241,6 @@ public class Habilidad : MonoBehaviour {
                             break;
                         case PlanHabilidades.Tipo.Debufo:
                             foreach (PlanHabilidades.Objetivo x in (PlanHabilidades.Objetivo[])Enum.GetValues(typeof(PlanHabilidades.Objetivo)))
-=======
-                        }
-                        break;
-                    case PlanHabilidades.Tipo.Curacion:
-                        pj.HP1 += BaseDMG;
-                        mensaje[1] = "Te has curado " + BaseDMG + " puntos de vida.";
-                        break;
-                    case PlanHabilidades.Tipo.Debufo:
-                        foreach (PlanHabilidades.Objetivo x in (PlanHabilidades.Objetivo[])Enum.GetValues(typeof(PlanHabilidades.Objetivo)))
-                        {
-                            if (x == objetivoEfecto)
->>>>>>> 26b63ef5c1e4ad76bad5ed35527673780782ca42
                             {
                                 if (x == objetivoEfecto)
                                 {
