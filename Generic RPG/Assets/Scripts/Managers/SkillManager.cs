@@ -12,16 +12,9 @@ public class SkillManager : MonoBehaviour{
     public GameObject HabSlot;
     void Start()
     {
-        if(GameManager.PJ != null)
-        {
-            PJ = GameManager.PJ;
-            ListadoHabilidades();
-            print(PJ.Nombre);
-        }
-        else
-        {
-            print("No se encuentra PJ en GM");
-        }
+        print(GameManager.PJ.clase);
+        PJ = GameManager.PJ;
+        ListadoHabilidades();
     }
     public void ListadoHabilidades()
     {
@@ -48,35 +41,42 @@ public class SkillManager : MonoBehaviour{
                 }
             }
         }
-        else
+        if(habilidadesPJ.Count == 0)
         {
-            print("No hay");
+            print("No hay.");
         }
     }
     public void Desplegar()
     {
         if(GameObject.Find("Panel").transform.Find("PanelHabilidades").gameObject.activeSelf == false)
         {
-            if(SceneManager.GetActiveScene().name == "Batalla")
+            if(habilidadesPJ.Count == 0)
             {
-                Button[] listado = GameObject.Find("Panel").GetComponentsInChildren<Button>();
-                foreach (Button x in listado)
+                print("No tienes habilidades.");
+            }
+            else
+            {
+                if (SceneManager.GetActiveScene().name == "Batalla")
                 {
-                    x.interactable = false;
-                    GameObject.FindObjectOfType<BattleManager>().Texto.text = "Habilidades";
+                    Button[] listado = GameObject.Find("Panel").GetComponentsInChildren<Button>();
+                    foreach (Button x in listado)
+                    {
+                        x.interactable = false;
+                        GameObject.FindObjectOfType<BattleManager>().Texto.text = "Habilidades";
+                    }
                 }
+                GameObject.Find("Panel").transform.Find("PanelHabilidades").gameObject.SetActive(true);
+                GameObject habil;
+                for (int i = 0; i < habilidadesPJ.Count; i++)
+                {
+                    habil = Instantiate(HabSlot, new Vector2(0, 0), Quaternion.identity) as GameObject;
+                    habil.name = "Hab_" + (i + 1);
+                    Transform papi = GameObject.Find("Panel").transform.Find("PanelHabilidades").transform.Find("Grilla");
+                    habil.transform.SetParent(papi, false);
+                    habil.GetComponent<Habilidad>().Hab = habilidadesPJ[i];
+                }
+                GameObject.Find("Hab_1").GetComponent<Button>().Select();
             }
-            GameObject.Find("Panel").transform.Find("PanelHabilidades").gameObject.SetActive(true);
-            GameObject habil;
-            for (int i = 0; i < habilidadesPJ.Count; i++)
-            {
-                habil = Instantiate(HabSlot, new Vector2(0, 0), Quaternion.identity) as GameObject;
-                habil.name = "Hab_" + (i + 1);
-                Transform papi = GameObject.Find("Panel").transform.Find("PanelHabilidades").transform.Find("Grilla");
-                habil.transform.SetParent(papi, false);
-                habil.GetComponent<Habilidad>().Hab = habilidadesPJ[i];
-            }
-            GameObject.Find("Hab_1").GetComponent<Button>().Select();
         }
     }
     public void Cerrar()

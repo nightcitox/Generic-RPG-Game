@@ -11,7 +11,7 @@ public class PlanHabilidades : ScriptableObject {
     public string Descripcion;
     public Objetivo obj;
     public AudioClip sfx;
-    public Animation animacion;
+    public AnimationClip animacion;
     public enum Tipo
     {
         Bufo,

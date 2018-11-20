@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Name: Hab_1
   m_EditorClassIdentifier: 
   nombre: Sword of Destruction
-  baseDMG: 10
-  lrnLVL: 5
+  baseDMG: 150
+  lrnLVL: 1
   clases:
   - {fileID: 11400000, guid: e515ed67238fb424c864328bc172b80f, type: 2}
   tipo: 2
-  icono: {fileID: 21300000, guid: b68f9d059c3f8ef4ca09ae2d3436b019, type: 3}
+  icono: {fileID: 21300000, guid: 4a93dcc2988bca64ebacff3ce528571c, type: 3}
   Descripcion: "Espada de destrucci\xF3n masiva."
   obj: 0
   sfx: {fileID: 8300000, guid: fb3eb429d447d8b4baa598d5d8065799, type: 3}
-  MPUse: 25
+  animacion: {fileID: 7400000, guid: d666ff6689a97c4449f2ba3650862473, type: 2}
+  MPUse: 15

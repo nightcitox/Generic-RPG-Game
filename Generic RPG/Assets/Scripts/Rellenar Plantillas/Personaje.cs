@@ -315,6 +315,8 @@ public class Personaje : MonoBehaviour {
             float VelY = 0;
             if(InputManager.Key("Derecha"))
             {
+                print("Derecha");
+                GameObject.FindGameObjectWithTag("Jugador").transform.localScale = new Vector2(5f, 5f);
                 VelX = (mov_spe) * Time.deltaTime;
                 VelY = 0;
                 UltimaPos = 0.5f;
@@ -326,6 +328,8 @@ public class Personaje : MonoBehaviour {
             }
             else if (InputManager.Key("Izquierda"))
             {
+                print("Izquierda");
+                GameObject.FindGameObjectWithTag("Jugador").transform.localScale = new Vector2(-5f, 5f);
                 VelX = (mov_spe*-1) * Time.deltaTime;
                 VelY = 0;
                 UltimaPos = 0.25f;

@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour, ISelectHandler, IDeselectHandler, IPoi
     static public Personaje PJ;
     static public int Experiencia;
     private List<int> niveles;
-    public PlanClase clasesita;
+    public static PlanClase clasesita;
     static public Vector2 PosMapa;
     public GameObject Prefab;
     public static bool menusActivos;
@@ -32,9 +32,13 @@ public class GameManager : MonoBehaviour, ISelectHandler, IDeselectHandler, IPoi
         bgm.volume = volumen;
         if (SceneManager.GetActiveScene().name == "MainMenu")
             VerificarGuardado(false);
-        if(FindObjectOfType<Personaje>() != null)
-            PJ = GameObject.Find("Personaje").GetComponent<Personaje>();
-        if(PJ != null)
+        if (FindObjectOfType<Personaje>() != null)
+        {
+            PJ = GameObject.FindGameObjectWithTag("Jugador").GetComponent<Personaje>();
+            clasesita = PJ.clase;
+        }
+        print(PJ.Nombre);
+        if (PJ != null)
         {
             menusActivos = false;
             DialogueHolder = Prefab;
@@ -42,7 +46,7 @@ public class GameManager : MonoBehaviour, ISelectHandler, IDeselectHandler, IPoi
             {
                 PosMapa = new Vector2(0f, 0f);
             }
-            if (clasesita != null)
+            if (PJ.clase == null)
             {
                 PJ.clase = clasesita;
             }
@@ -74,9 +78,12 @@ public class GameManager : MonoBehaviour, ISelectHandler, IDeselectHandler, IPoi
             {
                 j += 1;
             }
-            SubirNivel();
             if (SceneManager.GetActiveScene().name != "Batalla" && partidaCargada)
                 GameObject.Find("Personaje").transform.position = PosMapa;
+            if(SceneManager.GetActiveScene().name != "Batalla")
+            {
+                SubirNivel();
+            }
         }
     }
 	void Update () {

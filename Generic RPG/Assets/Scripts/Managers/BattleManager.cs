@@ -97,6 +97,9 @@ public class BattleManager : MonoBehaviour {
     #region Start y Update
     void Start() {
         pj = GameManager.PJ;
+        Personaje pjBattle = GameObject.Find("Personaje").AddComponent<Personaje>();
+        pjBattle.puedeMoverse = false;
+        pjBattle.clase = pj.clase;
         Texto = GameObject.Find("Estado").GetComponent<Text>();
         vidaPJ = (RectTransform)GameObject.Find("BarraPJHP").gameObject.transform.Find("Centro");
         manaPJ = (RectTransform)GameObject.Find("BarraPJMP").gameObject.transform.Find("Centro");
@@ -397,8 +400,9 @@ public class BattleManager : MonoBehaviour {
         dmg.ResetTrigger("Personaje");
         DecidirTurnos();
     }
-    public IEnumerator Animacion(int daño)
+    public IEnumerator Animacion(int daño, AnimationClip animHab)
     {
+        Animator hab = GameObject.Find("AtaqueAnim").GetComponent<Animator>();
         Animator dmg = GameObject.Find("Daño").GetComponent<Animator>();
         Animator anim = GameObject.Find("Personaje").GetComponent<Animator>();
         anim.SetTrigger("Ataque");
@@ -407,6 +411,8 @@ public class BattleManager : MonoBehaviour {
         GameObject.Find("Daño").GetComponent<Text>().text = "-" + daño;
         dmg.SetTrigger("Enemigo");
         en.SetTrigger("Sufrimiento");
+        print(animHab.name);
+        hab.Play(animHab.name);
         yield return new WaitForSeconds(0.5f);
         GameObject.Find("Enemigo").GetComponent<AudioSource>().Play();
         yield return new WaitForSeconds(anim.GetCurrentAnimatorClipInfo(0)[0].clip.length-1f);
@@ -418,7 +424,7 @@ public class BattleManager : MonoBehaviour {
         }
         DecidirTurnos();
     } 
-    public IEnumerator Esperar(Objeto item, string[] mensaje, int daño)
+    public IEnumerator Esperar(Objeto item, string[] mensaje, int daño, AnimationClip habAnim)
     {
         esperas = true;
         BotonesOFF();
@@ -429,7 +435,7 @@ public class BattleManager : MonoBehaviour {
             {
                 if (daño != 0)
                 {
-                    StartCoroutine(Animacion(daño));
+                    StartCoroutine(Animacion(daño, habAnim));
                 }
             }
             yield return new WaitForSeconds(3f);
@@ -450,12 +456,12 @@ public class BattleManager : MonoBehaviour {
             EN1.Hp = 1;
             GameObject.Find("BarraENM1").transform.Find("Centro").transform.Find("HP").GetComponent<Text>().text = "HP 0";
             Destroy(GameObject.Find("Enemigo"));
+            StopCoroutine(Acciones());
+            BotonesOFF();
             yield return new WaitForSeconds(2f);
             AudioClip vic = Resources.Load<AudioClip>("Música/FF7 - Victory Fanfare");
             GameObject.FindGameObjectWithTag("BGM").GetComponent<AudioSource>().Stop();
             GameObject.FindGameObjectWithTag("BGM").GetComponent<AudioSource>().PlayOneShot(vic);
-            StopCoroutine(Acciones());
-            BotonesOFF();
             Texto.text = "¡Has eliminado al enemigo!";
             yield return new WaitForSeconds(3f);
             Texto.text = "¡Ganaste!";

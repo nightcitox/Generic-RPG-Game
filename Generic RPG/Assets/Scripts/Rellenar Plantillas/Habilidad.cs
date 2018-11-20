@@ -188,7 +188,6 @@ public class Habilidad : MonoBehaviour {
             else
             {
                 bm.HabUtilizada1 = this;
-                print(bm.HabUtilizada1.nombre);
                 bm.AccionesdelPJ("Habilidad");
             }
         }else if(bm.accionespj == BattleManager.AccionesPJ.Habilidad)
@@ -247,7 +246,7 @@ public class Habilidad : MonoBehaviour {
                         }
                         break;
                 }
-                bm.StartCoroutine(bm.Esperar(null, mensaje, daño));
+                bm.StartCoroutine(bm.Esperar(null, mensaje, daño, habilidad.animacion));
             }
         }
     }
