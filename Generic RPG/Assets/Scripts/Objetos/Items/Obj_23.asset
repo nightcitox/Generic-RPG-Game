@@ -9,15 +9,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 314ccfe44665ed741ae64c1070f1b812, type: 3}
-  m_Name: Obj_1
+  m_Name: Obj_23
   m_EditorClassIdentifier: 
-  nombre: "Poci\xF3n"
-  descripcion: "Objeto b\xE1sico de curaci\xF3n."
+  nombre: 
+  descripcion: 
   nivelRestriccion: 0
   efecto: 0
-  tipo: 1
-  icono: {fileID: 21300000, guid: 2a1c0d7225b11c64e92a2f975e2cd3b5, type: 3}
-  reutilizable: 1
-  cantidadEfecto: 20
+  tipo: 0
+  icono: {fileID: 0}
+  reutilizable: 0
+  cantidadEfecto: 0
   objetivoEfecto: 0
   clasesPermitidas: []
