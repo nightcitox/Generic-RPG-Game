@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db710ed3bf17c664db928c50c8f73699, type: 3}
+  m_Name: Hab_Guerrero_2
+  m_EditorClassIdentifier: 
+  nombre: "Espada r\xE1pida"
+  baseDMG: 10
+  lrnLVL: 8
+  clases:
+  - {fileID: 11400000, guid: e515ed67238fb424c864328bc172b80f, type: 2}
+  tipo: 2
+  icono: {fileID: 21300000, guid: 6013fb34e16eb8a459ef56cd8120427f, type: 3}
+  Descripcion: "Un ataque bien r\xE1pido uwu"
+  obj: 2
+  sfx: {fileID: 8300000, guid: fb3eb429d447d8b4baa598d5d8065799, type: 3}
+  animacion: {fileID: 0}
+  MPUse: 10

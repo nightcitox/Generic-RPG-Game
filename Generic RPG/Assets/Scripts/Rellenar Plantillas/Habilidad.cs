@@ -233,7 +233,7 @@ public class Habilidad : MonoBehaviour {
                         }
                         break;
                     case PlanHabilidades.Tipo.Curacion:
-                        pj.HP1 -= BaseDMG;
+                        pj.HP1 += BaseDMG;
                         mensaje[1] = "Te has curado " + BaseDMG + " puntos de vida.";
                         break;
                     case PlanHabilidades.Tipo.Debufo:
