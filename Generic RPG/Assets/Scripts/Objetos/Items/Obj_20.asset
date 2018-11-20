@@ -11,13 +11,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 314ccfe44665ed741ae64c1070f1b812, type: 3}
   m_Name: Obj_20
   m_EditorClassIdentifier: 
-  nombre: 
-  descripcion: 
-  nivelRestriccion: 0
-  efecto: 0
+  nombre: 'botas corrientes '
+  descripcion: botas sencillas y ergonomicas
+  nivelRestriccion: 1
+  efecto: 3
   tipo: 0
-  icono: {fileID: 0}
+  icono: {fileID: 21300000, guid: 7474ce92ccd11ba4993d2c1992570ce0, type: 3}
   reutilizable: 0
-  cantidadEfecto: 0
-  objetivoEfecto: 0
+  cantidadEfecto: 5
+  objetivoEfecto: 4
   clasesPermitidas: []

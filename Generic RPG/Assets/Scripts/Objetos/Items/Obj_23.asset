@@ -11,13 +11,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 314ccfe44665ed741ae64c1070f1b812, type: 3}
   m_Name: Obj_23
   m_EditorClassIdentifier: 
-  nombre: 
-  descripcion: 
-  nivelRestriccion: 0
-  efecto: 0
+  nombre: botas rusas
+  descripcion: Estas botas fueron encontrada a finales de la 2da guerra mundial
+  nivelRestriccion: 7
+  efecto: 3
   tipo: 0
-  icono: {fileID: 0}
+  icono: {fileID: 21300000, guid: 4dce9501dd393c84991ba25c4fc32708, type: 3}
   reutilizable: 0
-  cantidadEfecto: 0
-  objetivoEfecto: 0
+  cantidadEfecto: 20
+  objetivoEfecto: 4
   clasesPermitidas: []
