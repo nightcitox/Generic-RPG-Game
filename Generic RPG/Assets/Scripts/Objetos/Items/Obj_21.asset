@@ -11,13 +11,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 314ccfe44665ed741ae64c1070f1b812, type: 3}
   m_Name: Obj_21
   m_EditorClassIdentifier: 
-  nombre: 
-  descripcion: 
-  nivelRestriccion: 0
-  efecto: 0
+  nombre: botas reforzadas
+  descripcion: Estas botas te proteguen de clavos y objetos puntiagudos
+  nivelRestriccion: 3
+  efecto: 3
   tipo: 0
-  icono: {fileID: 0}
+  icono: {fileID: 21300000, guid: 484bcf371eba6774fb25eda2787b3f0d, type: 3}
   reutilizable: 0
-  cantidadEfecto: 0
-  objetivoEfecto: 0
+  cantidadEfecto: 10
+  objetivoEfecto: 4
   clasesPermitidas: []
