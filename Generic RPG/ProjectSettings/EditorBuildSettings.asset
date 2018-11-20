@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Interfaces/Batalla.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/Mapas/Escoger Clase.unity
+    guid: 1d9d5040f76cc1f4398c330603311c6d
   m_configObjects: {}

@@ -11,6 +11,7 @@ TagManager:
   - GM
   - Jugador
   - Enemigo
+  - Menu
   layers:
   - Default
   - TransparentFX

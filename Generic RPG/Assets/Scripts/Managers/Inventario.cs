@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Inventario : MonoBehaviour {
-    public static List<PlanObjeto> objetos;
+    public static List<PlanObjeto> objetos = new List<PlanObjeto>();
     public GameObject obj;
     private int espacios;
     private Component[] listado;
@@ -60,58 +60,61 @@ public class Inventario : MonoBehaviour {
             }
             GameObject.Find("Panel").transform.Find("Inventario").gameObject.SetActive(true);
             contador = 1;
-            for (int i = 0; i < objetos.Count - 1; i++)
+            if(objetos.Count != 0)
             {
-                obj.GetComponent<Objeto>().item = objetos[i];
-                obj.GetComponent<Objeto>().Calculo(objetos);
-                GameObject objeto;
-                bool existe = false;
-                listado = GameObject.Find("Contenido").GetComponentsInChildren<Objeto>();
-                foreach (Objeto ob in listado)
+                for (int i = 0; i < objetos.Count - 1; i++)
                 {
-                    print(ob.item.nombre);
-                    if (ob.item == objetos[i])
+                    obj.GetComponent<Objeto>().item = objetos[i];
+                    obj.GetComponent<Objeto>().Calculo(objetos);
+                    GameObject objeto;
+                    bool existe = false;
+                    listado = GameObject.Find("Contenido").GetComponentsInChildren<Objeto>();
+                    foreach (Objeto ob in listado)
                     {
-                        print("Existe");
-                        existe = true;
+                        print(ob.item.nombre);
+                        if (ob.item == objetos[i])
+                        {
+                            print("Existe");
+                            existe = true;
+                        }
+                        else
+                        {
+                            print("No existe.");
+                        }
+                    }
+                    if (existe == true)
+                    {
+                        if (obj.GetComponent<Objeto>().item.tipo == PlanObjeto.Tipo.Equipo)
+                        {
+                            print("Equipo");
+                            objeto = Instantiate(obj, new Vector2(0, 0), Quaternion.identity) as GameObject;
+                            objeto.name = "Obj_" + contador;
+                            objeto.transform.SetParent(GameObject.Find("Contenido").transform, false);
+                            objeto.GetComponent<Objeto>().Calculo(objetos);
+                            contador += 1;
+                        }
                     }
                     else
                     {
-                        print("No existe.");
-                    }
-                }
-                if (existe == true)
-                {
-                    if(obj.GetComponent<Objeto>().item.tipo == PlanObjeto.Tipo.Equipo)
-                    {
-                        print("Equipo");
-                        objeto = Instantiate(obj, new Vector2(0, 0), Quaternion.identity) as GameObject;
-                        objeto.name = "Obj_" + contador;
-                        objeto.transform.SetParent(GameObject.Find("Contenido").transform, false);
-                        objeto.GetComponent<Objeto>().Calculo(objetos);
-                        contador += 1;
-                    }
-                }
-                else
-                {
-                    Scene actual = SceneManager.GetActiveScene();
-                    if (obj.GetComponent<Objeto>().item.tipo == PlanObjeto.Tipo.Consumible && actual.name == "Batalla")
-                    {
-                        print("Está en batalla");
-                        objeto = Instantiate(obj, new Vector2(0, 0), Quaternion.identity) as GameObject;
-                        objeto.name = "Obj_" + contador;
-                        objeto.transform.SetParent(GameObject.Find("Contenido").transform, false);
-                        objeto.GetComponent<Objeto>().Calculo(objetos);
-                        contador += 1;
-                    }
-                    else if (actual.name != "Batalla")
-                    {
-                        print("No está en batalla");
-                        objeto = Instantiate(obj, new Vector2(0, 0), Quaternion.identity) as GameObject;
-                        objeto.name = "Obj_" + contador;
-                        objeto.transform.SetParent(GameObject.Find("Contenido").transform, false);
-                        objeto.GetComponent<Objeto>().Calculo(objetos);
-                        contador += 1;
+                        Scene actual = SceneManager.GetActiveScene();
+                        if (obj.GetComponent<Objeto>().item.tipo == PlanObjeto.Tipo.Consumible && actual.name == "Batalla")
+                        {
+                            print("Está en batalla");
+                            objeto = Instantiate(obj, new Vector2(0, 0), Quaternion.identity) as GameObject;
+                            objeto.name = "Obj_" + contador;
+                            objeto.transform.SetParent(GameObject.Find("Contenido").transform, false);
+                            objeto.GetComponent<Objeto>().Calculo(objetos);
+                            contador += 1;
+                        }
+                        else if (actual.name != "Batalla")
+                        {
+                            print("No está en batalla");
+                            objeto = Instantiate(obj, new Vector2(0, 0), Quaternion.identity) as GameObject;
+                            objeto.name = "Obj_" + contador;
+                            objeto.transform.SetParent(GameObject.Find("Contenido").transform, false);
+                            objeto.GetComponent<Objeto>().Calculo(objetos);
+                            contador += 1;
+                        }
                     }
                 }
             }

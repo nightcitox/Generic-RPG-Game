@@ -11,9 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82c89046838492b4491ad32d96499558, type: 3}
   m_Name: Enemigo_1
   m_EditorClassIdentifier: 
-  nombre: Resfriado
+  nombre: Slime Resfriado
   baseHP: 60
-  baseATK: 10
+  baseATK: 100
   baseDEF: 5
   baseSPE: 5
   exp: 500

@@ -62,7 +62,7 @@ public class SkillManager : MonoBehaviour{
                     foreach (Button x in listado)
                     {
                         x.interactable = false;
-                        GameObject.FindObjectOfType<BattleManager>().Texto.text = "Habilidades";
+                        FindObjectOfType<BattleManager>().Texto.text = "Habilidades";
                     }
                 }
                 GameObject.Find("Panel").transform.Find("PanelHabilidades").gameObject.SetActive(true);

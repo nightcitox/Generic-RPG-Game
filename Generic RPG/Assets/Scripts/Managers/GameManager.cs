@@ -6,18 +6,19 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-public class GameManager : MonoBehaviour, ISelectHandler, IDeselectHandler, IPointerEnterHandler, IPointerExitHandler
+public class GameManager : MonoBehaviour
 {
     //Almacena los datos de la misión actual, diálogo actual para mostrarlo y el Personaje actual con su nivel, experiencia y estadísticas.
     #region Propiedades
     public static string UsuarioConectado;
+    public Sprite imagenBoton;
     public static bool sesion;
     public static PlanMision mision;
     public static GameObject DialogueHolder;
     public static Inventario inventario;
     static public Personaje PJ;
     static public int Experiencia;
-    private List<int> niveles;
+    public static List<int> niveles;
     public static PlanClase clasesita;
     static public Vector2 PosMapa;
     public GameObject Prefab;
@@ -28,19 +29,22 @@ public class GameManager : MonoBehaviour, ISelectHandler, IDeselectHandler, IPoi
     #endregion
     #region Métodos
     void Awake () {
+        Experiencia = 500;
         AudioSource bgm = GameObject.FindGameObjectWithTag("BGM").GetComponent<AudioSource>();
         bgm.volume = volumen;
         if (SceneManager.GetActiveScene().name == "MainMenu")
+        {
+            InputManager.GUIActivo = true;
             VerificarGuardado(false);
+        }
         if (FindObjectOfType<Personaje>() != null)
         {
             PJ = GameObject.FindGameObjectWithTag("Jugador").GetComponent<Personaje>();
             clasesita = PJ.clase;
         }
-        print(PJ.Nombre);
         if (PJ != null)
         {
-            menusActivos = false;
+            menusActivos = true;
             DialogueHolder = Prefab;
             if (PosMapa == new Vector2(0, 0))
             {
@@ -87,6 +91,7 @@ public class GameManager : MonoBehaviour, ISelectHandler, IDeselectHandler, IPoi
         }
     }
 	void Update () {
+        print(menusActivos);
         //Sistema de Guardado.
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -109,16 +114,17 @@ public class GameManager : MonoBehaviour, ISelectHandler, IDeselectHandler, IPoi
             info = CargarPartida();
             GameObject.Find("Personaje").GetComponent<Transform>().localPosition = new Vector2(info.posActualMapa[0], info.posActualMapa[1]);
         }
-        if (InputManager.KeyDown("Menus") && menusActivos)
+        if (SceneManager.GetActiveScene().name != "Login" && SceneManager.GetActiveScene().name != "Registro" && SceneManager.GetActiveScene().name != "MainMenu")
         {
-            switch (inventario.Abierto)
+            GameObject menu = FindObjectOfType<Canvas>().transform.Find("MainMenu").transform.Find("General").gameObject;
+            print(menu.activeSelf);
+            if (InputManager.KeyDown("Menus") && menusActivos)
             {
-                case true:
-                    inventario.Cerrar();
-                    break;
-                case false:
-                    Menus();
-                    break;
+                AbrirMenu();
+            }
+            else if ((InputManager.KeyDown("Menus") || (InputManager.KeyDown("Cancelar"))) && !menusActivos && menu.activeSelf)
+            {
+                CerrarMenu();
             }
         }
         //Event System para la Interfaz con el Custom Input Manager.
@@ -127,40 +133,46 @@ public class GameManager : MonoBehaviour, ISelectHandler, IDeselectHandler, IPoi
         {
             AudioSource sfx = GameObject.FindGameObjectWithTag("SFX").GetComponent<AudioSource>();
             sfx.volume = volumen;
-            PJ.puedeMoverse = false;
+            if(PJ != null)
+                PJ.puedeMoverse = false;
             AxisEventData ad = new AxisEventData(EventSystem.current);
             AudioClip cursor = Resources.Load<AudioClip>("SFX/GUI/Ogg/Cursor_tones/cursor_style_2");
-            if (ad.selectedObject == null)
+            if (ad.selectedObject == null && SceneManager.GetActiveScene().name == "Batalla")
                 GameObject.Find("Atacar").GetComponent<Button>().Select();
-            if (InputManager.KeyDown("Arriba"))
+            if(ad.selectedObject != null)
             {
+                if (InputManager.KeyDown("Arriba"))
+                {
+                    ad.moveDir = MoveDirection.Up;
+                }
+                else if (InputManager.KeyDown("Abajo"))
+                {
+                    ad.moveDir = MoveDirection.Down;
+                }
+                else if (InputManager.KeyDown("Izquierda"))
+                {
+                    ad.moveDir = MoveDirection.Left;
+                }
+                else if (InputManager.KeyDown("Derecha"))
+                {
+                    ad.moveDir = MoveDirection.Right;
+                }
+                else if (InputManager.KeyDown("Aceptar"))
+                {
+                    cursor = Resources.Load<AudioClip>("SFX/GUI/Ogg/Confirm_tones/style2/confirm_style_2_002");
+                    
+                    ad.selectedObject.gameObject.GetComponent<Button>().OnSubmit(ad);
+                }
+                else
+                    return;
                 sfx.PlayOneShot(cursor);
-                ad.moveDir = MoveDirection.Up;
             }
-            else if (InputManager.KeyDown("Abajo"))
-            {
-                sfx.PlayOneShot(cursor);
-                ad.moveDir = MoveDirection.Down;
-            }
-            else if (InputManager.KeyDown("Izquierda"))
-            {
-                sfx.PlayOneShot(cursor);
-                ad.moveDir = MoveDirection.Left;
-            }
-            else if (InputManager.KeyDown("Derecha"))
-            {
-                sfx.PlayOneShot(cursor);
-                ad.moveDir = MoveDirection.Right;
-            }
-            else if (InputManager.KeyDown("Aceptar"))
-            {
-                cursor = Resources.Load<AudioClip>("SFX/GUI/Ogg/Confirm_tones/style2/confirm_style_2_002");
-                sfx.PlayOneShot(cursor);
-                ad.selectedObject.gameObject.GetComponent<Button>().OnSubmit(ad);
-            }
-            else
-                return;
             ExecuteEvents.Execute(EventSystem.current.currentSelectedGameObject, ad, ExecuteEvents.moveHandler);
+            GameObject menu = FindObjectOfType<Canvas>().transform.Find("MainMenu").gameObject;
+            if (menu.activeSelf)
+            {
+                MoverBotones(ad);
+            }
         }
         else if(PJ != null)
         {
@@ -170,18 +182,17 @@ public class GameManager : MonoBehaviour, ISelectHandler, IDeselectHandler, IPoi
     }
     void OnGUI()
     {
-        if(SceneManager.GetActiveScene().name == "Batalla")
+        if(SceneManager.GetActiveScene().name != "Login" && SceneManager.GetActiveScene().name != "Registro" && SceneManager.GetActiveScene().name != "MainMenu")
         {
-            InputManager.GUIActivo = true;
+            if (SceneManager.GetActiveScene().name == "Batalla" || FindObjectOfType<Canvas>().transform.Find("MainMenu").gameObject.activeSelf)
+            {
+                InputManager.GUIActivo = true;
+            }
+            else
+            {
+                InputManager.GUIActivo = false;
+            }
         }
-        else
-        {
-            InputManager.GUIActivo = false;
-        }
-    }
-    void Menus()
-    {
-        inventario.Abrir();
     }
     public void SubirNivel()
     {
@@ -206,7 +217,7 @@ public class GameManager : MonoBehaviour, ISelectHandler, IDeselectHandler, IPoi
     }
     #endregion
     #region Guardar y Cargar
-    public static void GuardarPartida()
+    public void GuardarPartida()
     {
         const string carpeta = "Guardados";
         const string ext = ".dat";
@@ -222,7 +233,7 @@ public class GameManager : MonoBehaviour, ISelectHandler, IDeselectHandler, IPoi
             formateador.Serialize(fs, info);
         }
     }
-    public static InfoPartida CargarPartida()
+    public InfoPartida CargarPartida()
     {
         string[] filePaths = GetFilePaths();
         if (filePaths.Length > 0)
@@ -248,10 +259,10 @@ public class GameManager : MonoBehaviour, ISelectHandler, IDeselectHandler, IPoi
     }
     #endregion
     #region Control de Menus
-    static bool opciones;
+    public static bool opciones;
+    bool partida;
     public void VerificarGuardado(bool carga)
     {
-        bool partida = false;
         if (GetFilePaths().Length == 0)
         {
             GameObject.Find("btn_Partida").GetComponentInChildren<Text>().text = "Nueva Partida";
@@ -262,22 +273,24 @@ public class GameManager : MonoBehaviour, ISelectHandler, IDeselectHandler, IPoi
             GameObject.Find("btn_Partida").GetComponentInChildren<Text>().text = "Continuar";
             partida = true;
         }
+        print(partida);
         if (carga)
         {
             switch (partida)
             {
                 case true:
                     info = CargarPartida();
+                    InputManager.GUIActivo = false;
                     SceneManager.LoadScene(info.mapaActual);
                     PosMapa.x = info.posActualMapa[0];
                     PosMapa.y = info.posActualMapa[1];
                     break;
                 case false:
-                    SceneManager.LoadScene("Mapa");
+                    InputManager.GUIActivo = false;
+                    SceneManager.LoadScene("Escoger Clase");
                     break;
             }
         }
-        
     }
     public void Volumen()
     {
@@ -287,8 +300,10 @@ public class GameManager : MonoBehaviour, ISelectHandler, IDeselectHandler, IPoi
             foreach(AudioSource x in audios)
             {
                 x.volume = FindObjectOfType<Slider>().value;
-                volumen = x.volume;
             }
+            print(volumen);
+            volumen = FindObjectOfType<Slider>().value;
+            print(volumen);
         }
     }
     public void Resolucion()
@@ -317,26 +332,75 @@ public class GameManager : MonoBehaviour, ISelectHandler, IDeselectHandler, IPoi
     {
         Application.Quit();
     }
-
-    public void OnSelect(BaseEventData eventData)
+    private Button[] botones;
+    public void MoverBotones(AxisEventData ad)
     {
-        print(eventData.selectedObject);
-        Debug.Log("Cambio");
+        botones = FindObjectsOfType<Button>();
+        if(ad.selectedObject == null)
+        {
+            botones[0].Select();
+        }
+        foreach (Button x in botones)
+        {
+            if (x.gameObject != ad.selectedObject)
+            {
+                x.GetComponent<Image>().sprite = null;
+                x.GetComponent<Image>().color = new Color(255, 255, 255, 0);
+            }
+            else
+            {
+                x.GetComponent<Image>().sprite = imagenBoton;
+                x.GetComponent<Image>().color = new Color(255, 255, 255, 255);
+            }
+        }
     }
-
-    public void OnDeselect(BaseEventData eventData)
+    void AbrirMenu()
     {
-        throw new System.NotImplementedException();
+        opciones = true;
+        menusActivos = false;
+        FindObjectOfType<Canvas>().transform.Find("MainMenu").gameObject.SetActive(true);
+        AudioClip cursor = Resources.Load<AudioClip>("SFX/GUI/Ogg/Confirm_tones/style2/confirm_style_2_002");
+        AudioSource sfx = GameObject.FindGameObjectWithTag("SFX").GetComponent<AudioSource>();
+        sfx.volume = volumen;
+        sfx.PlayOneShot(cursor);
     }
-
-    public void OnPointerEnter(PointerEventData eventData)
+    public void CerrarMenu()
     {
-        throw new System.NotImplementedException();
+        FindObjectOfType<Canvas>().transform.Find("MainMenu").gameObject.SetActive(false);
+        AudioClip cursor = Resources.Load<AudioClip>("SFX/GUI/Ogg/Confirm_tones/style2/confirm_style_2_002");
+        AudioSource sfx = GameObject.FindGameObjectWithTag("SFX").GetComponent<AudioSource>();
+        sfx.volume = volumen;
+        sfx.PlayOneShot(cursor);
+        menusActivos = true;
+        opciones = false;
     }
-
-    public void OnPointerExit(PointerEventData eventData)
+    public void Estadísticas()
     {
-        throw new System.NotImplementedException();
+        if (opciones)
+        {
+            GameObject.Find("NombreNivel").GetComponent<Text>().text = PJ.Nombre + " Nivel " + PJ.Nivel;
+            GameObject.Find("Atk").GetComponent<Text>().text = "ATK " + PJ.ATK1;
+            GameObject.Find("Spe").GetComponent<Text>().text = "SPE " + PJ.SPE1;
+            GameObject.Find("Def").GetComponent<Text>().text = "DEF " + PJ.DEF1;
+            GameObject.Find("PJIdle").GetComponent<Animator>().SetBool(PJ.clase.nombre, true);
+            //300 el largo de la barrita
+            //% experiencia
+            float porcentaje = (float)GameManager.Experiencia / (float)GameManager.niveles[PJ.Nivel + 1];
+            porcentaje = porcentaje * 300;
+            GameObject.Find("Barrita").GetComponent<RectTransform>().sizeDelta = new Vector2(porcentaje, 22);
+            GameObject.Find("EXP").GetComponent<Text>().text = "EXP " + GameManager.Experiencia + "/" + GameManager.niveles[PJ.Nivel + 1];
+            //HP Count barrita numeritos cosa.
+            porcentaje = PJ.HP1 / PJ.MaxHP1;
+            porcentaje = porcentaje * 140;
+            GameObject.Find("BarritaHP").GetComponent<RectTransform>().sizeDelta = new Vector2(porcentaje, 22);
+            GameObject.Find("HPCount").GetComponent<Text>().text = PJ.HP1 + "/" + PJ.MaxHP1;
+            //MP Count barrita numeritos cosa.
+            porcentaje = PJ.MP1 / PJ.MaxMP1;
+            porcentaje = porcentaje * 140;
+            GameObject.Find("BarritaMP").GetComponent<RectTransform>().sizeDelta = new Vector2(porcentaje, 22);
+            GameObject.Find("MPCount").GetComponent<Text>().text = PJ.MP1 + "/" + PJ.MaxMP1;
+
+        }
     }
     #endregion
 }

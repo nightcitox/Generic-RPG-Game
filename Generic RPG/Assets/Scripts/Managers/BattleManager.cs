@@ -112,6 +112,7 @@ public class BattleManager : MonoBehaviour {
     }
     void Update()
     {
+        print(finalizar);
         //Actualizar la barra de vida automáticamente.
         if(EN1.Hp <= 0 || pj.HP1 <= 0)
         {
@@ -196,7 +197,8 @@ public class BattleManager : MonoBehaviour {
     }
     public void AccionesdelPJ(string accion)
     {
-        foreach(AccionesPJ x in (AccionesPJ[])System.Enum.GetValues(typeof(AccionesPJ)))
+        BotonesOFF();
+        foreach (AccionesPJ x in (AccionesPJ[])System.Enum.GetValues(typeof(AccionesPJ)))
         {
             if(x.ToString() == accion)
             {
@@ -226,7 +228,7 @@ public class BattleManager : MonoBehaviour {
                 }
                 else
                 {
-                    if ((EN1.Hp / EN1.Maxhp) < 0.2)
+                    if (((float)EN1.Hp / (float)EN1.Maxhp) < 0.2)
                     {
                         acc = AccionesEnemigo.Curarse;
                     }
@@ -254,7 +256,7 @@ public class BattleManager : MonoBehaviour {
                         int curacion = Mathf.RoundToInt(Random.Range(EN1.Maxhp*.05f, EN1.Maxhp * .1f));
                         EN1.Hp += curacion;
                         Texto.text = "El enemigo ha recuperado "+curacion+" de HP.";
-                        yield return new WaitForSeconds(5f);
+                        yield return new WaitForSeconds(3f);
                         DecidirTurnos();
                         break;
                 }
@@ -411,7 +413,6 @@ public class BattleManager : MonoBehaviour {
         GameObject.Find("Daño").GetComponent<Text>().text = "-" + daño;
         dmg.SetTrigger("Enemigo");
         en.SetTrigger("Sufrimiento");
-        print(animHab.name);
         hab.Play(animHab.name);
         yield return new WaitForSeconds(0.5f);
         GameObject.Find("Enemigo").GetComponent<AudioSource>().Play();
@@ -474,11 +475,14 @@ public class BattleManager : MonoBehaviour {
         }
         else if (pj.HP1 <= 0)
         {
+            StopCoroutine(BarraAliado());
+            pj.HP1 = 0;
+            GameObject.Find("BarraPJHP").transform.Find("Centro").transform.Find("HP").GetComponent<Text>().text = "HP 0";
             StopCoroutine(Acciones());
             BotonesOFF();
-            yield return new WaitForSeconds(3f);
             Texto.text = "Perdiste!";
             yield return new WaitForSeconds(3f);
+            SceneManager.LoadScene("Login");
         }
         yield return true;
     }

@@ -44,8 +44,13 @@ public class LogManager : MonoBehaviour {
             case "3":
                 msg = "La contraseña es incorrecta.";
                 break;
+            default:
+                msg = "No se pudo conectar con el servidor.";
+                break;
         }
         Submit.interactable = false;
+        verificaUser = false;
+        verificaPass = false;
         GameObject.Find("LoginMSG").GetComponent<Text>().text = msg;
     }
     IEnumerator Registrar()
@@ -87,21 +92,24 @@ public class LogManager : MonoBehaviour {
             print("Hubo un error. Error #"+link.text);
         }
         Submit.interactable = false;
+        verificaUser = false;
+        verificaPass = false;
     }
+    private bool verificaUser = false;
+    private bool verificaPass = false;
     public void Verificar()
     {
-        int verificado = 0;
-        foreach(GameObject inp in Inputs)
+        foreach (GameObject inp in Inputs)
         {
-            if(inp.name == "NicknameInput" && inp.transform.Find("Text").GetComponent<Text>().text.Length >= 8)
+            if(inp.name == "NicknameInput" && inp.transform.Find("Text").GetComponent<Text>().text.Length >= 7)
             {
-                verificado += 1;
-            }else if (inp.name == "PasswordInput" && inp.transform.Find("Text").GetComponent<Text>().text.Length >= 8)
+                verificaUser = true;
+            }else if (inp.name == "PasswordInput" && inp.transform.Find("Text").GetComponent<Text>().text.Length >= 7)
             {
-                verificado += 1;
+                verificaPass = true;
             }
         }
-        if(verificado == 2)
+        if(verificaPass && verificaUser)
         {
             Submit.interactable = true;
         }
