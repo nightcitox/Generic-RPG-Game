@@ -9,8 +9,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a5a1fc8db335b4546a785aeef21d268f, type: 3}
-  m_Name: Dia_9
+  m_Name: Dialogo_Escoger_Mago
   m_EditorClassIdentifier: 
-  id: 9
-  dialogo: Algo asecha en mi casa hace 9 meses, la verdad cada persona que entra en
-    mi casa se siente mal.
+  id: 1001
+  dialogos:
+  - "Maestro de las artes r\xFAnicas y elementales, posee gran capacidad intelectual
+    y gran capacidad de da\xF1o."
+  - "\xBFDeseas recorrer el camino de la sabidur\xEDa?"
+  tipo: 1

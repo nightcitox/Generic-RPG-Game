@@ -8,8 +8,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5a1fc8db335b4546a785aeef21d268f, type: 3}
-  m_Name: Dia_4
+  m_Script: {fileID: 11500000, guid: a52a2f833bcd8dc4e9dadbac559590cc, type: 3}
+  m_Name: Escoger_Guerrero
   m_EditorClassIdentifier: 
-  id: 4
-  dialogo: Miau! Miau!
+  nombre: Guerrero
+  dialogos: {fileID: 11400000, guid: 4173201ff981d0f46a11c9bab58bac14, type: 2}
+  misionesNPC: []

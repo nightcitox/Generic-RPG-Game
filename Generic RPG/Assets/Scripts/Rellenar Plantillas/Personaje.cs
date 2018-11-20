@@ -10,7 +10,7 @@ public class Personaje : MonoBehaviour {
     public float mov_spe;
     private Vector3 pos;
     private Vector3 endPos;
-    public bool puedeMoverse;
+    public static bool puedeMoverse;
     private int[] bufos = new int[5]; //0-HP, 1-MP, 2-ATK, 3-DEF, 4-SPE
     bool moviendose;
     bool dentro;
@@ -159,12 +159,13 @@ public class Personaje : MonoBehaviour {
     }
     #endregion
     #region Start y Update
-    void Start () {
-        for(int i = 0; i < 4; i++)
+    void Start() {
+        FindObjectOfType<GameManager>().enabled = true;
+        for (int i = 0; i < 4; i++)
         {
             bufos[i] = 0;
         }
-        nombre = clase.nombre;
+        nombre = GameManager.UsuarioConectado;
         if (SceneManager.GetActiveScene().name == "Batalla")
         {
             GetComponent<SpriteRenderer>().sprite = clase.battler;
@@ -177,7 +178,6 @@ public class Personaje : MonoBehaviour {
             Animator anim = GetComponent<Animator>();
             anim.runtimeAnimatorController = clase.mapController as RuntimeAnimatorController;
         }
-        puedeMoverse = true;
     }
     void Update()
     {
@@ -209,20 +209,22 @@ public class Personaje : MonoBehaviour {
     }
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.CompareTag("Encuentros") == true )
+        if (col.gameObject.CompareTag("Encuentros") == true)
         {
             dentro = true;
             GameObject.Find("Zona Encuentros").GetComponent<Mapa>().CalcularProbabilidad();
         }
-        else if(col.gameObject.CompareTag("TP") == true)
+        else if (col.gameObject.CompareTag("TP") == true)
         {
             Fader.nombreMapa = col.gameObject.name;
             puedeMoverse = false;
             Fader.cambiarLvl = true;
         }
-        else if(col.gameObject.CompareTag("Evento") == true)
+        else if (col.gameObject.CompareTag("Evento") == true)
         {
             col.gameObject.GetComponent<Evento>().Accionar();
+            puedeMoverse = false;
+            print("1");
         }
         else
         {

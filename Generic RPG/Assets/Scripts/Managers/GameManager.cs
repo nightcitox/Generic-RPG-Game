@@ -26,10 +26,10 @@ public class GameManager : MonoBehaviour
     public static bool partidaCargada;
     public static InfoPartida info = new InfoPartida();
     public static float volumen = 1f;
+    public bool PuedeAbrirMenu;
     #endregion
     #region Métodos
     void Awake () {
-        Experiencia = 500;
         AudioSource bgm = GameObject.FindGameObjectWithTag("BGM").GetComponent<AudioSource>();
         bgm.volume = volumen;
         if (SceneManager.GetActiveScene().name == "MainMenu")
@@ -44,7 +44,6 @@ public class GameManager : MonoBehaviour
         }
         if (PJ != null)
         {
-            menusActivos = true;
             DialogueHolder = Prefab;
             if (PosMapa == new Vector2(0, 0))
             {
@@ -94,23 +93,10 @@ public class GameManager : MonoBehaviour
         }
     }
 	void Update () {
-        print(menusActivos);
-        //Sistema de Guardado.
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-
-            GuardarPartida();
-        }
-        //Sistema de Cargado.
-        if (Input.GetKeyDown(KeyCode.Delete))
-        {
-
-        }
         if (SceneManager.GetActiveScene().name != "Login" && SceneManager.GetActiveScene().name != "Registro" && SceneManager.GetActiveScene().name != "MainMenu")
         {
             GameObject menu = FindObjectOfType<Canvas>().transform.Find("MainMenu").transform.Find("General").gameObject;
-            print(menu.activeSelf);
-            if (InputManager.KeyDown("Menus") && menusActivos)
+            if (InputManager.KeyDown("Menus") && menusActivos && PuedeAbrirMenu)
             {
                 AbrirMenu();
             }
@@ -125,8 +111,8 @@ public class GameManager : MonoBehaviour
         {
             AudioSource sfx = GameObject.FindGameObjectWithTag("SFX").GetComponent<AudioSource>();
             sfx.volume = volumen;
-            if(PJ != null)
-                PJ.puedeMoverse = false;
+            if (PJ != null)
+                Personaje.puedeMoverse = false;
             AxisEventData ad = new AxisEventData(EventSystem.current);
             AudioClip cursor = Resources.Load<AudioClip>("SFX/GUI/Ogg/Cursor_tones/cursor_style_2");
             if (ad.selectedObject == null && SceneManager.GetActiveScene().name == "Batalla")
@@ -166,10 +152,7 @@ public class GameManager : MonoBehaviour
                 MoverBotones(ad);
             }
         }
-        else if(PJ != null)
-        {
-            PJ.puedeMoverse = true;
-        }
+        print(InputManager.GUIActivo);
         #endregion
     }
     void OnGUI()
@@ -203,9 +186,21 @@ public class GameManager : MonoBehaviour
             PJ.Estadisticas();
         }
     }
-    public void EscogerClase()
+    public void EscogerClase(string clase)
     {
-
+        string[] nombres = UnityEditor.AssetDatabase.FindAssets(clase);
+        for(int i = 0; i < nombres.Length; i++)
+        {
+            string assetPath = UnityEditor.AssetDatabase.GUIDToAssetPath(nombres[i]);
+            PlanClase clasex = UnityEditor.AssetDatabase.LoadAssetAtPath<PlanClase>(assetPath);
+            if (clasex != null)
+            {
+                clasesita = clasex;
+                PJ.clase = clasex;
+                PJ.Estadisticas();
+                SubirNivel();
+            }
+        }
     }
     #endregion
     #region Guardar y Cargar
@@ -378,6 +373,7 @@ public class GameManager : MonoBehaviour
         AudioSource sfx = GameObject.FindGameObjectWithTag("SFX").GetComponent<AudioSource>();
         sfx.volume = volumen;
         sfx.PlayOneShot(cursor);
+        Personaje.puedeMoverse = true;
         menusActivos = true;
         opciones = false;
     }

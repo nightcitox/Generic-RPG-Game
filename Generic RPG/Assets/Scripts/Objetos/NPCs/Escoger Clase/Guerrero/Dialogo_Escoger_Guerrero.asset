@@ -9,7 +9,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a5a1fc8db335b4546a785aeef21d268f, type: 3}
-  m_Name: Dia_6
+  m_Name: Dialogo_Escoger_Guerrero
   m_EditorClassIdentifier: 
-  id: 6
-  dialogo: Me he sentido muy mal ultimamente.
+  id: 1000
+  dialogos:
+  - "El poder de los guerreros es enorme en t\xE9rminos f\xEDsicos."
+  - "\xBFDeseas escoger este gran poder?"
+  tipo: 1

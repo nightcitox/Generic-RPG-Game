@@ -12,6 +12,7 @@ TagManager:
   - Jugador
   - Enemigo
   - Menu
+  - Evento
   layers:
   - Default
   - TransparentFX

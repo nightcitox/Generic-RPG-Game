@@ -29,9 +29,10 @@ public class NPC : MonoBehaviour {
         {
             //Aquí coloco que cuando entra en colisión y presiona el botón denominado como Submit
             //haga todo el proceso de los diálogos pero OJO siempre y cuando esté en colisión y permaneza así.
-            if (InputManager.KeyDown("Aceptar"))
+            if (InputManager.KeyDown("Aceptar") && GameManager.menusActivos)
             {
-                GameObject Holder = Instantiate(GameManager.DialogueHolder, FindObjectOfType<Image>().transform);
+                FindObjectOfType<GameManager>().PuedeAbrirMenu = false;
+                GameObject Holder = Instantiate(GameManager.DialogueHolder, FindObjectOfType<Canvas>().transform);
                 Holder.name = "Holder";
                 texto = GameObject.Find("Dialogo").GetComponent<Text>();
                 GameObject.Find("NPCName").GetComponent<Text>().text = nombre;
@@ -39,7 +40,7 @@ public class NPC : MonoBehaviour {
                 FindObjectOfType<AudioSource>().PlayOneShot(GUI);
                 index = 0;
                 //Primero busco el objeto de Personaje.
-                GameObject.FindGameObjectWithTag("Player").GetComponent<Personaje>().puedeMoverse = false;
+                Personaje.puedeMoverse = false;
                 //Si hay más de un diálogo presente en el sistema del NPC se filtra para que funcionen todos.
                 char[] tex = dialogos.dialogos[index].ToCharArray();
                 StartCoroutine(TextoCambiante(tex));
@@ -52,7 +53,6 @@ public class NPC : MonoBehaviour {
                 AudioClip GUI = Resources.Load<AudioClip>("SFX/GUI/Ogg/Confirm_tones/style2/confirm_style_2_002");
                 FindObjectOfType<AudioSource>().PlayOneShot(GUI);
                 IniciarChat();
-                print("Success");
             }
         }
     }
@@ -70,7 +70,7 @@ public class NPC : MonoBehaviour {
             print("No quedan más diálogos");
             if (dialogos.tipo == PlanDialogo.TipoDialogo.ConOpciones)
             {
-                InputManager.GUIActivo = true;
+                puedeContinuar = false;
                 GameObject.Find("Holder").transform.Find("Opciones").gameObject.SetActive(true);
                 Button con = GameObject.Find("Confirmar").GetComponent<Button>();
                 con.Select();
@@ -83,7 +83,7 @@ public class NPC : MonoBehaviour {
                 texto.text = "";
                 Destroy(GameObject.Find("Holder"));
                 chatIniciado = false;
-                GameObject.FindGameObjectWithTag("Player").GetComponent<Personaje>().puedeMoverse = true;
+                Personaje.puedeMoverse = false;
                 interaccion = true;
                 puedeContinuar = false;
             }
@@ -91,7 +91,7 @@ public class NPC : MonoBehaviour {
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player")) { interaccion = true; }
+        if (collision.gameObject.CompareTag("Jugador")) { interaccion = true; }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
@@ -112,24 +112,29 @@ public class NPC : MonoBehaviour {
     }
     void Salir()
     {
-        print("Uwu");
         chatIniciado = false;
-        GameObject.FindGameObjectWithTag("Player").GetComponent<Personaje>().puedeMoverse = true;
+        Personaje.puedeMoverse = false;
         interaccion = true;
         puedeContinuar = false;
         Destroy(GameObject.Find("Holder"));
+        GameManager.menusActivos = true;
     }
     public void CrearMision()
     {
+        if(gameObject.name == "Escoger_Clase")
+        {
+            FindObjectOfType<GameManager>().EscogerClase(nombre);
+            FindObjectOfType<GameManager>().PuedeAbrirMenu = true;
+        }
         //En este, se crea la misión y se redirige al GameManager para que se coloque como misión actual y se pueda
         //cumplir el objetivo de la misma.
-        print("Fleto");
         GameManager.mision = mision;
         chatIniciado = false;
-        GameObject.FindGameObjectWithTag("Player").GetComponent<Personaje>().puedeMoverse = true;
+        Personaje.puedeMoverse = false;
         interaccion = true;
         puedeContinuar = false;
         Destroy(GameObject.Find("Holder"));
+        GameManager.menusActivos = true;
     }
     public void AsignarMision(PlanMision asigMision)
     {

@@ -8,8 +8,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5a1fc8db335b4546a785aeef21d268f, type: 3}
-  m_Name: Dia_7
+  m_Script: {fileID: 11500000, guid: a52a2f833bcd8dc4e9dadbac559590cc, type: 3}
+  m_Name: Escoger_Mago
   m_EditorClassIdentifier: 
-  id: 7
-  dialogo: Me duele la cabeza.
+  nombre: Mago
+  dialogos: {fileID: 11400000, guid: e9e64d456b03ea240a9f60278bf7cbb8, type: 2}
+  misionesNPC: []

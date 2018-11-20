@@ -98,7 +98,7 @@ public class BattleManager : MonoBehaviour {
     void Start() {
         pj = GameManager.PJ;
         Personaje pjBattle = GameObject.Find("Personaje").AddComponent<Personaje>();
-        pjBattle.puedeMoverse = false;
+        Personaje.puedeMoverse = false;
         pjBattle.clase = pj.clase;
         Texto = GameObject.Find("Estado").GetComponent<Text>();
         vidaPJ = (RectTransform)GameObject.Find("BarraPJHP").gameObject.transform.Find("Centro");
