@@ -7,7 +7,11 @@ using UnityEngine.UI;
 public class LogManager : MonoBehaviour {
     public GameObject[] Inputs;
     public Button Submit;
-
+    private Text mensaje;
+    void Start()
+    {
+        mensaje = GameObject.Find("StatusMSG").GetComponent<Text>();
+    }
     public void Rutinas(string rutina)
     {
         StartCoroutine(rutina);
@@ -36,6 +40,7 @@ public class LogManager : MonoBehaviour {
                 obj = Inputs[0].GetComponent<InputField>();
                 GameManager.UsuarioConectado = obj.text;
                 GameManager.sesion = true;
+                verifica = false;
                 SceneManager.LoadScene("MainMenu");
                 break;
             case "2":
@@ -49,8 +54,6 @@ public class LogManager : MonoBehaviour {
                 break;
         }
         Submit.interactable = false;
-        verificaUser = false;
-        verificaPass = false;
         GameObject.Find("LoginMSG").GetComponent<Text>().text = msg;
     }
     IEnumerator Registrar()
@@ -82,35 +85,106 @@ public class LogManager : MonoBehaviour {
 
         WWW link = new WWW("http://localhost/ConexionesSQL/registro.php", formulario);
         yield return link;
-        if(link.text == "0")
+        string msg = "";
+        switch (link.text)
         {
-            print("Se ha creado exitosamente el usuario.");
-            SceneManager.LoadScene("Login");
+            case "0":
+                msg = "Se ha creado exitosamente el usuario.";
+                yield return new WaitForSeconds(2f);
+                SceneManager.LoadScene("Login");
+                verifica = false;
+                break;
+            case "3":
+                msg = "El usuario ya existe.";
+                break;
+            case "4":
+                msg = "No se pudo crear al usuario.";
+                break;
+            default:
+                msg = "No se pudo conectar con el servidor.";
+                break;
         }
-        else
-        {
-            print("Hubo un error. Error #"+link.text);
-        }
+        mensaje.text = msg;
         Submit.interactable = false;
-        verificaUser = false;
-        verificaPass = false;
     }
-    private bool verificaUser = false;
-    private bool verificaPass = false;
+    private bool verifica;
     public void Verificar()
     {
         foreach (GameObject inp in Inputs)
         {
-            if(inp.name == "NicknameInput" && inp.transform.Find("Text").GetComponent<Text>().text.Length >= 7)
+            if(inp.name == "NicknameInput" && inp.transform.Find("Text").GetComponent<Text>().text.Length >= 8)
             {
-                verificaUser = true;
-            }else if (inp.name == "PasswordInput" && inp.transform.Find("Text").GetComponent<Text>().text.Length >= 7)
+                verifica = true;
+            }else if (inp.name == "PasswordInput" && inp.transform.Find("Text").GetComponent<Text>().text.Length >= 8)
             {
-                verificaPass = true;
+                verifica = true;
+            }
+            else if(inp.name == "NicknameInput" || inp.name == "PasswordInput")
+            {
+                verifica = false;
             }
         }
-        if(verificaPass && verificaUser)
+    }
+    bool verificadisimo;
+    public void VerificarDiaMesAño()
+    {
+        foreach (GameObject inp in Inputs)
         {
+            print(inp.name + inp.transform.Find("Text").GetComponent<Text>().text.Length);
+            if (inp.name == "DiaInput" && inp.transform.Find("Text").GetComponent<Text>().text.Length > 0)
+            {
+                int Dia = int.Parse(inp.transform.Find("Text").GetComponent<Text>().text);
+                print(Dia);
+                if (Dia >= 1 && Dia <= 31)
+                {
+                    verificadisimo = true;
+                }
+                else
+                {
+                    verificadisimo = false;
+                    mensaje.text = "Ingrese un rango de días válido (1-31)";
+                }
+            }
+            else if (inp.name == "MesInput" && inp.transform.Find("Text").GetComponent<Text>().text.Length > 0)
+            {
+                int Mes = int.Parse(inp.transform.Find("Text").GetComponent<Text>().text);
+                print(Mes);
+                if (Mes >= 1 && Mes <= 12)
+                {
+                    verificadisimo = true;
+                }
+                else
+                {
+                    verificadisimo = false;
+                    mensaje.text = "Ingrese un mes válido (1-12)";
+                }
+            }
+            else if (inp.name == "AñoInput" && inp.transform.Find("Text").GetComponent<Text>().text.Length > 0)
+            {
+                int Año = int.Parse(inp.transform.Find("Text").GetComponent<Text>().text);
+                print(Año);
+                if (Año >= 1950 && Año <= 2003)
+                {
+                    verificadisimo = true;
+                }
+                else
+                {
+                    verificadisimo = false;
+                    mensaje.text = "Ingrese un año válido (1900-2003)";
+                }
+            }
+            else if (inp.name == "DiaInput" || inp.name == "MesInput" || inp.name == "AñoInput")
+            {
+                verificadisimo = false;
+            }
+        }
+    }
+    void Update()
+    {
+        print("Verifica: " + verifica + " Verificadisimo: " + verificadisimo);
+        if (verifica && verificadisimo)
+        {
+            mensaje.text = "";
             Submit.interactable = true;
         }
         else
