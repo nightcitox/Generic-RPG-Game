@@ -14,9 +14,9 @@ MonoBehaviour:
   nombre: Mago
   baseHP: 50
   baseMP: 100
-  baseATK: 20
+  baseATK: 200
   baseDEF: 5
-  baseSPE: 20
+  baseSPE: 5
   battlerController: {fileID: 9100000, guid: c037460a3d9c09b4fb2c10c43d433b01, type: 2}
   battler: {fileID: 21300000, guid: c47f2d28a74290843bb8ee016168924c, type: 3}
   mapController: {fileID: 9100000, guid: 7185d142e40d947449e2b7a651b9833a, type: 2}

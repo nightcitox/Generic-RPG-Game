@@ -20,6 +20,7 @@ public class Objeto : MonoBehaviour{
     private Button BotonUtilizar;
     private int cantidadEfecto;
     private PlanObjeto.Objetivo objetivoEfecto;
+    private PlanObjeto.TipoEquipo tipoEquipo;
     public int Cantidad
     {
         get
@@ -46,6 +47,19 @@ public class Objeto : MonoBehaviour{
         }
     }
 
+    public PlanObjeto.TipoEquipo TipoEquipo
+    {
+        get
+        {
+            return tipoEquipo;
+        }
+
+        set
+        {
+            tipoEquipo = value;
+        }
+    }
+
     #endregion
     void Start () {
         BotonUtilizar = GetComponentInChildren<Button>();
@@ -64,8 +78,6 @@ public class Objeto : MonoBehaviour{
             Destroy(gameObject);
         }
         GameObject seleccionado = EventSystem.current.currentSelectedGameObject;
-        print(seleccionado.GetComponentInParent<Objeto>());
-        print(BotonUtilizar.name);
         if(seleccionado.GetComponentInParent<Objeto>() == this)
         {
             Seleccionar();
@@ -73,7 +85,6 @@ public class Objeto : MonoBehaviour{
     }
     void Seleccionar()
     {
-        print("Seleccionado " + gameObject.name);
         GameObject.Find("Inventario").transform.Find("Descripcion").transform.Find("Text").gameObject.GetComponent<Text>().text = descripcion;
     }
     public void Inicializar()
@@ -88,6 +99,7 @@ public class Objeto : MonoBehaviour{
         transform.Find("Item").GetComponent<Image>().sprite = icono;
         cantidadEfecto = item.cantidadEfecto;
         objetivoEfecto = item.objetivoEfecto;
+        tipoEquipo = item.tipoEquipo;
     }
     public void Utilizar()
     {
@@ -96,8 +108,32 @@ public class Objeto : MonoBehaviour{
         switch (Tipo)
         {
             case PlanObjeto.Tipo.Equipo:
-                print("uwu");
-                //Crear clase de equipamiento.
+                AudioClip equiparSonido = Resources.Load("SFX/UI SFX/Clothing/Armor/ArmorEquip2.mp3") as AudioClip;
+                GameObject.FindGameObjectWithTag("SFX").GetComponent<AudioSource>().PlayOneShot(equiparSonido);
+                
+                if(GameManager.PJ.Equipo[(int)tipoEquipo] != null)
+                {
+                    GameManager.PJ.DeBuff(GameManager.PJ.Equipo[(int)tipoEquipo].objetivoEfecto.ToString(), GameManager.PJ.Equipo[(int)tipoEquipo].cantidadEfecto);
+                    Inventario.objetos.Add(GameManager.PJ.Equipo[(int)tipoEquipo]);
+                    GameManager.PJ.Equipo[(int)tipoEquipo] = item;
+                }
+                else
+                {
+                    GameManager.PJ.Equipo[(int)tipoEquipo] = item;
+                }
+                GameManager.PJ.Buff(objetivoEfecto.ToString(), cantidadEfecto);
+                Objeto[] lista = FindObjectsOfType<Objeto>();
+                foreach(Objeto x in lista)
+                {
+                    if(x.item == item)
+                    {
+                        Destroy(x.gameObject);
+                        return;
+                    }
+                }
+                Inventario.objetos.Remove(item);
+                GameManager.inventario.Cerrar();
+                GameManager.inventario.Abrir();
                 break;
             case PlanObjeto.Tipo.Consumible:
                 if (PlanObjeto.Efecto.Curacion == efecto)

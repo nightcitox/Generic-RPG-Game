@@ -38,4 +38,14 @@ public class PlanObjeto : ScriptableObject {
         Consumible,
         Mision
     }
+    public enum TipoEquipo
+    {
+        Casco,
+        Armadura,
+        Pantalones,
+        Zapatos,
+        Arma,
+        Ninguno
+    }
+    public TipoEquipo tipoEquipo;
 }

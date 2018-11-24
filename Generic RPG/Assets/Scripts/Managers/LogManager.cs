@@ -8,10 +8,6 @@ public class LogManager : MonoBehaviour {
     public GameObject[] Inputs;
     public Button Submit;
     private Text mensaje;
-    void Start()
-    {
-        mensaje = GameObject.Find("StatusMSG").GetComponent<Text>();
-    }
     public void Rutinas(string rutina)
     {
         StartCoroutine(rutina);
@@ -58,6 +54,7 @@ public class LogManager : MonoBehaviour {
     }
     IEnumerator Registrar()
     {
+        mensaje = GameObject.Find("StatusMSG").GetComponent<Text>();
         WWWForm formulario = new WWWForm();
         InputField obj = Inputs[0].GetComponent<InputField>();
         formulario.AddField("usuario", obj.text);
@@ -128,6 +125,7 @@ public class LogManager : MonoBehaviour {
     bool verificadisimo;
     public void VerificarDiaMesAño()
     {
+        mensaje = GameObject.Find("StatusMSG").GetComponent<Text>();
         foreach (GameObject inp in Inputs)
         {
             print(inp.name + inp.transform.Find("Text").GetComponent<Text>().text.Length);
@@ -181,15 +179,29 @@ public class LogManager : MonoBehaviour {
     }
     void Update()
     {
-        print("Verifica: " + verifica + " Verificadisimo: " + verificadisimo);
-        if (verifica && verificadisimo)
+        if(SceneManager.GetActiveScene().name != "Login")
         {
-            mensaje.text = "";
-            Submit.interactable = true;
+            if (verifica && verificadisimo)
+            {
+                mensaje.text = "";
+                Submit.interactable = true;
+            }
+            else
+            {
+                Submit.interactable = false;
+            }
         }
         else
         {
-            Submit.interactable = false;
+            if (verifica)
+            {
+                mensaje.text = "";
+                Submit.interactable = true;
+            }
+            else
+            {
+                Submit.interactable = false;
+            }
         }
     }
 }

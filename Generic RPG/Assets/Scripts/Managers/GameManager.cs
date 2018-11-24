@@ -27,20 +27,27 @@ public class GameManager : MonoBehaviour
     public static InfoPartida info = new InfoPartida();
     public static float volumen = 1f;
     public bool PuedeAbrirMenu;
+    public static string Escena;
+    public static GameManager instance = null;
     #endregion
     #region Métodos
     void Awake () {
+        if (instance == null)
+        {
+            instance = this;
+            PJ = FindObjectOfType<Personaje>();
+        }
+        else if (instance != this)
+            Destroy(gameObject);
+        DontDestroyOnLoad(gameObject);
+        if (PJ != null)
+            print(PJ.HP1);
         AudioSource bgm = GameObject.FindGameObjectWithTag("BGM").GetComponent<AudioSource>();
         bgm.volume = volumen;
         if (SceneManager.GetActiveScene().name == "MainMenu")
         {
             InputManager.GUIActivo = true;
             VerificarGuardado(false);
-        }
-        if (FindObjectOfType<Personaje>() != null)
-        {
-            PJ = GameObject.FindGameObjectWithTag("Jugador").GetComponent<Personaje>();
-            clasesita = PJ.clase;
         }
         if (PJ != null)
         {
@@ -93,7 +100,8 @@ public class GameManager : MonoBehaviour
         }
     }
 	void Update () {
-        if (SceneManager.GetActiveScene().name != "Login" && SceneManager.GetActiveScene().name != "Registro" && SceneManager.GetActiveScene().name != "MainMenu")
+        Scene actual = SceneManager.GetActiveScene();
+        if (actual.name != "Login" && actual.name != "Registro" && actual.name != "MainMenu" && actual.name != "Batalla")
         {
             GameObject menu = FindObjectOfType<Canvas>().transform.Find("MainMenu").transform.Find("General").gameObject;
             if (InputManager.KeyDown("Menus") && menusActivos && PuedeAbrirMenu)
@@ -146,13 +154,15 @@ public class GameManager : MonoBehaviour
                 sfx.PlayOneShot(cursor);
             }
             ExecuteEvents.Execute(EventSystem.current.currentSelectedGameObject, ad, ExecuteEvents.moveHandler);
-            GameObject menu = FindObjectOfType<Canvas>().transform.Find("MainMenu").gameObject;
-            if (menu.activeSelf)
+            if(SceneManager.GetActiveScene().name != "Batalla")
             {
-                MoverBotones(ad);
+                GameObject menu = FindObjectOfType<Canvas>().transform.Find("MainMenu").gameObject;
+                if (menu.activeSelf)
+                {
+                    MoverBotones(ad);
+                }
             }
         }
-        print(InputManager.GUIActivo);
         #endregion
     }
     void OnGUI()
@@ -165,6 +175,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
+                Personaje.puedeMoverse = true;
                 InputManager.GUIActivo = false;
             }
         }
@@ -382,9 +393,9 @@ public class GameManager : MonoBehaviour
         if (opciones)
         {
             GameObject.Find("NombreNivel").GetComponent<Text>().text = PJ.Nombre + " Nivel " + PJ.Nivel;
-            GameObject.Find("Atk").GetComponent<Text>().text = "ATK " + PJ.ATK1;
-            GameObject.Find("Spe").GetComponent<Text>().text = "SPE " + PJ.SPE1;
-            GameObject.Find("Def").GetComponent<Text>().text = "DEF " + PJ.DEF1;
+            GameObject.Find("Atk").GetComponent<Text>().text = "ATK " + (PJ.ATK1- PJ.Bufos1[2]) + " + " + PJ.Bufos1[2];
+            GameObject.Find("Spe").GetComponent<Text>().text = "SPE " + (PJ.SPE1- PJ.Bufos1[4]) + " + " + PJ.Bufos1[4];
+            GameObject.Find("Def").GetComponent<Text>().text = "DEF " + (PJ.DEF1- PJ.Bufos1[3]) + " + " + PJ.Bufos1[3];
             GameObject.Find("PJIdle").GetComponent<Animator>().SetBool(PJ.clase.nombre, true);
             //300 el largo de la barrita
             //% experiencia

@@ -12,7 +12,6 @@ public class SkillManager : MonoBehaviour{
     public GameObject HabSlot;
     void Start()
     {
-        print(GameManager.PJ.clase);
         PJ = GameManager.PJ;
         ListadoHabilidades();
     }

@@ -17,7 +17,7 @@ public class Mapa : MonoBehaviour {
     public void CalcularProbabilidad()
     {
         float ProbEncuentro = Random.Range(0, 101);
-        if(ProbEncuentro > 5)
+        if(ProbEncuentro > 50)
         {
             return;
         }
@@ -34,6 +34,7 @@ public class Mapa : MonoBehaviour {
                 if(Encuentro <= enemigos[i].ProbabilidadAparecer)
                 {
                     en = enemigos[i];
+                    GameManager.Escena = SceneManager.GetActiveScene().name;
                     GameManager.PosMapa = GameObject.Find("Personaje").transform.position;
                     SceneManager.LoadScene("Batalla");
                     return;

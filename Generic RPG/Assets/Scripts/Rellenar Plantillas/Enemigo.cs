@@ -154,7 +154,7 @@ public class Enemigo : MonoBehaviour {
         GameObject.Find("BarraENM1").transform.Find("Text").GetComponent<Text>().text = Nombre;
         GameObject.Find("BarraENM1").transform.Find("NivelText").GetComponent<Text>().text = "Nivel: " + Nivel;
         CalcularStatsPorNivel();
-        GameObject.Find("GameManager").GetComponent<BattleManager>().DecidirTurnos();
+        GameObject.Find("BattleManager").GetComponent<BattleManager>().DecidirTurnos();
     }
     void Update()
     {
@@ -176,7 +176,7 @@ public class Enemigo : MonoBehaviour {
         def = Mathf.RoundToInt(enemigo.baseDEF + (((float)Nivel / 20) * enemigo.baseDEF) + Random.Range(Nivel - (float)Nivel / 2, Nivel + (float)Nivel / 2));
         spe = Mathf.RoundToInt(enemigo.baseSPE + (((float)Nivel / 20) * enemigo.baseSPE) + Random.Range(Nivel - (float)Nivel / 2, Nivel + (float)Nivel / 2));
         Personaje pj = GameObject.Find("Personaje").GetComponent<Personaje>();
-        BattleManager bm = GameObject.Find("GameManager").GetComponent<BattleManager>();
+        BattleManager bm = GameObject.Find("BattleManager").GetComponent<BattleManager>();
         if (Spe > pj.SPE1)
         {
             bm.Turno1 = BattleManager.Turno.Enemigo;

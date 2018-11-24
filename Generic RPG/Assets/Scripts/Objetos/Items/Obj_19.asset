@@ -14,10 +14,11 @@ MonoBehaviour:
   nombre: Cuerda
   descripcion: "Termina el juego en 1 seg. \xBFQu\xE9 mejor?"
   nivelRestriccion: 0
-  efecto: 0
+  efecto: 3
   tipo: 0
   icono: {fileID: 21300000, guid: f67db51fcc92e1942addfd3a21bab981, type: 3}
   reutilizable: 0
   cantidadEfecto: 0
   objetivoEfecto: 0
   clasesPermitidas: []
+  tipoEquipo: 0

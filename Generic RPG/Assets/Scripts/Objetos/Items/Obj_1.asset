@@ -21,3 +21,4 @@ MonoBehaviour:
   cantidadEfecto: 20
   objetivoEfecto: 0
   clasesPermitidas: []
+  tipoEquipo: 0

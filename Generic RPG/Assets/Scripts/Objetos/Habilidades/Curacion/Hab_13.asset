@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Hab_13
   m_EditorClassIdentifier: 
   nombre: Cura
-  baseDMG: -30
+  baseDMG: 30
   lrnLVL: 1
   clases:
   - {fileID: 11400000, guid: c2606bd98a457b44099839268cfdf576, type: 2}

@@ -160,7 +160,7 @@ public class Habilidad : MonoBehaviour {
                 gameObject.transform.Find("Daño").GetComponent<Text>().text = BaseDMG.ToString()+"%";
                 break;
             case PlanHabilidades.Tipo.Curacion:
-                gameObject.transform.Find("Daño").GetComponent<Text>().text = (baseDMG*-1).ToString();
+                gameObject.transform.Find("Daño").GetComponent<Text>().text = baseDMG.ToString();
                 break;
             case PlanHabilidades.Tipo.Bufo:
                 gameObject.transform.Find("Daño").GetComponent<Text>().text = objetivoEfecto.ToString() + " - " + baseDMG;
@@ -177,7 +177,7 @@ public class Habilidad : MonoBehaviour {
     }
     public void Utilizar()
     {
-        BattleManager bm = GameObject.Find("GameManager").GetComponent<BattleManager>();
+        BattleManager bm = FindObjectOfType<BattleManager>();
         if(bm != null)
         {
             if (bm.accionespj == BattleManager.AccionesPJ.Decision)
@@ -201,7 +201,7 @@ public class Habilidad : MonoBehaviour {
                 if (pj.MP1 >= MPUse)
                 {
                     string[] mensaje = new string[2];
-                    bm.GetComponentInChildren<AudioSource>().PlayOneShot(sfx);
+                    GameObject.FindGameObjectWithTag("SFX").GetComponent<AudioSource>().PlayOneShot(sfx);
                     mensaje[0] = pj.Nombre + " ha utilizado " + nombre + ".";
                     //cositos de la animacion que podría tener.
                     pj.MP1 -= MPUse;
@@ -233,6 +233,7 @@ public class Habilidad : MonoBehaviour {
                                     mensaje[1] = "Has aumentado en " + baseDMG + " tu " + x.ToString();
                                     pj.Buff(objetivoEfecto.ToString(), baseDMG);
                                 }
+                                daño = 0;
                             }
                             break;
                         case PlanHabilidades.Tipo.Curacion:
@@ -246,6 +247,7 @@ public class Habilidad : MonoBehaviour {
                                 {
                                     mensaje[1] = en.DeBuff(objetivoEfecto.ToString(), baseDMG);
                                 }
+                                daño = 0;
                             }
                             break;
                     }

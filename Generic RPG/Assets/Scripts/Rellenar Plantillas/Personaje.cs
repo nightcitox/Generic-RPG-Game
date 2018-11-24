@@ -5,7 +5,7 @@ public class Personaje : MonoBehaviour {
     #region propiedades
     private string nombre;
     private int nivel;
-    private float exp;
+    private PlanObjeto[] equipo = new PlanObjeto[5];
     public PlanClase clase;
     public float mov_spe;
     private Vector3 pos;
@@ -145,25 +145,42 @@ public class Personaje : MonoBehaviour {
         }
     }
 
-    public float Exp
+    public PlanObjeto[] Equipo
     {
         get
         {
-            return exp;
+            return equipo;
         }
 
         set
         {
-            exp = value;
+            equipo = value;
+        }
+    }
+
+    public int[] Bufos1
+    {
+        get
+        {
+            return bufos;
+        }
+
+        set
+        {
+            bufos = value;
         }
     }
     #endregion
     #region Start y Update
     void Start() {
-        FindObjectOfType<GameManager>().enabled = true;
+        if(GameManager.clasesita != null)
+        {
+            clase = GameManager.clasesita;
+        }
+        GameManager.menusActivos = true;
         for (int i = 0; i < 4; i++)
         {
-            bufos[i] = 0;
+            Bufos1[i] = 0;
         }
         nombre = GameManager.UsuarioConectado;
         if (SceneManager.GetActiveScene().name == "Batalla")
@@ -241,24 +258,25 @@ public class Personaje : MonoBehaviour {
     #region Métodos
     public void Buff(string stat, int cant)
     {
+        print("Sube" + stat + " " + cant);
         switch (stat)
         {
             case "HP":
-                bufos[0] += cant;
+                Bufos1[0] += cant;
                 HP += cant;
                 break;
             case "MP":
-                bufos[1] += cant;
+                Bufos1[1] += cant;
                 MP += cant;
                 break;
             case "ATK":
-                bufos[2] += cant;
+                Bufos1[2] += cant;
                 break;
             case "DEF":
-                bufos[3] += cant;
+                Bufos1[3] += cant;
                 break;
             case "SPE":
-                bufos[4] += cant;
+                Bufos1[4] += cant;
                 break;
         }
         Bufos();
@@ -266,24 +284,25 @@ public class Personaje : MonoBehaviour {
     }
     public void DeBuff(string stat, int cant)
     {
+        print("Baja: "+stat + " " + cant);
         switch (stat)
         {
             case "HP":
-                bufos[0] -= cant;
+                Bufos1[0] -= cant;
                 HP += cant;
                 break;
             case "MP":
-                bufos[1] -= cant;
+                Bufos1[1] -= cant;
                 MP += cant;
                 break;
             case "ATK":
-                bufos[2] -= cant;
+                Bufos1[2] -= cant;
                 break;
             case "DEF":
-                bufos[3] -= cant;
+                Bufos1[3] -= cant;
                 break;
             case "SPE":
-                bufos[4] -= cant;
+                Bufos1[4] -= cant;
                 break;
         }
         Bufos();
@@ -292,11 +311,14 @@ public class Personaje : MonoBehaviour {
     void Bufos()
     {
         //Acá meteré los bufos del equipamiento.
-        MaxHP += bufos[0];
-        MaxMP += bufos[1];
-        ATK += bufos[2];
-        DEF += bufos[3];
-        SPE += bufos[4];
+        Estadisticas();
+        HP = GameManager.PJ.HP;
+        MP = GameManager.PJ.MP;
+        MaxHP += Bufos1[0];
+        MaxMP += Bufos1[1];
+        ATK += Bufos1[2];
+        DEF += Bufos1[3];
+        SPE += Bufos1[4];
     }
     public void Estadisticas()
     {

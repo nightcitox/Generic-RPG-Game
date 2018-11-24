@@ -108,7 +108,6 @@ public class Inventario : MonoBehaviour {
                         }
                         else if (actual.name != "Batalla")
                         {
-                            print("No está en batalla");
                             objeto = Instantiate(obj, new Vector2(0, 0), Quaternion.identity) as GameObject;
                             objeto.name = "Obj_" + contador;
                             objeto.transform.SetParent(GameObject.Find("Contenido").transform, false);
@@ -123,14 +122,8 @@ public class Inventario : MonoBehaviour {
             Abierto = true;
         }
     }
-    public void Agregar()
+    public void Agregar(PlanObjeto item)
     {
-        int al = Random.Range(1, 19);
-        string[] nombres = AssetDatabase.FindAssets("Obj_" + al);
-        string assetPath = AssetDatabase.GUIDToAssetPath(nombres[0]);
-        PlanObjeto asset = AssetDatabase.LoadAssetAtPath<PlanObjeto>(assetPath);
-        if(asset != null)
-            objetos.Add(asset);
-        print("Agegado objeto: " + asset.nombre);
+        objetos.Add(item);
     }
 }
