@@ -95,13 +95,13 @@ public class BattleManager : MonoBehaviour {
     }
     #endregion
     #region Start y Update
-    void Start() {
+    void Awake() {
         AudioClip bgm = Resources.Load("Música/Dark Souls III - Lorian OST - Battle Theme") as AudioClip;
         GameObject.FindGameObjectWithTag("BGM").GetComponent<AudioSource>().clip = bgm;
         GameObject.FindGameObjectWithTag("BGM").GetComponent<AudioSource>().Stop();
         GameObject.FindGameObjectWithTag("BGM").GetComponent<AudioSource>().Play();
         pj = GameManager.PJ;
-        Personaje pjBattler = GameObject.Find("Personaje").AddComponent<Personaje>();
+        Personaje pjBattler = GameObject.Find("Personaje").GetComponent<Personaje>();
         pjBattler.clase = pj.clase;
         Personaje.puedeMoverse = false;
         Texto = GameObject.Find("Estado").GetComponent<Text>();
@@ -203,6 +203,10 @@ public class BattleManager : MonoBehaviour {
             {
                 turno = Turno.Personaje;
             }
+        }
+        if (EN1.Hp <= 0 || pj.HP1 <= 0)
+        {
+            StartCoroutine("Victoria");
         }
         if (finalizar == 2)
         {
@@ -377,7 +381,6 @@ public class BattleManager : MonoBehaviour {
     IEnumerator Ataque()
     {
         Animator anim;
-        Animator dmg = GameObject.Find("Daño").GetComponent<Animator>();
         int daño;
         float media;
         float critico = Random.Range(0, 100);
@@ -386,12 +389,12 @@ public class BattleManager : MonoBehaviour {
             case Turno.Enemigo:
                 anim = GameObject.Find("Enemigo").GetComponent<Animator>();
                 media = EN1.Atk - (pj.DEF1 * 0.25f);
-                if(media < 0)
+                if (media < 0)
                 {
                     media = 1;
                 }
-                daño = Mathf.RoundToInt(Random.Range(media- (media*.1f), media + (media * .1f)));
-                if(critico < 10)
+                daño = Mathf.RoundToInt(Random.Range(media - (media * .1f), media + (media * .1f)));
+                if (critico < 10)
                 {
                     daño += daño / 2;
                     Texto.text = "¡Has recibido " + daño + " de daño CRÍTICO!";
@@ -400,13 +403,19 @@ public class BattleManager : MonoBehaviour {
                 {
                     Texto.text = "¡Has recibido " + daño + " de daño!";
                 }
+                float duracion = 0;
+                AnimationClip[] a = anim.runtimeAnimatorController.animationClips;
+                for (int i = 0; i < a.Length; i++)
+                {
+                    if(a[i].name == "Ataque")
+                    {
+                        duracion = a[i].length;
+                    }
+                }
                 anim.SetTrigger("Ataque");
+                print(duracion);
                 GameObject.Find("Daño").GetComponent<Text>().text = "-" + daño;
-                dmg.SetTrigger("Personaje");
-                AudioClip oof = Resources.Load<AudioClip>("SFX/Oof");
-                yield return new WaitForSeconds(0.5f);
-                GameObject.Find("SFX").GetComponent<AudioSource>().PlayOneShot(oof);
-                yield return new WaitForSeconds(anim.GetCurrentAnimatorClipInfo(0)[0].clip.length);
+                yield return new WaitForSeconds(duracion+1f);
                 anim.ResetTrigger("Ataque");
                 pj.HP1 -= daño;
                 break;
@@ -427,20 +436,24 @@ public class BattleManager : MonoBehaviour {
                 {
                     Texto.text = "¡Has realizado " + daño + " de daño!";
                 }
+                duracion = 0;
+                a = anim.runtimeAnimatorController.animationClips;
+                for (int i = 0; i < a.Length; i++)
+                {
+                    if (a[i].name.Contains("Ataque") || (a[i].name.Contains("Attack")))
+                    {
+                        duracion = a[i].length;
+                    }
+                }
+                print(duracion);
                 anim.SetTrigger("Ataque");
-                yield return new WaitForSeconds(0.5f);
                 GameObject.Find("Daño").GetComponent<Text>().text = "-" + daño;
-                dmg.SetTrigger("Enemigo");
-                yield return new WaitForSeconds(0.5f);
-                GameObject.Find("Enemigo").GetComponent<AudioSource>().Play();
-                yield return new WaitForSeconds(anim.GetCurrentAnimatorClipInfo(0)[0].clip.length);
+                yield return new WaitForSeconds(duracion + 1f);
                 anim.ResetTrigger("Ataque");
                 EN1.Hp -= daño;
                 break;
         }
         GameObject.Find("Daño").GetComponent<Text>().text = "";
-        dmg.ResetTrigger("Enemigo");
-        dmg.ResetTrigger("Personaje");
         DecidirTurnos();
     }
     public IEnumerator Animacion(int daño, AnimationClip animHab)

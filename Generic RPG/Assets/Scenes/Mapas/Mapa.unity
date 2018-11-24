@@ -156,7 +156,7 @@ Prefab:
         type: 2}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 99fb03ea17d7d94489d61559e2c8c631, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 212719860727887118, guid: f5a3c80561477094e93c4880c12a0365,
         type: 2}
       propertyPath: m_Size.x
@@ -176,7 +176,7 @@ Prefab:
         type: 2}
       propertyPath: clase
       value: 
-      objectReference: {fileID: 11400000, guid: c2606bd98a457b44099839268cfdf576,
+      objectReference: {fileID: 11400000, guid: e515ed67238fb424c864328bc172b80f,
         type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5a3c80561477094e93c4880c12a0365, type: 2}
@@ -476,8 +476,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemigos:
-  - {fileID: 11400000, guid: f7818d36b45602742835d1cf295b4bf1, type: 2}
-  - {fileID: 11400000, guid: 0c97f24368a95494190b4303cf94a5c3, type: 2}
+  - {fileID: 11400000, guid: c21b7dd85b49d1243b4b3447c215029b, type: 2}
   lv: 10
 --- !u!50 &1431363469
 Rigidbody2D:

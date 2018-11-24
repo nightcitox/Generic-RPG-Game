@@ -173,7 +173,8 @@ public class Personaje : MonoBehaviour {
     #endregion
     #region Start y Update
     void Start() {
-        if(GameManager.clasesita != null)
+        DontDestroyOnLoad(gameObject);
+        if (GameManager.clasesita != null)
         {
             clase = GameManager.clasesita;
         }
@@ -183,18 +184,6 @@ public class Personaje : MonoBehaviour {
             Bufos1[i] = 0;
         }
         nombre = GameManager.UsuarioConectado;
-        if (SceneManager.GetActiveScene().name == "Batalla")
-        {
-            GetComponent<SpriteRenderer>().sprite = clase.battler;
-            Animator anim = GetComponent<Animator>();
-            anim.runtimeAnimatorController = clase.battlerController as RuntimeAnimatorController;
-        }
-        else
-        {
-            GetComponent<SpriteRenderer>().sprite = clase.mapSprite;
-            Animator anim = GetComponent<Animator>();
-            anim.runtimeAnimatorController = clase.mapController as RuntimeAnimatorController;
-        }
     }
     void Update()
     {
@@ -229,19 +218,20 @@ public class Personaje : MonoBehaviour {
         if (col.gameObject.CompareTag("Encuentros") == true)
         {
             dentro = true;
+            print("Triggereando la tierra");
             GameObject.Find("Zona Encuentros").GetComponent<Mapa>().CalcularProbabilidad();
         }
         else if (col.gameObject.CompareTag("TP") == true)
         {
             Fader.nombreMapa = col.gameObject.name;
             puedeMoverse = false;
+            transform.position = new Vector2(0, 0);
             Fader.cambiarLvl = true;
         }
         else if (col.gameObject.CompareTag("Evento") == true)
         {
             col.gameObject.GetComponent<Evento>().Accionar();
             puedeMoverse = false;
-            print("1");
         }
         else
         {
@@ -253,6 +243,25 @@ public class Personaje : MonoBehaviour {
         if (col.gameObject.CompareTag("Encuentros") == false) { return; }
         dentro = false;
         timer = 0f;
+    }
+    void OnLevelWasLoaded()
+    {
+        if (SceneManager.GetActiveScene().name == "Batalla")
+        {
+            print("owo");
+            transform.position = new Vector2(-4, 0.5f);
+            transform.localScale = new Vector2(2.5f, 2.5f);
+            GetComponent<SpriteRenderer>().sprite = clase.battler;
+            Animator anim = GetComponent<Animator>();
+            anim.runtimeAnimatorController = clase.battlerController as RuntimeAnimatorController;
+        }
+        else
+        {
+            transform.localScale = new Vector2(5, 5);
+            GetComponent<SpriteRenderer>().sprite = clase.mapSprite;
+            Animator anim = GetComponent<Animator>();
+            anim.runtimeAnimatorController = clase.mapController as RuntimeAnimatorController;
+        }
     }
     #endregion
     #region Métodos
@@ -374,6 +383,15 @@ public class Personaje : MonoBehaviour {
             mov.SetBool("Moviendose", false);
             mov.Play("Nada", 0, UltimaPos);
         }
+    }
+    public void TirarDaño()
+    {
+        Animator dmg = GameObject.Find("Daño").GetComponent<Animator>();
+        dmg.ResetTrigger("Enemigo");
+        dmg.ResetTrigger("Personaje");
+        dmg.SetTrigger("Enemigo");
+        AudioClip oof = Resources.Load<AudioClip>("SFX/Oof");
+        GameObject.Find("SFX").GetComponent<AudioSource>().PlayOneShot(oof);
     }
     #endregion
 }

@@ -262,4 +262,13 @@ public class Enemigo : MonoBehaviour {
         return AplicarStats(stat, cant);
         //Falta agregar el tiempo que demora. Por ahora voy a hacerlo pa que al salir de la batalla elimine los bufos.
     }
+    public void TirarDaño()
+    {
+        Animator dmg = GameObject.Find("Daño").GetComponent<Animator>();
+        dmg.ResetTrigger("Enemigo");
+        dmg.ResetTrigger("Personaje");
+        dmg.SetTrigger("Personaje");
+        AudioClip oof = Resources.Load<AudioClip>("SFX/Oof");
+        GameObject.Find("SFX").GetComponent<AudioSource>().PlayOneShot(oof);
+    }
 }

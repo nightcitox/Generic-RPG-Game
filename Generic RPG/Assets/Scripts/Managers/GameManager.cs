@@ -40,8 +40,7 @@ public class GameManager : MonoBehaviour
         else if (instance != this)
             Destroy(gameObject);
         DontDestroyOnLoad(gameObject);
-        if (PJ != null)
-            print(PJ.HP1);
+        FindObjectOfType<Personaje>().clase = PJ.clase;
         AudioSource bgm = GameObject.FindGameObjectWithTag("BGM").GetComponent<AudioSource>();
         bgm.volume = volumen;
         if (SceneManager.GetActiveScene().name == "MainMenu")

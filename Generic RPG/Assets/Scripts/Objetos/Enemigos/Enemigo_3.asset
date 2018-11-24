@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82c89046838492b4491ad32d96499558, type: 3}
+  m_Name: Enemigo_3
+  m_EditorClassIdentifier: 
+  nombre: Rabia
+  baseHP: 100
+  baseATK: 12
+  baseDEF: 7
+  baseSPE: 15
+  exp: 150
+  sprite: {fileID: 21300000, guid: 92f5e7b559241454fa6caf086ca53137, type: 3}
+  anim: {fileID: 9100000, guid: a225adefaa6fd994a8a47a2f6192a574, type: 2}
+  ProbabilidadAparecer: 50
+  Sufrimiento: {fileID: 8300000, guid: 7b696a41c021dfd4aa69500a8cc33412, type: 3}
+  Ataque: {fileID: 8300000, guid: 7a2b584ee23312a469f6e72b799e06fa, type: 3}
