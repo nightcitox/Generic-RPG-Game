@@ -20,6 +20,6 @@ MonoBehaviour:
   icono: {fileID: 21300000, guid: 3a4c2474f6908ed49a10f83c949753c6, type: 3}
   Descripcion: Descarga electrica
   obj: 2
-  sfx: {fileID: 0}
+  sfx: {fileID: 8300000, guid: 21d30f300632e764fb51df72fa1f16f4, type: 3}
   animacion: {fileID: 7400000, guid: 64d46fee9f9d08745a93d30872e6533c, type: 2}
   MPUse: 20

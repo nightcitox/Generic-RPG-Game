@@ -817,5 +817,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 010e47b10483f4e4aa5dadd1e4050961, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clase: {fileID: 11400000, guid: e515ed67238fb424c864328bc172b80f, type: 2}
+  clase: {fileID: 11400000, guid: c2606bd98a457b44099839268cfdf576, type: 2}
   mov_spe: 10

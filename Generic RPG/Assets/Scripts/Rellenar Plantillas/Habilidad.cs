@@ -250,7 +250,9 @@ public class Habilidad : MonoBehaviour {
                             }
                             break;
                     }
-                    bm.StartCoroutine(bm.Esperar(null, mensaje, daño, habilidad.animacion, habilidad.sfx));
+                    FindObjectOfType<AnimSFX>().sfx = sfx;
+                    print(FindObjectOfType<AnimSFX>().sfx.name);
+                    bm.StartCoroutine(bm.Esperar(null, mensaje, daño, habilidad.animacion));
                 }
             }
         }

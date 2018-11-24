@@ -204,10 +204,6 @@ public class BattleManager : MonoBehaviour {
                 turno = Turno.Personaje;
             }
         }
-        if (EN1.Hp <= 0 || pj.HP1 <= 0)
-        {
-            StartCoroutine("Victoria");
-        }
         if (finalizar == 2)
         {
             accionespj = AccionesPJ.Decision;
@@ -456,7 +452,7 @@ public class BattleManager : MonoBehaviour {
         GameObject.Find("Daño").GetComponent<Text>().text = "";
         DecidirTurnos();
     }
-    public IEnumerator Animacion(int daño, AnimationClip animHab, AudioClip sfx)
+    public IEnumerator Animacion(int daño, AnimationClip animHab)
     {
         if(daño == 0)
         {
@@ -464,7 +460,6 @@ public class BattleManager : MonoBehaviour {
             Animator anim = GameObject.Find("Personaje").GetComponent<Animator>();
             hab.Play(animHab.name);
             yield return new WaitForSeconds(animHab.length);
-            FindObjectOfType<AnimSFX>().sfx = sfx;
         }
         else
         {
@@ -488,7 +483,7 @@ public class BattleManager : MonoBehaviour {
         }
         DecidirTurnos();
     } 
-    public IEnumerator Esperar(Objeto item, string[] mensaje, int daño, AnimationClip habAnim, AudioClip sfx)
+    public IEnumerator Esperar(Objeto item, string[] mensaje, int daño, AnimationClip habAnim)
     {
         esperas = true;
         BotonesOFF();
@@ -499,7 +494,7 @@ public class BattleManager : MonoBehaviour {
             {
                 if (daño != 0)
                 {
-                    StartCoroutine(Animacion(daño, habAnim, sfx));
+                    StartCoroutine(Animacion(daño, habAnim));
                 }
             }
             yield return new WaitForSeconds(3f);
@@ -520,11 +515,12 @@ public class BattleManager : MonoBehaviour {
         }
         if(habAnim != null && daño == 0)
         {
-            StartCoroutine(Animacion(0, habAnim, sfx));
+            StartCoroutine(Animacion(0, habAnim));
         }
     }
     IEnumerator Victoria()
     {
+        BotonesOFF();
         if (EN1.Hp <= 0)
         {
             EN1.Hp = 1;
@@ -534,7 +530,6 @@ public class BattleManager : MonoBehaviour {
             StopCoroutine("Esperar");
             GameObject.Find("BarraENM1").transform.Find("Centro").transform.Find("HP").GetComponent<Text>().text = "HP 0";
             Destroy(GameObject.Find("Enemigo"));
-            BotonesOFF();
             yield return new WaitForSeconds(2f);
             AudioClip vic = Resources.Load<AudioClip>("Música/FF7 - Victory Fanfare");
             GameObject.FindGameObjectWithTag("BGM").GetComponent<AudioSource>().Stop();
@@ -556,7 +551,6 @@ public class BattleManager : MonoBehaviour {
             StopCoroutine(BarraEnemigos());
             GameObject.Find("BarraPJHP").transform.Find("Centro").transform.Find("HP").GetComponent<Text>().text = "HP 0";
             StopCoroutine(Acciones());
-            BotonesOFF();
             Texto.text = "Perdiste!";
             yield return new WaitForSeconds(3f);
             SceneManager.LoadScene("Login");

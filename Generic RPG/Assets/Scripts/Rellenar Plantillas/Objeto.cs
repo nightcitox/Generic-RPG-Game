@@ -152,7 +152,7 @@ public class Objeto : MonoBehaviour{
                             mensaje = new string[2];
                             mensaje[0] = GameObject.Find("Personaje").GetComponent<Personaje>().Nombre + " ha utilizado " + nombre + ".";
                             mensaje[1] = GameObject.Find("Personaje").GetComponent<Personaje>().Nombre + " ha recuperado " + cantidadEfecto + " de "+ objetivoEfecto.ToString() +".";
-                            bm.StartCoroutine(bm.Esperar(this, mensaje, 0, null, null));
+                            bm.StartCoroutine(bm.Esperar(this, mensaje, 0, null));
                             print("inicia");
                             switch (objetivoEfecto)
                             {
