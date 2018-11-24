@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db710ed3bf17c664db928c50c8f73699, type: 3}
   m_Name: Hab_Guerrero_1
   m_EditorClassIdentifier: 
-  nombre: Super Hachazo
+  nombre: Super sablazo
   baseDMG: 5000
   lrnLVL: 1
   clases:
@@ -21,4 +21,5 @@ MonoBehaviour:
   Descripcion: Pega un super hachazo con habilidades destructivas.
   obj: 0
   sfx: {fileID: 8300000, guid: fb3eb429d447d8b4baa598d5d8065799, type: 3}
+  animacion: {fileID: 7400000, guid: c3c6b970d91d0e240b84ede6c9ea0a71, type: 2}
   MPUse: 15

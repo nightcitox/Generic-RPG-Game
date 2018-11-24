@@ -21,5 +21,5 @@ MonoBehaviour:
   Descripcion: "Espada de destrucci\xF3n masiva."
   obj: 0
   sfx: {fileID: 8300000, guid: fb3eb429d447d8b4baa598d5d8065799, type: 3}
-  animacion: {fileID: 7400000, guid: d666ff6689a97c4449f2ba3650862473, type: 2}
+  animacion: {fileID: 7400000, guid: 61eb6f620da3b854bb73f831dc13ea75, type: 2}
   MPUse: 15

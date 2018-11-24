@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db710ed3bf17c664db928c50c8f73699, type: 3}
+  m_Name: Hab_vel
+  m_EditorClassIdentifier: 
+  nombre: rapidin
+  baseDMG: 0
+  lrnLVL: 1
+  clases:
+  - {fileID: 11400000, guid: c2606bd98a457b44099839268cfdf576, type: 2}
+  - {fileID: 11400000, guid: 463bed96ec78da541b3253184094ec70, type: 2}
+  tipo: 0
+  icono: {fileID: 21300000, guid: fdb9e480bfe20bd469a59c5da74e0bcb, type: 3}
+  Descripcion: un rapidin
+  obj: 4
+  sfx: {fileID: 0}
+  animacion: {fileID: 7400000, guid: 2a62367f858e5ad40a8fe2065218e7ed, type: 2}
+  MPUse: 0

@@ -15,11 +15,11 @@ MonoBehaviour:
   baseDMG: 15
   lrnLVL: 2
   clases:
-  - {fileID: 11400000, guid: 463bed96ec78da541b3253184094ec70, type: 2}
-  - {fileID: 11400000, guid: c2606bd98a457b44099839268cfdf576, type: 2}
+  - {fileID: 11400000, guid: e515ed67238fb424c864328bc172b80f, type: 2}
   tipo: 2
   icono: {fileID: 21300000, guid: 39db0129174c3ac4a9f89bd5ae81cf35, type: 3}
   Descripcion: Una rafaga feroz que puede aturdir al enemigo
   obj: 0
   sfx: {fileID: 0}
+  animacion: {fileID: 7400000, guid: d745036b0c1266c4fb7b18d18ec79503, type: 2}
   MPUse: 5

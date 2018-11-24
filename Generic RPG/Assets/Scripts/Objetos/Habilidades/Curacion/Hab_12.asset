@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Hab_12
   m_EditorClassIdentifier: 
   nombre: Masaje
-  baseDMG: -20
+  baseDMG: 20
   lrnLVL: 4
   clases:
   - {fileID: 11400000, guid: e515ed67238fb424c864328bc172b80f, type: 2}
@@ -21,4 +21,5 @@ MonoBehaviour:
   Descripcion: "Puede eliminar debufos adem\xE1s cura al objetivo."
   obj: 0
   sfx: {fileID: 0}
+  animacion: {fileID: 7400000, guid: c0a382384ef4d3e4bb6e585f03f842af, type: 2}
   MPUse: 20

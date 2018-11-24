@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Hab_2
   m_EditorClassIdentifier: 
   nombre: "Curaci\xF3n"
-  baseDMG: -15
+  baseDMG: 15
   lrnLVL: 0
   clases:
   - {fileID: 11400000, guid: 463bed96ec78da541b3253184094ec70, type: 2}
@@ -21,4 +21,5 @@ MonoBehaviour:
   Descripcion: cura xd
   obj: 0
   sfx: {fileID: 0}
+  animacion: {fileID: 7400000, guid: 51f43333a70822d48ac765be74ad723c, type: 2}
   MPUse: 0

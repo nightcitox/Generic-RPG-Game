@@ -12,11 +12,16 @@ MonoBehaviour:
   m_Name: Obj_16
   m_EditorClassIdentifier: 
   nombre: "Semillas del ermita\xF1o"
-  descripcion: Te cura de todo mal jaja troliado
-  nivelRestriccion: 0
+  descripcion: Te cura de todo mal.
+  nivelRestriccion: 1
   efecto: 0
   tipo: 1
   icono: {fileID: 21300000, guid: 81bcc582f747d4a4e85285bf6d051d16, type: 3}
   reutilizable: 0
-  cantidadEfecto: 0
+  cantidadEfecto: 1
   objetivoEfecto: 0
+  clasesPermitidas:
+  - {fileID: 11400000, guid: e515ed67238fb424c864328bc172b80f, type: 2}
+  - {fileID: 11400000, guid: c2606bd98a457b44099839268cfdf576, type: 2}
+  - {fileID: 11400000, guid: 463bed96ec78da541b3253184094ec70, type: 2}
+  tipoEquipo: 0

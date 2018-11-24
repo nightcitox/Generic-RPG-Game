@@ -11,15 +11,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db710ed3bf17c664db928c50c8f73699, type: 3}
   m_Name: Hab_8
   m_EditorClassIdentifier: 
-  nombre: 'Sobredosis '
+  nombre: netito-san
   baseDMG: 100
   lrnLVL: 50
   clases:
   - {fileID: 11400000, guid: e515ed67238fb424c864328bc172b80f, type: 2}
   tipo: 2
   icono: {fileID: 21300000, guid: b29c7f89d1a6f8146ba351797c2333e4, type: 3}
-  Descripcion: El usuario consume una gran cantidad de pastillas para cargar un poderoso
-    ataque final, sin embargo al finalizar el turno pierdes toda tu vida.
+  Descripcion: El usuario da un fuerte golpe a su rival.
   obj: 0
   sfx: {fileID: 0}
+  animacion: {fileID: 7400000, guid: f1ad785fe721660408222b3deb7dc907, type: 2}
   MPUse: 0

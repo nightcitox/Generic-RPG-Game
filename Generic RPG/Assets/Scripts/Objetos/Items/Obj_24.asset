@@ -20,4 +20,6 @@ MonoBehaviour:
   reutilizable: 0
   cantidadEfecto: 25
   objetivoEfecto: 4
-  clasesPermitidas: []
+  clasesPermitidas:
+  - {fileID: 11400000, guid: 463bed96ec78da541b3253184094ec70, type: 2}
+  tipoEquipo: 3
