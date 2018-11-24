@@ -201,7 +201,6 @@ public class Habilidad : MonoBehaviour {
                 if (pj.MP1 >= MPUse)
                 {
                     string[] mensaje = new string[2];
-                    GameObject.FindGameObjectWithTag("SFX").GetComponent<AudioSource>().PlayOneShot(sfx);
                     mensaje[0] = pj.Nombre + " ha utilizado " + nombre + ".";
                     //cositos de la animacion que podría tener.
                     pj.MP1 -= MPUse;
@@ -251,7 +250,7 @@ public class Habilidad : MonoBehaviour {
                             }
                             break;
                     }
-                    bm.StartCoroutine(bm.Esperar(null, mensaje, daño, habilidad.animacion));
+                    bm.StartCoroutine(bm.Esperar(null, mensaje, daño, habilidad.animacion, habilidad.sfx));
                 }
             }
         }

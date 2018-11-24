@@ -456,18 +456,15 @@ public class BattleManager : MonoBehaviour {
         GameObject.Find("Daño").GetComponent<Text>().text = "";
         DecidirTurnos();
     }
-    public IEnumerator Animacion(int daño, AnimationClip animHab)
+    public IEnumerator Animacion(int daño, AnimationClip animHab, AudioClip sfx)
     {
         if(daño == 0)
         {
             Animator hab = GameObject.Find("AtaqueAnim").GetComponent<Animator>();
             Animator anim = GameObject.Find("Personaje").GetComponent<Animator>();
-            print(hab.transform.position.x);
-            hab.transform.position = anim.transform.position;
-            print(hab.transform.position.x);
-            print(anim.transform.position.x);
             hab.Play(animHab.name);
             yield return new WaitForSeconds(animHab.length);
+            FindObjectOfType<AnimSFX>().sfx = sfx;
         }
         else
         {
@@ -491,7 +488,7 @@ public class BattleManager : MonoBehaviour {
         }
         DecidirTurnos();
     } 
-    public IEnumerator Esperar(Objeto item, string[] mensaje, int daño, AnimationClip habAnim)
+    public IEnumerator Esperar(Objeto item, string[] mensaje, int daño, AnimationClip habAnim, AudioClip sfx)
     {
         esperas = true;
         BotonesOFF();
@@ -502,7 +499,7 @@ public class BattleManager : MonoBehaviour {
             {
                 if (daño != 0)
                 {
-                    StartCoroutine(Animacion(daño, habAnim));
+                    StartCoroutine(Animacion(daño, habAnim, sfx));
                 }
             }
             yield return new WaitForSeconds(3f);
@@ -523,7 +520,7 @@ public class BattleManager : MonoBehaviour {
         }
         if(habAnim != null && daño == 0)
         {
-            StartCoroutine(Animacion(0, habAnim));
+            StartCoroutine(Animacion(0, habAnim, sfx));
         }
     }
     IEnumerator Victoria()
