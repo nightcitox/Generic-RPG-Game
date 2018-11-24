@@ -21,5 +21,5 @@ MonoBehaviour:
   Descripcion: "Un ataque bien r\xE1pido uwu"
   obj: 2
   sfx: {fileID: 8300000, guid: fb3eb429d447d8b4baa598d5d8065799, type: 3}
-  animacion: {fileID: 0}
+  animacion: {fileID: 7400000, guid: 79d4fb57349f2994a9b8bdb283d606db, type: 2}
   MPUse: 10

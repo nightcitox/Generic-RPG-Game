@@ -13,12 +13,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nombre: "Poci\xF3n"
   descripcion: "Objeto b\xE1sico de curaci\xF3n."
-  nivelRestriccion: 0
+  nivelRestriccion: 1
   efecto: 0
   tipo: 1
   icono: {fileID: 21300000, guid: 2a1c0d7225b11c64e92a2f975e2cd3b5, type: 3}
   reutilizable: 1
   cantidadEfecto: 20
   objetivoEfecto: 0
-  clasesPermitidas: []
-  tipoEquipo: 0
+  clasesPermitidas:
+  - {fileID: 11400000, guid: e515ed67238fb424c864328bc172b80f, type: 2}
+  - {fileID: 11400000, guid: c2606bd98a457b44099839268cfdf576, type: 2}
+  - {fileID: 11400000, guid: 463bed96ec78da541b3253184094ec70, type: 2}
+  tipoEquipo: 5

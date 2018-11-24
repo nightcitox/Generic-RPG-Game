@@ -21,4 +21,5 @@ MonoBehaviour:
   Descripcion: "Hace un peque\xF1o baile para ganar fuerza durante 3 turnos."
   obj: 2
   sfx: {fileID: 0}
+  animacion: {fileID: 7400000, guid: 837e097870862f1408828aaba9e9832b, type: 2}
   MPUse: 5
