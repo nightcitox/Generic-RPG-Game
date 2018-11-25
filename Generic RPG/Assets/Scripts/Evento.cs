@@ -6,5 +6,6 @@ public class Evento : MonoBehaviour {
     public void Accionar()
     {
         Personaje.puedeMoverse = true;
+        GameObject.Find("Cinemática").SetActive(false);
     }
 }

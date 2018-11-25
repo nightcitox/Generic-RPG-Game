@@ -15,7 +15,7 @@ public class Habilidad : MonoBehaviour {
     private Sprite icono;
     private string Descripcion;
     private PlanHabilidades.Objetivo objetivoEfecto;
-    private AudioClip sfx;
+    private AudioClip[] sfx;
     private Button BotonHabilidad;
     #endregion
     #region GetSetProps
@@ -250,8 +250,10 @@ public class Habilidad : MonoBehaviour {
                             }
                             break;
                     }
-                    FindObjectOfType<AnimSFX>().sfx = sfx;
-                    print(FindObjectOfType<AnimSFX>().sfx.name);
+                    for(int i = 0; i< sfx.Length; i++)
+                    {
+                        FindObjectOfType<AnimSFX>().sfx[i] = sfx[i];
+                    }
                     bm.StartCoroutine(bm.Esperar(null, mensaje, daño, habilidad.animacion));
                 }
             }

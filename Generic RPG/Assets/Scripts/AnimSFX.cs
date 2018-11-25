@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class AnimSFX : MonoBehaviour
 {
-    public AudioClip sfx;
+    public AudioClip[] sfx = new AudioClip[10];
+    public int contador = 0;
     public void UsarEfecto()
     {
-        print("Si se ejecuta");
-        print(sfx.name);
-        GetComponent<AudioSource>().PlayOneShot(sfx);
+        GetComponent<AudioSource>().PlayOneShot(sfx[contador]);
+        contador += 1;
+        if(contador == sfx.Length)
+        {
+            contador = 0;
+        }
     }
 }

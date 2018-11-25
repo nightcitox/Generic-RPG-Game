@@ -10,7 +10,7 @@ public class PlanHabilidades : ScriptableObject {
     public Sprite icono;
     public string Descripcion;
     public Objetivo obj;
-    public AudioClip sfx;
+    public AudioClip[] sfx;
     public AnimationClip animacion;
     public enum Tipo
     {

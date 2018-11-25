@@ -218,7 +218,6 @@ public class Personaje : MonoBehaviour {
         if (col.gameObject.CompareTag("Encuentros") == true)
         {
             dentro = true;
-            print("Triggereando la tierra");
             GameObject.Find("Zona Encuentros").GetComponent<Mapa>().CalcularProbabilidad();
         }
         else if (col.gameObject.CompareTag("TP") == true)
