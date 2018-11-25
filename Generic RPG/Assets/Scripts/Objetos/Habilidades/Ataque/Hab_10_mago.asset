@@ -9,17 +9,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: db710ed3bf17c664db928c50c8f73699, type: 3}
-  m_Name: Hab_3
+  m_Name: Hab_10_mago
   m_EditorClassIdentifier: 
-  nombre: Paracetamolisis
-  baseDMG: 15
-  lrnLVL: 2
+  nombre: 
+  baseDMG: 10
+  lrnLVL: 0
   clases:
-  - {fileID: 11400000, guid: e515ed67238fb424c864328bc172b80f, type: 2}
-  tipo: 2
-  icono: {fileID: 21300000, guid: ba6ba7e038c68f8498c2ee0c546c6422, type: 3}
-  Descripcion: Una rafaga feroz que puede aturdir al enemigo
+  - {fileID: 11400000, guid: c2606bd98a457b44099839268cfdf576, type: 2}
+  tipo: 0
+  icono: {fileID: 0}
+  Descripcion: 
   obj: 0
   sfx: {fileID: 0}
-  animacion: {fileID: 7400000, guid: d745036b0c1266c4fb7b18d18ec79503, type: 2}
-  MPUse: 5
+  animacion: {fileID: 0}
+  MPUse: 0
