@@ -10,13 +10,9 @@ public class SkillManager : MonoBehaviour{
     private Personaje PJ;
     private List<PlanHabilidades> habilidadesPJ = new List<PlanHabilidades>();
     public GameObject HabSlot;
-    void Start()
-    {
-        PJ = GameManager.PJ;
-        ListadoHabilidades();
-    }
     public void ListadoHabilidades()
     {
+        habilidadesPJ = new List<PlanHabilidades>();
         string[] nombres = AssetDatabase.FindAssets("Hab");
         for (int i = 0; i < nombres.Length; i++)
         {
@@ -47,6 +43,8 @@ public class SkillManager : MonoBehaviour{
     }
     public void Desplegar()
     {
+        PJ = FindObjectOfType<Personaje>();
+        ListadoHabilidades();
         if(GameObject.Find("Panel").transform.Find("PanelHabilidades").gameObject.activeSelf == false)
         {
             if(habilidadesPJ.Count == 0)

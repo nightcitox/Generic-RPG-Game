@@ -1837,7 +1837,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d67513568b4f4de48ba72f04b710bb71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sfx: {fileID: 0}
+  sfx:
+  - {fileID: 0}
+  contador: 0
 --- !u!1 &1429102992
 GameObject:
   m_ObjectHideFlags: 0
@@ -1902,7 +1904,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: f83f4efe975d74b4b837b389b618138e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 05b40ba328c2cc6488fe6982bcf40880, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

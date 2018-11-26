@@ -100,9 +100,8 @@ public class BattleManager : MonoBehaviour {
         GameObject.FindGameObjectWithTag("BGM").GetComponent<AudioSource>().clip = bgm;
         GameObject.FindGameObjectWithTag("BGM").GetComponent<AudioSource>().Stop();
         GameObject.FindGameObjectWithTag("BGM").GetComponent<AudioSource>().Play();
-        pj = GameManager.PJ;
-        Personaje pjBattler = GameObject.Find("Personaje").GetComponent<Personaje>();
-        pjBattler.clase = pj.clase;
+        pj = FindObjectOfType<Personaje>();
+        print(pj.clase.nombre);
         Personaje.puedeMoverse = false;
         Texto = GameObject.Find("Estado").GetComponent<Text>();
         vidaPJ = (RectTransform)GameObject.Find("BarraPJHP").gameObject.transform.Find("Centro");
@@ -275,7 +274,7 @@ public class BattleManager : MonoBehaviour {
                     case AccionesEnemigo.Escapar:
                         Texto.text = "El enemigo ha escapado.";
                         yield return new WaitForSeconds(5f);
-                        SceneManager.LoadScene("Mapa");
+                        SceneManager.LoadScene(GameManager.Escena);
                         break;
                     case AccionesEnemigo.Curarse:
                         int curacion = Mathf.RoundToInt(Random.Range(EN1.Maxhp*.05f, EN1.Maxhp * .1f));

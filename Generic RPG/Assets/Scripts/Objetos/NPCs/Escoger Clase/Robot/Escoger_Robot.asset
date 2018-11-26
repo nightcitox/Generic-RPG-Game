@@ -8,10 +8,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5a1fc8db335b4546a785aeef21d268f, type: 3}
-  m_Name: Dia_Letrero
+  m_Script: {fileID: 11500000, guid: a52a2f833bcd8dc4e9dadbac559590cc, type: 3}
+  m_Name: Escoger_Robot
   m_EditorClassIdentifier: 
-  id: 0
-  dialogos:
-  - Adelante, Challaco el pueblo sin ley.
-  tipo: 2
+  nombre: Robot
+  dialogos: {fileID: 11400000, guid: cbb7f2934a00fa74b8d5cd6c4cf0e04c, type: 2}
+  misionesNPC: []

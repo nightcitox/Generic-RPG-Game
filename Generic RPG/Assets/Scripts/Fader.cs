@@ -20,6 +20,7 @@ public class Fader : MonoBehaviour {
     public void Transicionar()
     {
         cambiarLvl = false;
+        Personaje.puedeMoverse = true;
         SceneManager.LoadScene(nombreMapa);
     }
 }

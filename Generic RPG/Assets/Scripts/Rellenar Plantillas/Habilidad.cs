@@ -250,7 +250,8 @@ public class Habilidad : MonoBehaviour {
                             }
                             break;
                     }
-                    for(int i = 0; i< sfx.Length; i++)
+                    FindObjectOfType<AnimSFX>().sfx = new AudioClip[sfx.Length];
+                    for (int i = 0; i< sfx.Length; i++)
                     {
                         FindObjectOfType<AnimSFX>().sfx[i] = sfx[i];
                     }

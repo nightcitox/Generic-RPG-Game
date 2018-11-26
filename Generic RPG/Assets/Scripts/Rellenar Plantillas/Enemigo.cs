@@ -141,7 +141,7 @@ public class Enemigo : MonoBehaviour {
     // Use this for initialization
     void Start() {
         enemigo = Mapa.en;
-        Nivel = Random.Range(Mapa.NivelZona-2, Mapa.NivelZona+2);
+        Nivel = Random.Range(Mapa.NivelZona[0], Mapa.NivelZona[1]);
         for (int i = 0; i < 2; i++)
         {
             bufos[i] = 0;

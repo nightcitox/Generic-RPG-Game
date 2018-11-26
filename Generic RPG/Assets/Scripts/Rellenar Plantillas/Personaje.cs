@@ -174,6 +174,7 @@ public class Personaje : MonoBehaviour {
     #region Start y Update
     void Start() {
         DontDestroyOnLoad(gameObject);
+        puedeMoverse = true;
         if (GameManager.clasesita != null)
         {
             clase = GameManager.clasesita;
@@ -243,11 +244,10 @@ public class Personaje : MonoBehaviour {
         dentro = false;
         timer = 0f;
     }
-    void OnLevelWasLoaded()
+    public void CambiarSprite()
     {
         if (SceneManager.GetActiveScene().name == "Batalla")
         {
-            print("owo");
             transform.position = new Vector2(-4, 0.5f);
             transform.localScale = new Vector2(2.5f, 2.5f);
             GetComponent<SpriteRenderer>().sprite = clase.battler;
@@ -261,6 +261,11 @@ public class Personaje : MonoBehaviour {
             Animator anim = GetComponent<Animator>();
             anim.runtimeAnimatorController = clase.mapController as RuntimeAnimatorController;
         }
+    }
+    void OnLevelWasLoaded()
+    {
+        CambiarSprite();
+        Estadisticas();
     }
     #endregion
     #region Métodos

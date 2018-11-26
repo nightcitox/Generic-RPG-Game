@@ -9,9 +9,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a5a1fc8db335b4546a785aeef21d268f, type: 3}
-  m_Name: Dia_Letrero
+  m_Name: Dialogo_Escoger_Robot
   m_EditorClassIdentifier: 
   id: 0
   dialogos:
-  - Adelante, Challaco el pueblo sin ley.
-  tipo: 2
+  - Un poder infinito proveniente de la maquinaria pesada incrustada.
+  - "\xBFDeseas el poder de un robot?"
+  tipo: 1

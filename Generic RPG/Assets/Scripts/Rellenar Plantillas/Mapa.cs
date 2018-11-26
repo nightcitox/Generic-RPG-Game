@@ -8,8 +8,8 @@ public class Mapa : MonoBehaviour {
     public List<PlanEnemigo> enemigos;
     private string nombre;
     static public PlanEnemigo en;
-    public int lv;
-    public static int NivelZona;
+    public int[] lv = new int[2];
+    public static int[] NivelZona = new int[2];
     #endregion
     void Start () {
         NivelZona = lv;

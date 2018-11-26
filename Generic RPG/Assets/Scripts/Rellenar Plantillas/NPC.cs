@@ -83,7 +83,7 @@ public class NPC : MonoBehaviour {
                 texto.text = "";
                 Destroy(GameObject.Find("Holder"));
                 chatIniciado = false;
-                Personaje.puedeMoverse = false;
+                Personaje.puedeMoverse = true;
                 interaccion = true;
                 puedeContinuar = false;
             }
@@ -113,7 +113,7 @@ public class NPC : MonoBehaviour {
     void Salir()
     {
         chatIniciado = false;
-        Personaje.puedeMoverse = false;
+        Personaje.puedeMoverse = true;
         interaccion = true;
         puedeContinuar = false;
         Destroy(GameObject.Find("Holder"));
@@ -125,12 +125,13 @@ public class NPC : MonoBehaviour {
         {
             FindObjectOfType<GameManager>().EscogerClase(nombre);
             FindObjectOfType<GameManager>().PuedeAbrirMenu = true;
+            FindObjectOfType<Personaje>().CambiarSprite();
         }
         //En este, se crea la misión y se redirige al GameManager para que se coloque como misión actual y se pueda
         //cumplir el objetivo de la misma.
         GameManager.mision = mision;
         chatIniciado = false;
-        Personaje.puedeMoverse = false;
+        Personaje.puedeMoverse = true;
         interaccion = true;
         puedeContinuar = false;
         Destroy(GameObject.Find("Holder"));
