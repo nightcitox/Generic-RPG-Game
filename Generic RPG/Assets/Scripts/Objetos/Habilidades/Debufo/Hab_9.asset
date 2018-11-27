@@ -20,6 +20,7 @@ MonoBehaviour:
   icono: {fileID: 21300000, guid: ccee4f1e6261c134088810fa23107333, type: 3}
   Descripcion: Baile entretenido que baja el ataque rival.
   obj: 0
-  sfx: {fileID: 0}
+  sfx:
+  - {fileID: 8300000, guid: b255ac637f405d24ab83e92eb7f7de0d, type: 3}
   animacion: {fileID: 7400000, guid: 46a0557fb8da75541a18b01dbb4d7047, type: 2}
   MPUse: 5

@@ -20,6 +20,7 @@ MonoBehaviour:
   icono: {fileID: 21300000, guid: 10a38cb918f124d43a1d62b0a4f36bd0, type: 3}
   Descripcion: Pega un super hachazo con habilidades destructivas.
   obj: 0
-  sfx: {fileID: 8300000, guid: fb3eb429d447d8b4baa598d5d8065799, type: 3}
+  sfx:
+  - {fileID: 8300000, guid: 75c95300305ca044e846b031384c4397, type: 3}
   animacion: {fileID: 7400000, guid: c3c6b970d91d0e240b84ede6c9ea0a71, type: 2}
   MPUse: 15

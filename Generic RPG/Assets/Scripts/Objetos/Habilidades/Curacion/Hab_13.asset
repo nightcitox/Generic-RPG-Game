@@ -21,6 +21,7 @@ MonoBehaviour:
   icono: {fileID: 21300000, guid: 766b30c684960a146977ee93c6c9e0c6, type: 3}
   Descripcion: Cura la tus yayas
   obj: 0
-  sfx: {fileID: 8300000, guid: ad57dcdacb7c30b428b78a96de6d95d2, type: 3}
+  sfx:
+  - {fileID: 8300000, guid: 8901758f25e414e4aaa29b31502e222e, type: 3}
   animacion: {fileID: 7400000, guid: 2e612c6fba21c3b44892fd2bcd09e711, type: 2}
   MPUse: 0

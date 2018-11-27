@@ -19,7 +19,8 @@ MonoBehaviour:
   tipo: 2
   icono: {fileID: 21300000, guid: b29c7f89d1a6f8146ba351797c2333e4, type: 3}
   Descripcion: El usuario da un fuerte golpe a su rival.
-  obj: 0
-  sfx: {fileID: 0}
+  obj: 2
+  sfx:
+  - {fileID: 8300000, guid: 84e69a89be2648f48ad6949c85718592, type: 3}
   animacion: {fileID: 7400000, guid: f1ad785fe721660408222b3deb7dc907, type: 2}
   MPUse: 0

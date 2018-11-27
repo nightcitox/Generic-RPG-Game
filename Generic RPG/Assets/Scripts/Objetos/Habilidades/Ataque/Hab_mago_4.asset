@@ -9,17 +9,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: db710ed3bf17c664db928c50c8f73699, type: 3}
-  m_Name: Hab_10_mago
+  m_Name: Hab_mago_4
   m_EditorClassIdentifier: 
-  nombre: 
-  baseDMG: 10
-  lrnLVL: 0
+  nombre: "Calcinaci\xF3n"
+  baseDMG: 350
+  lrnLVL: 1
   clases:
   - {fileID: 11400000, guid: c2606bd98a457b44099839268cfdf576, type: 2}
-  tipo: 0
-  icono: {fileID: 0}
-  Descripcion: 
+  tipo: 2
+  icono: {fileID: 21300000, guid: cc0bd2a4ef0434c4b88b1edf824e539b, type: 3}
+  Descripcion: "Calcina al enemigo con una fuerte explosi\xF3n m\xE1gica."
   obj: 0
-  sfx: {fileID: 0}
-  animacion: {fileID: 0}
-  MPUse: 0
+  sfx:
+  - {fileID: 8300000, guid: 024c3a64a4cff444198e3509ad7cd9ff, type: 3}
+  animacion: {fileID: 7400000, guid: 409b72d656323664cbdc2f96b8b2890b, type: 2}
+  MPUse: 15

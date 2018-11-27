@@ -20,6 +20,8 @@ MonoBehaviour:
   icono: {fileID: 21300000, guid: cc0bd2a4ef0434c4b88b1edf824e539b, type: 3}
   Descripcion: Bola de fuego
   obj: 2
-  sfx: {fileID: 0}
+  sfx:
+  - {fileID: 8300000, guid: f9f61a70ab3011943aa2ec7201f87cad, type: 3}
+  - {fileID: 8300000, guid: 1aec3baa610dd5a4b9a80606ab4174d9, type: 3}
   animacion: {fileID: 7400000, guid: 1252aa32b2e7a8a45a2e8286e204154a, type: 2}
   MPUse: 30

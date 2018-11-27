@@ -20,6 +20,7 @@ MonoBehaviour:
   icono: {fileID: 21300000, guid: 9bdd1b037b02c514893ba3393d458b02, type: 3}
   Descripcion: cura xd
   obj: 0
-  sfx: {fileID: 0}
+  sfx:
+  - {fileID: 8300000, guid: ebcedb87f5cd07445ace58dcc9a31b8e, type: 3}
   animacion: {fileID: 7400000, guid: 51f43333a70822d48ac765be74ad723c, type: 2}
   MPUse: 0

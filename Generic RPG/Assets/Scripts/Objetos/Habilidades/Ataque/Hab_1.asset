@@ -19,10 +19,9 @@ MonoBehaviour:
   tipo: 2
   icono: {fileID: 21300000, guid: 4a93dcc2988bca64ebacff3ce528571c, type: 3}
   Descripcion: "Espada de destrucci\xF3n masiva."
-  obj: 0
+  obj: 2
   sfx:
-  - {fileID: 8300000, guid: 7b696a41c021dfd4aa69500a8cc33412, type: 3}
-  - {fileID: 8300000, guid: 2c26e8df3744cc3429952a797a78de76, type: 3}
-  - {fileID: 8300000, guid: 9e7817aecb8d29242a7eec45e97652da, type: 3}
+  - {fileID: 8300000, guid: b4d976ed72d7623489e39b4ddbe47379, type: 3}
+  - {fileID: 8300000, guid: f9f61a70ab3011943aa2ec7201f87cad, type: 3}
   animacion: {fileID: 7400000, guid: 61eb6f620da3b854bb73f831dc13ea75, type: 2}
   MPUse: 15

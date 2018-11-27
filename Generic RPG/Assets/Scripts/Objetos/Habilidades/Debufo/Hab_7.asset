@@ -20,6 +20,7 @@ MonoBehaviour:
   icono: {fileID: 21300000, guid: a5a90456ad4d8724997f56e86d223e03, type: 3}
   Descripcion: Un fuerte olor que confunde al rival.
   obj: 3
-  sfx: {fileID: 0}
+  sfx:
+  - {fileID: 8300000, guid: abb2ee752255916459c44190edcee38b, type: 3}
   animacion: {fileID: 7400000, guid: 6002cf955ddf0384ab4f4573a0dfc148, type: 2}
   MPUse: 10

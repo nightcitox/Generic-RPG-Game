@@ -20,6 +20,7 @@ MonoBehaviour:
   icono: {fileID: 21300000, guid: 63f4f74176fbc584db46cd622cf20cf6, type: 3}
   Descripcion: "Es la t\xE9cnica m\xE1s eficaz para curar tus dolores."
   obj: 0
-  sfx: {fileID: 8300000, guid: 30609b3a2e4289747a2e2f163ff87abd, type: 3}
+  sfx:
+  - {fileID: 8300000, guid: 78becebec7b8a9e41a632802a1bb437c, type: 3}
   animacion: {fileID: 7400000, guid: 2da1057cc9a89c340b85bba0b7ec69fe, type: 2}
   MPUse: 1
